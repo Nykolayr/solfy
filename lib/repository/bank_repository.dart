@@ -1,0 +1,48 @@
+import 'package:either_dart/either.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_response.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/client_search_response.dart';
+import 'package:solfy_flutter/models/api/errors/errors_response.dart';
+import 'package:dio/dio.dart';
+import 'package:solfy_flutter/repository/ibank_repository.dart';
+import 'package:solfy_flutter/services/api/bank_api_client.dart';
+
+/// Реализация репозитория, работающего с bank-разделом API
+class BankRepository implements IBankRepository {
+  final BankApiClient _apiClient;
+  ClientSearchResp? _clientSearchForm;
+  ClientSearchResp get phoneNumber => _clientSearchForm ?? ClientSearchResp();
+
+  BankRepository(this._apiClient);
+
+  @override
+  Future<Either<ErrorsResponse, ClientSearchResp>> clientSearch(
+      ClientSearchRequest request) async {
+    print('console clientSearch ');
+    try {
+      final response = await _apiClient.clientSearch(request);
+      print('console clientSearch =  ${response.toJson()}');
+      return Right(response);
+    } on DioError catch (error) {
+      print(
+          'ошибка clientSearch == ${ErrorsResponse.fromJson(error.response!.data)}');
+      return Left(ErrorsResponse.fromJson(error.response!.data));
+    }
+  }
+
+  @override
+  Future<Either<ErrorsResponse, ClientScoreResp>> clientScore(
+      ClientScoreRequest request) async {
+    print('console clientScore ');
+    try {
+      final response = await _apiClient.clientScore(request);
+      print('console clientScore =  ${response.toJson()}');
+      return Right(response);
+    } on DioError catch (error) {
+      print(
+          'ошибка clientScore == ${ErrorsResponse.fromJson(error.response!.data)}');
+      return Left(ErrorsResponse.fromJson(error.response!.data));
+    }
+  }
+}

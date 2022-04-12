@@ -1,0 +1,645 @@
+import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_address_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_data_item_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_family_data_item_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_income_item_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_job_info_item_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_property_item_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_properties_item_response.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/client_search_response.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/value_object_response.dart';
+import 'package:solfy_flutter/models/api/errors/errors_response.dart';
+import 'package:solfy_flutter/models/api/static/dictionaries/dictionaries_dictionary_item_response.dart';
+import 'package:solfy_flutter/models/api/static/geo/geo_district_response.dart';
+import 'package:solfy_flutter/models/api/static/geo/geo_region_response.dart';
+import 'package:solfy_flutter/models/enums.dart';
+import 'package:solfy_flutter/models/form_property_model.dart';
+import 'package:solfy_flutter/models/form_vehicle_model.dart';
+import 'package:solfy_flutter/repository/bank_repository.dart';
+import 'package:solfy_flutter/repository/profile_repository.dart';
+import 'package:solfy_flutter/repository/static_repository.dart';
+import 'package:solfy_flutter/services/database/client_search_db_service.dart';
+
+part 'questionnaire_state.dart';
+part 'questionnaire_event.dart';
+part 'questionnaire_bloc.freezed.dart';
+
+/// Блок с логикой анкеты
+class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
+  final BankRepository _bankRepository;
+  final ProfileRepository _profileRepository;
+  final StaticRepository _staticRepository;
+  final ClientSearchDbService _dbService;
+
+  QuestionnaireBloc(this._bankRepository, this._dbService,
+      this._staticRepository, this._profileRepository)
+      : super(Initial()) {
+    on<Reset>(
+      (event, emit) async {
+        emit(const Initial());
+      },
+    );
+    on<ClientSearch>(
+      (event, emit) async {
+        await clientSearch(emit, event);
+      },
+    );
+    on<SavePersonalData>(
+      (event, emit) async {
+        await savePersonalData(emit, event);
+      },
+    );
+    on<SaveAddressData>(
+      (event, emit) async {
+        await saveAddressData(emit, event);
+      },
+    );
+    on<SaveJobData>(
+      (event, emit) async {
+        await saveJobData(emit, event);
+      },
+    );
+    on<SavePropertiesData>(
+      (event, emit) async {
+        await savePropertiesData(emit, event);
+      },
+    );
+    on<ClientScore>(
+      (event, emit) async {
+        await clientScore(emit, event);
+      },
+    );
+  }
+
+  /// Поиск анкеты клиента
+  Future<void> clientSearch(
+      Emitter<QuestionnaireState> emit, ClientSearch event) async {
+    final dbResponse = await _dbService.getClientSearchResponse();
+    print('dbResponse == ${dbResponse}');
+    if (dbResponse != null) {
+      emit(QuestionnaireFoundSuccess(
+        dbResponse.clientSearchResponse,
+        dbResponse.questionnaire,
+        dbResponse.currentStage,
+      ));
+    } else {
+      var res = await _profileRepository.getProfile();
+      if (res.isRight) {
+        print('phone == ${res.right.profile!.phone}');
+      }
+      if (event.number != null && res.isRight) {
+        String? phone = res.right.profile!.phone!
+            .replaceAll(" ", "")
+            .replaceAll("+", "")
+            .replaceAll("-", "");
+        final request = ClientSearchRequest(
+          phone,
+          {"id": 8, "code": "BIO"},
+          event.series!,
+          event.number!,
+          event.pinFl!,
+          true,
+        );
+        final response = await _bankRepository.clientSearch(request);
+        if (response.isRight) {
+          final clientData = response.right.clientData?.copyWith(
+            docIssueDate:
+                formatFormDate(response.right.clientData?.docIssueDate),
+            docEndDate: formatFormDate(response.right.clientData?.docEndDate),
+          );
+          await _dbService.saveClientSearchResponse(
+              response.right.copyWith(clientData: clientData));
+          final dbResponse = await _dbService.getClientSearchResponse();
+          if (dbResponse != null) {
+            emit(QuestionnaireFoundSuccess(
+              dbResponse.clientSearchResponse,
+              dbResponse.questionnaire,
+              dbResponse.currentStage,
+            ));
+          }
+        } else {
+          print("errors ==${response.left.errors}");
+          emit(QuestionnaireFoundError(response.left));
+        }
+      }
+    }
+  }
+
+  /// Сохранение в локальную бд данных из страницы "Персональные данные"
+  Future<void> savePersonalData(
+      Emitter<QuestionnaireState> emit, SavePersonalData event) async {
+    print('event.data == ${event.data}');
+
+    final newQuestionnaire = event.questionnaire.copyWith(
+      clientData: event.questionnaire.clientData?.copyWith(
+        lastName: event.data["last_name"],
+        firstName: event.data["first_name"],
+        middleName: event.data["middle_name"],
+        dateOfBirth: event.data["date_of_birth"],
+        inn: event.data["inn"],
+        gender: ValueObject(
+          _staticRepository.dictionaries.gender?.dictionaryItems
+              ?.firstWhere((element) => element.value == event.data["gender"])
+              .id,
+          event.data["gender"],
+        ),
+        docType: ValueObject(
+          _staticRepository.dictionaries.docType?.dictionaryItems
+              ?.firstWhere((element) => element.value == event.data["doc_type"])
+              .id,
+          event.data["doc_type"],
+        ),
+        docSeries: event.data["doc_series"],
+        docNumber: event.data["doc_number"],
+        docIssueDate: event.data["doc_issue_date"],
+        docEndDate: event.data["doc_end_date"],
+        adminAreaDocument: ValueObject(
+          _staticRepository.geo.regions
+              ?.firstWhere((element) =>
+                  element.name == event.data["admin_area_document"])
+              .id,
+          event.data["admin_area_document"],
+        ),
+        agencyDocument: ValueObject(
+          _staticRepository.geo.districts
+              ?.firstWhere(
+                  (element) => element.name == event.data["agency_document"])
+              .id,
+          event.data["agency_document"],
+        ),
+        residency: ValueObject(
+          _staticRepository.dictionaries.residency?.dictionaryItems
+              ?.firstWhere(
+                  (element) => element.value == event.data["citizenship"])
+              .id,
+          event.data["citizenship"],
+        ),
+        countryBirth: ValueObject(
+          _staticRepository.geo.countryItems
+              ?.firstWhere((element) =>
+                  element.countries?.any((element) =>
+                      element.name == event.data["country_birth"]) ??
+                  false)
+              .countries
+              ?.firstWhere(
+                  (element) => element.name == event.data["country_birth"])
+              .id,
+          event.data["country_birth"],
+        ),
+        locationBirth: event.data["location_birth"],
+        mobilePhone: event.data["mobile_phone1"] != null
+            ? (event.data["mobile_phone1"] as String)
+                .replaceAll(" ", "")
+                .replaceAll("+", "")
+                .replaceAll("-", "")
+            : null,
+        email: event.data["email"],
+        education: ValueObject(
+          _staticRepository.dictionaries.education?.dictionaryItems
+              ?.firstWhere(
+                  (element) => element.value == event.data["education"])
+              .id,
+          event.data["education"],
+        ),
+      ),
+      clientFamilyData: event.questionnaire.clientFamilyData?.copyWith(
+        maritalStatus: ValueObject(
+          _staticRepository.dictionaries.maritalStatus?.dictionaryItems
+              ?.firstWhere(
+                  (element) => element.value == event.data["marital_status"])
+              .id,
+          event.data["marital_status"],
+        ),
+        childrenNumber: event.data["children_number"] != null
+            ? int.tryParse(event.data["children_number"])
+            : 0,
+      ),
+      codeWord: event.data["code_word"],
+    );
+    await _dbService.updateQuestionnaire(newQuestionnaire);
+    await _dbService.updateCurrentStage(2);
+    final newData = await _dbService.getClientSearchResponse();
+    if (newData != null) {
+      emit(QuestionnaireFoundSuccess(newData.clientSearchResponse,
+          newData.questionnaire, newData.currentStage));
+    }
+  }
+
+  /// Сохранение в локальную бд данных из страницы "Адрес"
+  Future<void> saveAddressData(
+      Emitter<QuestionnaireState> emit, SaveAddressData event) async {
+    print('event.data == ${event.data}');
+    ClientSearchResponse newQuestionnaire = event.questionnaire.copyWith(
+      clientRegistrationAddress:
+          event.questionnaire.clientRegistrationAddress?.copyWith(
+        adminArea: ValueObject(
+          _staticRepository.geo.regions
+              ?.firstWhere((element) => element.name == event.data["region"])
+              .id,
+          event.data["region"],
+        ),
+        district: ValueObject(
+          _staticRepository.geo.districts
+              ?.firstWhere((element) => element.name == event.data["district"])
+              .id,
+          event.data["district"],
+        ),
+        locality: event.data["city"],
+        street: event.data["street"],
+        houseNumber: event.data["house"],
+        apartmentNumber: event.data["apartment"],
+        typeOwnership: ValueObject(
+          _staticRepository.dictionaries.typeOwnership?.dictionaryItems
+              ?.firstWhere((element) => element.value == event.data["type"])
+              .id,
+          event.data["type"],
+        ),
+      ),
+    );
+    if (event.data["temp_region"] != null) {
+      newQuestionnaire = newQuestionnaire.copyWith(
+        clientTemporaryAddress:
+            event.questionnaire.clientRegistrationAddress?.copyWith(
+          adminArea: ValueObject(
+            _staticRepository.geo.regions
+                ?.firstWhere(
+                    (element) => element.name == event.data["temp_region"],
+                    orElse: () => GeoRegionResponse())
+                .id,
+            event.data["temp_region"],
+          ),
+          district: ValueObject(
+            _staticRepository.geo.districts
+                ?.firstWhere(
+                    (element) => element.name == event.data["temp_district"],
+                    orElse: () => GeoDistrictResponse())
+                .id,
+            event.data["temp_district"],
+          ),
+          locality: event.data["temp_city"],
+          street: event.data["temp_street"],
+          houseNumber: event.data["temp_house"],
+          apartmentNumber: event.data["temp_apartment"],
+          typeOwnership: ValueObject(
+            _staticRepository.dictionaries.typeOwnership?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["temp_type"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["temp_type"],
+          ),
+        ),
+      );
+    } else {
+      newQuestionnaire =
+          newQuestionnaire.copyWith(clientTemporaryAddress: null);
+    }
+
+    if (event.data["fact_region"] != null) {
+      newQuestionnaire = newQuestionnaire.copyWith(
+        clientLivingAddress:
+            event.questionnaire.clientRegistrationAddress?.copyWith(
+          adminArea: ValueObject(
+            _staticRepository.geo.regions
+                ?.firstWhere(
+                    (element) => element.name == event.data["fact_region"],
+                    orElse: () => GeoRegionResponse())
+                .id,
+            event.data["fact_region"],
+          ),
+          district: ValueObject(
+            _staticRepository.geo.districts
+                ?.firstWhere(
+                    (element) => element.name == event.data["fact_district"],
+                    orElse: () => GeoDistrictResponse())
+                .id,
+            event.data["fact_district"],
+          ),
+          locality: event.data["fact_city"],
+          street: event.data["fact_street"],
+          houseNumber: event.data["fact_house"],
+          apartmentNumber: event.data["fact_apartment"],
+          typeOwnership: ValueObject(
+            _staticRepository.dictionaries.typeOwnership?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["fact_type"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["fact_type"],
+          ),
+        ),
+      );
+    } else {
+      newQuestionnaire = newQuestionnaire.copyWith(
+          clientLivingAddress: event.factSelector ==
+                  FactAddressSelector.SameAsRegistrationAddress
+              ? newQuestionnaire.clientRegistrationAddress
+              : event.factSelector == FactAddressSelector.SameAsTempAddress
+                  ? newQuestionnaire.clientTemporaryAddress
+                  : null);
+    }
+    await _dbService.updateQuestionnaire(newQuestionnaire);
+    await _dbService.updateCurrentStage(3);
+    final newData = await _dbService.getClientSearchResponse();
+    if (newData != null) {
+      emit(QuestionnaireFoundSuccess(
+        newData.clientSearchResponse,
+        newData.questionnaire,
+        newData.currentStage,
+      ));
+    }
+  }
+
+  /// Сохранение в локальную бд данных из страницы "Работа и доходы"
+  Future<void> saveJobData(
+      Emitter<QuestionnaireState> emit, SaveJobData event) async {
+    print('event.data == ${event.data}');
+    final newQuestionnaire = event.questionnaire.copyWith(
+        clientJobInfo: event.questionnaire.clientJobInfo?.copyWith(
+          typeActivity: ValueObject(
+            _staticRepository.dictionaries.typeActivity?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["activity_type"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["activity_type"],
+          ),
+          employerName: event.data["employer_name"],
+          employerId: event.data["employer_inn"],
+          typeFarm: ValueObject(
+            _staticRepository.dictionaries.typeFarm?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["farm_type"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["farm_type"],
+          ),
+          employmentPositionCategory: ValueObject(
+            _staticRepository
+                .dictionaries.employmentPositionCategory?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["category"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["category"],
+          ),
+          workerNumber: ValueObject(
+            _staticRepository.dictionaries.workerNumber?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["worker_number"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["worker_number"],
+          ),
+          lastWorkExperience: ValueObject(
+            _staticRepository.dictionaries.lastWorkExperience?.dictionaryItems
+                ?.firstWhere(
+                    (element) =>
+                        element.value == event.data["last_work_experience"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["last_work_experience"],
+          ),
+          workExperience: ValueObject(
+            _staticRepository.dictionaries.workExperience?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["work_experience"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["work_experience"],
+          ),
+        ),
+        clientIncome: event.questionnaire.clientIncome?.copyWith(
+          monthlyIncome: int.tryParse(event.data["monthly_income"] != null
+              ? (event.data["monthly_income"] as String).replaceAll(" ", "")
+              : ""),
+          monthlyExpenses: int.tryParse(event.data["monthly_expenses"] != null
+              ? (event.data["monthly_expenses"] as String).replaceAll(" ", "")
+              : ""),
+          loanExpenses: int.tryParse(event.data["loan_expenses"] != null
+              ? (event.data["loan_expenses"] as String).replaceAll(" ", "")
+              : ""),
+          addIncome: event.data["additional"] != null
+              ? ValueObject(1, "Да")
+              : ValueObject(0, "Нет"),
+          addIncomeAmount: int.tryParse(event.data["additional"] != null
+              ? (event.data["additional"] as String).replaceAll(" ", "")
+              : ""),
+          addIncomeSource: ValueObject(
+            _staticRepository.dictionaries.addIncomeSource?.dictionaryItems
+                ?.firstWhere(
+                    (element) => element.value == event.data["additional_type"],
+                    orElse: () => DictionariesDictionaryItemResponse())
+                .id,
+            event.data["additional_type"],
+          ),
+        ));
+    await _dbService.updateQuestionnaire(newQuestionnaire);
+    await _dbService.updateCurrentStage(4);
+    final newData = await _dbService.getClientSearchResponse();
+    if (newData != null) {
+      emit(QuestionnaireFoundSuccess(
+        newData.clientSearchResponse,
+        newData.questionnaire,
+        newData.currentStage,
+      ));
+    }
+  }
+
+  /// Сохранение в локальную бд данных из страницы "Ваше имущество"
+  Future<void> savePropertiesData(
+      Emitter<QuestionnaireState> emit, SavePropertiesData event) async {
+    final properties = event.properties
+        .map(
+          (e) => ClientSearchClientPropertiesItemResponse(
+            marketValueRealty:
+                int.tryParse(e.marketValue.text.replaceAll(" ", "")),
+            typeProperty: ValueObject(
+              _staticRepository.dictionaries.typeProperty?.dictionaryItems
+                  ?.firstWhere((element) => element.value == e.type.text,
+                      orElse: () => DictionariesDictionaryItemResponse())
+                  .id,
+              e.type.text,
+            ),
+            regionProperty: ValueObject(
+              _staticRepository.geo.regions
+                  ?.firstWhere((element) => element.name == e.region.text,
+                      orElse: () => GeoRegionResponse())
+                  .id,
+              e.region.text,
+            ),
+          ),
+        )
+        .toList();
+    final vehicles = event.vehicles
+        .map(
+          (e) => ClientSearchClientPropertiesItemResponse(
+            marketValueVehicle:
+                int.tryParse(e.marketValue.text.replaceAll(" ", "")),
+            typeVehicle: ValueObject(
+              _staticRepository.dictionaries.typeVehicle?.dictionaryItems
+                  ?.firstWhere((element) => element.value == e.type.text,
+                      orElse: () => DictionariesDictionaryItemResponse())
+                  .id,
+              e.type.text,
+            ),
+            yearIssue: int.tryParse(e.yearIssue.text),
+            modelVehicle: e.model.text,
+          ),
+        )
+        .toList();
+    final newQuestionnaire = event.questionnaire.copyWith(
+      clientProperties: properties,
+      clientVehicles: vehicles,
+    );
+    await _dbService.updateQuestionnaire(newQuestionnaire);
+    await _dbService.updateCurrentStage(5);
+    final newData = await _dbService.getClientSearchResponse();
+    if (newData != null) {
+      emit(QuestionnaireFoundSuccess(
+        newData.clientSearchResponse,
+        newData.questionnaire,
+        newData.currentStage,
+      ));
+    }
+  }
+
+  /// Отправка анкеты
+  Future<void> clientScore(
+      Emitter<QuestionnaireState> emit, ClientScore event) async {
+    final questionnaire =
+        (await _dbService.getClientSearchResponse())?.questionnaire;
+    print('console  phone=  ${questionnaire?.clientData?.mobilePhone}');
+    print("console  Отправка анкеты ${questionnaire?.toJson()}");
+    final request = ClientScoreRequest(
+      clientData: ClientScoreClientDataItemRequest(
+        lastName: questionnaire?.clientData?.lastName,
+        countryBirth: questionnaire?.clientData?.countryBirth?.id,
+        codeFilial: event.id,
+        firstName: questionnaire?.clientData?.firstName,
+        docType: questionnaire?.clientData?.docType?.id,
+        email: questionnaire?.clientData?.email,
+        docEndDate: formatDateForRequest(questionnaire?.clientData?.docEndDate),
+        pnfl: questionnaire?.clientData?.pnfl,
+        inn: questionnaire?.clientData?.inn,
+        clientId: questionnaire?.clientData?.clientId,
+        residenceCountry: 860,
+        mobilePhone: questionnaire?.clientData?.mobilePhone,
+        docNumber: questionnaire?.clientData?.docNumber,
+        locationBirth: questionnaire?.clientData?.locationBirth,
+        clientCode: questionnaire?.clientData?.clientCode,
+        adminAreaDocument: questionnaire?.clientData?.adminAreaDocument?.id,
+        docSeries: questionnaire?.clientData?.docSeries,
+        gender: questionnaire?.clientData?.gender?.id,
+        docIssueDate:
+            formatDateForRequest(questionnaire?.clientData?.docIssueDate),
+        agencyDocument: questionnaire?.clientData?.agencyDocument?.id,
+        dateOfBirth:
+            formatDateForRequest(questionnaire?.clientData?.dateOfBirth),
+        middleName: questionnaire?.clientData?.middleName,
+        status: questionnaire?.clientData?.status,
+        residency: questionnaire?.clientData?.residency?.id,
+        education: questionnaire?.clientData?.education?.id,
+        citizenship: questionnaire?.clientData?.citizenship,
+      ),
+      clientLivingAddress: ClientScoreClientAddressRequest(
+        houseNumber: questionnaire?.clientLivingAddress?.houseNumber,
+        district: questionnaire?.clientLivingAddress?.district?.id,
+        apartmentNumber: questionnaire?.clientLivingAddress?.apartmentNumber,
+        locality: questionnaire?.clientLivingAddress?.locality,
+        adminArea: questionnaire?.clientLivingAddress?.adminArea?.id,
+        street: questionnaire?.clientLivingAddress?.street,
+        typeOwnership: questionnaire?.clientLivingAddress?.typeOwnership?.id,
+      ),
+      clientFamilyData: ClientScoreClientFamilyDataItemRequest(
+        maritalStatus: questionnaire?.clientFamilyData?.maritalStatus?.id,
+        children:
+            questionnaire?.clientFamilyData?.childrenNumber != null ? 1 : 0,
+        childrenNumber: questionnaire?.clientFamilyData?.childrenNumber,
+      ),
+      clientJobInfo: ClientScoreClientJobInfoItemRequest(
+        employerName: questionnaire?.clientJobInfo?.employerName,
+        employmentPositionCategory:
+            questionnaire?.clientJobInfo?.employmentPositionCategory?.id,
+        workExperience: questionnaire?.clientJobInfo?.workExperience?.id,
+        workerNumber: questionnaire?.clientJobInfo?.workerNumber?.id,
+        typeActivity: questionnaire?.clientJobInfo?.typeActivity?.id,
+        typeFarm: questionnaire?.clientJobInfo?.typeFarm?.id,
+        lastWorkExperience:
+            questionnaire?.clientJobInfo?.lastWorkExperience?.id,
+        typeOrganization: questionnaire?.clientJobInfo?.typeOrganization?.id,
+        employerId: questionnaire?.clientJobInfo?.employerId,
+        typeBusiness: questionnaire?.clientJobInfo?.typeBusiness?.id,
+      ),
+      clientProperties: questionnaire?.clientProperties
+          ?.map((e) => ClientScoreClientPropertyItemRequest(
+                marketValueRealty: e.marketValueRealty,
+                regionProperty: e.regionProperty?.id,
+                typeProperty: e.typeProperty?.id,
+              ))
+          .toList(),
+      clientVehicles: questionnaire?.clientVehicles
+          ?.map((e) => ClientScoreClientPropertyItemRequest(
+                marketValueVehicle: e.marketValueVehicle,
+                yearIssue: e.yearIssue,
+                typeVehicle: e.typeVehicle?.id,
+                modelVehicle: e.modelVehicle,
+              ))
+          .toList(),
+      clientRegistrationAddress: ClientScoreClientAddressRequest(
+        houseNumber: questionnaire?.clientRegistrationAddress?.houseNumber,
+        district: questionnaire?.clientRegistrationAddress?.district?.id,
+        apartmentNumber:
+            questionnaire?.clientRegistrationAddress?.apartmentNumber,
+        locality: questionnaire?.clientRegistrationAddress?.locality,
+        adminArea: questionnaire?.clientRegistrationAddress?.adminArea?.id,
+        street: questionnaire?.clientRegistrationAddress?.street,
+        typeOwnership:
+            questionnaire?.clientRegistrationAddress?.typeOwnership?.id,
+      ),
+      clientTemporaryAddress: ClientScoreClientAddressRequest(
+        houseNumber: questionnaire?.clientTemporaryAddress?.houseNumber,
+        district: questionnaire?.clientTemporaryAddress?.district?.id,
+        apartmentNumber: questionnaire?.clientTemporaryAddress?.apartmentNumber,
+        locality: questionnaire?.clientTemporaryAddress?.locality,
+        adminArea: questionnaire?.clientTemporaryAddress?.adminArea?.id,
+        street: questionnaire?.clientTemporaryAddress?.street,
+        typeOwnership: questionnaire?.clientTemporaryAddress?.typeOwnership?.id,
+      ),
+      clientIncome: ClientScoreClientIncomeItemRequest(
+        addIncome: questionnaire?.clientIncome?.addIncome?.id,
+        loanExpenses: questionnaire?.clientIncome?.loanExpenses,
+        addIncomeSource: questionnaire?.clientIncome?.addIncomeSource?.id,
+        addIncomeAmount: questionnaire?.clientIncome?.addIncomeAmount,
+        monthlyIncome: questionnaire?.clientIncome?.monthlyIncome,
+        monthlyExpenses: questionnaire?.clientIncome?.monthlyExpenses,
+      ),
+      secretWord: questionnaire?.codeWord,
+    );
+
+    final response = await _bankRepository.clientScore(request);
+    if (response.isRight) {
+      emit(const QuestionnaireSentSuccess());
+    } else {
+      emit(QuestionnaireSentError(response.left));
+    }
+  }
+
+  String? formatDateForRequest(String? date) {
+    if (date == null) {
+      return null;
+    }
+    return "${date.substring(6, 10)}-${date.substring(3, 5)}-${date.substring(0, 2)}";
+  }
+
+  String? formatFormDate(String? date) {
+    if (date == null) {
+      return null;
+    }
+    final datetime = DateTime.parse(date);
+    return "${datetime.day < 10 ? "0${datetime.day}" : datetime.day}.${datetime.month < 10 ? "0${datetime.month}" : datetime.month}.${datetime.year}";
+  }
+}
