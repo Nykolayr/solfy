@@ -28,7 +28,7 @@ class ClientSearchClientDataResponse with _$ClientSearchClientDataResponse {
     @JsonKey(name: "doc_series") String? docSeries,
     @JsonKey(name: "gender") ValueObject? gender,
     @JsonKey(name: "doc_issue_date") String? docIssueDate,
-    @JsonKey(name: "agency_document") ValueObject? agencyDocument,
+    @JsonKey(name: "agency_document") String? agencyDocument,
     @JsonKey(name: "date_of_birth") String? dateOfBirth,
     @JsonKey(name: "middle_name") String? middleName,
     @JsonKey(name: "status") String? status,

@@ -28,7 +28,7 @@ ClientScoreClientDataItemRequest _$ClientScoreClientDataItemRequestFromJson(
       docSeries: json['doc_series'] as String?,
       gender: json['gender'] as int?,
       docIssueDate: json['doc_issue_date'] as String?,
-      agencyDocument: json['agency_document'] as int?,
+      agencyDocument: json['agency_document'] as String?,
       dateOfBirth: json['date_of_birth'] as String?,
       middleName: json['middle_name'] as String?,
       status: json['status'] as String?,

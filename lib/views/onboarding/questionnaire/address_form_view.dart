@@ -59,17 +59,20 @@ class _AddressFormViewState extends State<AddressFormView> {
   void initState() {
     ModalHelpers.ftoast.init(context);
     final questionnaire =
-        (context.read<QuestionnaireBloc>().state as QuestionnaireFoundSuccess).questionnaire;
+        (context.read<QuestionnaireBloc>().state as QuestionnaireFoundSuccess)
+            .questionnaire;
     // Устанавливаем видимость адрес временной регистрации
     if (questionnaire.clientTemporaryAddress?.adminArea != null) {
       isTempAddressVisible = true;
     }
     // Устанавливаем флаг адреса фактического проживания
     if (questionnaire.clientLivingAddress?.adminArea != null) {
-      if (questionnaire.clientLivingAddress == questionnaire.clientRegistrationAddress) {
+      if (questionnaire.clientLivingAddress ==
+          questionnaire.clientRegistrationAddress) {
         _firstItem.isEnabled = true;
       } else {
-        if (questionnaire.clientLivingAddress == questionnaire.clientTemporaryAddress) {
+        if (questionnaire.clientLivingAddress ==
+            questionnaire.clientTemporaryAddress) {
           _secondItem.isEnabled = true;
         } else {
           _thirdItem.isEnabled = true;
@@ -145,72 +148,99 @@ class _AddressFormViewState extends State<AddressFormView> {
                                 globalKey: _formGlobalKey,
                                 regionItem: FormItemModel(
                                   name: "region",
-                                  uneditableValue: state.staticQuestionnaire
-                                          .clientRegistrationAddress?.adminArea !=
+                                  uneditableValue: state
+                                          .staticQuestionnaire
+                                          .clientRegistrationAddress
+                                          ?.adminArea !=
                                       null,
                                   initialValue: state
-                                      .questionnaire.clientRegistrationAddress?.adminArea?.value,
+                                      .questionnaire
+                                      .clientRegistrationAddress
+                                      ?.adminArea
+                                      ?.value,
                                 ),
                                 districtItem: FormItemModel(
                                   name: "district",
-                                  uneditableValue: state.staticQuestionnaire
-                                          .clientRegistrationAddress?.district !=
+                                  uneditableValue: state
+                                          .staticQuestionnaire
+                                          .clientRegistrationAddress
+                                          ?.district !=
                                       null,
                                   initialValue: state
-                                      .questionnaire.clientRegistrationAddress?.district?.value,
+                                      .questionnaire
+                                      .clientRegistrationAddress
+                                      ?.district
+                                      ?.value,
                                 ),
                                 cityItem: FormItemModel(
                                   name: "city",
-                                  uneditableValue: state.staticQuestionnaire
-                                          .clientRegistrationAddress?.locality !=
+                                  uneditableValue: state
+                                          .staticQuestionnaire
+                                          .clientRegistrationAddress
+                                          ?.locality !=
                                       null,
-                                  initialValue:
-                                      state.questionnaire.clientRegistrationAddress?.locality,
+                                  initialValue: state.questionnaire
+                                      .clientRegistrationAddress?.locality,
                                 ),
                                 streetItem: FormItemModel(
                                   name: "street",
-                                  uneditableValue:
-                                      state.staticQuestionnaire.clientRegistrationAddress?.street !=
-                                          null,
-                                  initialValue:
-                                      state.questionnaire.clientRegistrationAddress?.street,
+                                  uneditableValue: state.staticQuestionnaire
+                                          .clientRegistrationAddress?.street !=
+                                      null,
+                                  initialValue: state.questionnaire
+                                      .clientRegistrationAddress?.street,
                                 ),
                                 houseItem: FormItemModel(
                                   name: "house",
-                                  uneditableValue: state.staticQuestionnaire
-                                          .clientRegistrationAddress?.houseNumber !=
+                                  uneditableValue: state
+                                          .staticQuestionnaire
+                                          .clientRegistrationAddress
+                                          ?.houseNumber !=
                                       null,
-                                  initialValue:
-                                      state.questionnaire.clientRegistrationAddress?.houseNumber,
+                                  initialValue: state.questionnaire
+                                      .clientRegistrationAddress?.houseNumber,
                                 ),
                                 apartmentItem: FormItemModel(
                                   name: "apartment",
-                                  uneditableValue: state.staticQuestionnaire
-                                          .clientRegistrationAddress?.apartmentNumber !=
+                                  uneditableValue: state
+                                          .staticQuestionnaire
+                                          .clientRegistrationAddress
+                                          ?.apartmentNumber !=
                                       null,
                                   initialValue: state
-                                      .questionnaire.clientRegistrationAddress?.apartmentNumber,
+                                      .questionnaire
+                                      .clientRegistrationAddress
+                                      ?.apartmentNumber,
                                 ),
                                 typeItem: FormItemModel(
                                   name: "type",
-                                  uneditableValue: state.staticQuestionnaire
-                                          .clientRegistrationAddress?.typeOwnership !=
+                                  uneditableValue: state
+                                          .staticQuestionnaire
+                                          .clientRegistrationAddress
+                                          ?.typeOwnership !=
                                       null,
-                                  initialValue: state.questionnaire.clientRegistrationAddress
-                                      ?.typeOwnership?.value,
+                                  initialValue: state
+                                      .questionnaire
+                                      .clientRegistrationAddress
+                                      ?.typeOwnership
+                                      ?.value,
                                 ),
                               ),
                               SizedBox(height: 20.h),
                               !isTempAddressVisible
                                   ? Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(height: 12.h),
                                         GestureDetector(
-                                          onTap: () => setState(() => isTempAddressVisible = true),
+                                          onTap: () => setState(() =>
+                                              isTempAddressVisible = true),
                                           child: Text(
-                                            "add_temp_registration_address".tr(),
-                                            style: theme.textStyles.formTextClickable,
+                                            "add_temp_registration_address"
+                                                .tr(),
+                                            style: theme
+                                                .textStyles.formTextClickable,
                                           ),
                                         ),
                                         SizedBox(height: 22.h),
@@ -219,7 +249,8 @@ class _AddressFormViewState extends State<AddressFormView> {
                                   : SizedBox(),
                               isTempAddressVisible
                                   ? Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Divider(height: 0),
                                         SizedBox(height: 16.h),
@@ -230,10 +261,12 @@ class _AddressFormViewState extends State<AddressFormView> {
                                         ),
                                         SizedBox(height: 14.h),
                                         GestureDetector(
-                                          onTap: () => setState(() => isTempAddressVisible = false),
+                                          onTap: () => setState(() =>
+                                              isTempAddressVisible = false),
                                           child: Text(
                                             "Удалить",
-                                            style: theme.textStyles.formTextClickable,
+                                            style: theme
+                                                .textStyles.formTextClickable,
                                           ),
                                         ),
                                         SizedBox(height: 26.h),
@@ -241,59 +274,88 @@ class _AddressFormViewState extends State<AddressFormView> {
                                           globalKey: _formGlobalKey,
                                           regionItem: FormItemModel(
                                             name: "temp_region",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.adminArea !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.adminArea !=
                                                 null,
-                                            initialValue: state.questionnaire.clientTemporaryAddress
-                                                ?.adminArea?.value,
+                                            initialValue: state
+                                                .questionnaire
+                                                .clientTemporaryAddress
+                                                ?.adminArea
+                                                ?.value,
                                           ),
                                           districtItem: FormItemModel(
                                             name: "temp_district",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.district !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.district !=
                                                 null,
-                                            initialValue: state.questionnaire.clientTemporaryAddress
-                                                ?.district?.value,
+                                            initialValue: state
+                                                .questionnaire
+                                                .clientTemporaryAddress
+                                                ?.district
+                                                ?.value,
                                           ),
                                           cityItem: FormItemModel(
                                             name: "temp_city",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.locality !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.locality !=
                                                 null,
                                             initialValue: state
-                                                .questionnaire.clientTemporaryAddress?.locality,
+                                                .questionnaire
+                                                .clientTemporaryAddress
+                                                ?.locality,
                                           ),
                                           streetItem: FormItemModel(
                                             name: "temp_street",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.street !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.street !=
                                                 null,
-                                            initialValue:
-                                                state.questionnaire.clientTemporaryAddress?.street,
+                                            initialValue: state.questionnaire
+                                                .clientTemporaryAddress?.street,
                                           ),
                                           houseItem: FormItemModel(
                                             name: "temp_house",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.houseNumber !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.houseNumber !=
                                                 null,
                                             initialValue: state
-                                                .questionnaire.clientTemporaryAddress?.houseNumber,
+                                                .questionnaire
+                                                .clientTemporaryAddress
+                                                ?.houseNumber,
                                           ),
                                           apartmentItem: FormItemModel(
                                             name: "temp_apartment",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.apartmentNumber !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.apartmentNumber !=
                                                 null,
-                                            initialValue: state.questionnaire.clientTemporaryAddress
+                                            initialValue: state
+                                                .questionnaire
+                                                .clientTemporaryAddress
                                                 ?.apartmentNumber,
                                           ),
                                           typeItem: FormItemModel(
                                             name: "temp_type",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientTemporaryAddress?.typeOwnership !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientTemporaryAddress
+                                                    ?.typeOwnership !=
                                                 null,
-                                            initialValue: state.questionnaire.clientTemporaryAddress
-                                                ?.typeOwnership?.value,
+                                            initialValue: state
+                                                .questionnaire
+                                                .clientTemporaryAddress
+                                                ?.typeOwnership
+                                                ?.value,
                                           ),
                                         ),
                                         Divider(height: 0),
@@ -325,59 +387,86 @@ class _AddressFormViewState extends State<AddressFormView> {
                                           globalKey: _formGlobalKey,
                                           regionItem: FormItemModel(
                                             name: "fact_region",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.adminArea !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.adminArea !=
                                                 null,
-                                            initialValue: state.questionnaire.clientLivingAddress
-                                                ?.adminArea?.value,
+                                            initialValue: state
+                                                .questionnaire
+                                                .clientLivingAddress
+                                                ?.adminArea
+                                                ?.value,
                                           ),
                                           districtItem: FormItemModel(
                                             name: "fact_district",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.district !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.district !=
                                                 null,
                                             initialValue: state
-                                                .questionnaire.clientLivingAddress?.district?.value,
+                                                .questionnaire
+                                                .clientLivingAddress
+                                                ?.district
+                                                ?.value,
                                           ),
                                           cityItem: FormItemModel(
                                             name: "fact_city",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.locality !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.locality !=
                                                 null,
-                                            initialValue:
-                                                state.questionnaire.clientLivingAddress?.locality,
+                                            initialValue: state.questionnaire
+                                                .clientLivingAddress?.locality,
                                           ),
                                           streetItem: FormItemModel(
                                             name: "fact_street",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.street !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.street !=
                                                 null,
-                                            initialValue:
-                                                state.questionnaire.clientLivingAddress?.street,
+                                            initialValue: state.questionnaire
+                                                .clientLivingAddress?.street,
                                           ),
                                           houseItem: FormItemModel(
                                             name: "fact_house",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.houseNumber !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.houseNumber !=
                                                 null,
                                             initialValue: state
-                                                .questionnaire.clientLivingAddress?.houseNumber,
+                                                .questionnaire
+                                                .clientLivingAddress
+                                                ?.houseNumber,
                                           ),
                                           apartmentItem: FormItemModel(
                                             name: "fact_apartment",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.apartmentNumber !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.apartmentNumber !=
                                                 null,
                                             initialValue: state
-                                                .questionnaire.clientLivingAddress?.apartmentNumber,
+                                                .questionnaire
+                                                .clientLivingAddress
+                                                ?.apartmentNumber,
                                           ),
                                           typeItem: FormItemModel(
                                             name: "fact_type",
-                                            uneditableValue: state.staticQuestionnaire
-                                                    .clientLivingAddress?.typeOwnership !=
+                                            uneditableValue: state
+                                                    .staticQuestionnaire
+                                                    .clientLivingAddress
+                                                    ?.typeOwnership !=
                                                 null,
-                                            initialValue: state.questionnaire.clientLivingAddress
-                                                ?.typeOwnership?.value,
+                                            initialValue: state
+                                                .questionnaire
+                                                .clientLivingAddress
+                                                ?.typeOwnership
+                                                ?.value,
                                           ),
                                         ),
                                       ],
@@ -387,7 +476,9 @@ class _AddressFormViewState extends State<AddressFormView> {
                               LongButtonWithText(
                                 text: "Продолжить",
                                 onTap: () async {
-                                  final isValid = _formGlobalKey.currentState?.validate() ?? false;
+                                  final isValid =
+                                      _formGlobalKey.currentState?.validate() ??
+                                          false;
                                   setState(() {
                                     validationEnabled = true;
                                     if (!(_firstItem.isEnabled ||
@@ -404,13 +495,17 @@ class _AddressFormViewState extends State<AddressFormView> {
                                     context.router.push(JobInfoFormView());
                                     _formGlobalKey.currentState?.save();
                                     final factSelector = _firstItem.isEnabled
-                                        ? FactAddressSelector.SameAsRegistrationAddress
+                                        ? FactAddressSelector
+                                            .SameAsRegistrationAddress
                                         : _secondItem.isEnabled
-                                            ? FactAddressSelector.SameAsTempAddress
+                                            ? FactAddressSelector
+                                                .SameAsTempAddress
                                             : FactAddressSelector.New;
                                     context.read<QuestionnaireBloc>().add(
                                           SaveAddressData(
-                                            _formGlobalKey.currentState?.value ?? {},
+                                            _formGlobalKey
+                                                    .currentState?.value ??
+                                                {},
                                             state.questionnaire,
                                             factSelector,
                                           ),

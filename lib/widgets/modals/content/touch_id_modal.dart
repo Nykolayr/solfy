@@ -40,7 +40,9 @@ class FloatModalTouchId extends StatelessWidget {
                 ),
               ),
               Icon(
-                type == BiometricType.face ? SolfyIcons.face_id : SolfyIcons.touchid,
+                type == BiometricType.face
+                    ? SolfyIcons.face_id
+                    : SolfyIcons.touchid,
                 color: Colors.white,
                 size: 24,
               ),
@@ -68,14 +70,15 @@ class FloatModalTouchId extends StatelessWidget {
                 ),
               );
               await UserSettingsDbService.saveBiometric(didAuthenticate);
-              print(didAuthenticate);
+              print('console didAuthenticate>> $didAuthenticate');
               Navigator.pop(context);
             },
           ),
           SizedBox(height: 16),
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: Text("later".tr(), style: theme.textStyles.flagIconsTextActive),
+            child:
+                Text("later".tr(), style: theme.textStyles.flagIconsTextActive),
           ),
           SizedBox(height: 24.h),
         ],

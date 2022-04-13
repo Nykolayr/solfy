@@ -22,7 +22,7 @@ class _$ValueObjectResponseTearOff {
   const _$ValueObjectResponseTearOff();
 
   ValueObject call(
-      @JsonKey(name: "id") int? id, @JsonKey(name: "value") String? value) {
+      @JsonKey(name: "id") dynamic id, @JsonKey(name: "value") String? value) {
     return ValueObject(
       id,
       value,
@@ -142,7 +142,7 @@ class _$ValueObject implements ValueObject {
 
   /// Идентификатор объекта
   @JsonKey(name: "id")
-  final int? id;
+  final dynamic id;
   @override
 
   /// Значение объекта
@@ -182,9 +182,8 @@ class _$ValueObject implements ValueObject {
 }
 
 abstract class ValueObject implements ValueObjectResponse {
-  const factory ValueObject(
-          @JsonKey(name: "id") int? id, @JsonKey(name: "value") String? value) =
-      _$ValueObject;
+  const factory ValueObject(@JsonKey(name: "id") dynamic id,
+      @JsonKey(name: "value") String? value) = _$ValueObject;
 
   factory ValueObject.fromJson(Map<String, dynamic> json) =
       _$ValueObject.fromJson;
@@ -193,7 +192,7 @@ abstract class ValueObject implements ValueObjectResponse {
 
   /// Идентификатор объекта
   @JsonKey(name: "id")
-  int? get id => throw _privateConstructorUsedError;
+  dynamic get id => throw _privateConstructorUsedError;
   @override
 
   /// Значение объекта

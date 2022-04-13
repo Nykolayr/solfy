@@ -21,7 +21,7 @@ class _LanguageSelectorViewState extends State<LanguageSelectorView> {
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
 
-    print(context.locale);
+    print('console >>> ${context.locale}');
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -55,7 +55,8 @@ class _LanguageSelectorViewState extends State<LanguageSelectorView> {
                     SizedBox(height: 50),
                     LongButtonWithText(
                       text: "continue".tr(),
-                      onTap: () => context.router.replaceAll([PhoneNumberRoute()]),
+                      onTap: () =>
+                          context.router.replaceAll([PhoneNumberRoute()]),
                     ),
                     SizedBox(height: 12.h),
                   ],

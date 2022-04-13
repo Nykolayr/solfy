@@ -281,9 +281,6 @@ abstract class $QuestionnaireFoundSuccessCopyWith<$Res> {
       {ClientSearchResponse staticQuestionnaire,
       ClientSearchResponse questionnaire,
       int currentStage});
-
-  $ClientSearchResponseCopyWith<$Res> get staticQuestionnaire;
-  $ClientSearchResponseCopyWith<$Res> get questionnaire;
 }
 
 /// @nodoc
@@ -318,21 +315,6 @@ class _$QuestionnaireFoundSuccessCopyWithImpl<$Res>
           : currentStage // ignore: cast_nullable_to_non_nullable
               as int,
     ));
-  }
-
-  @override
-  $ClientSearchResponseCopyWith<$Res> get staticQuestionnaire {
-    return $ClientSearchResponseCopyWith<$Res>(_value.staticQuestionnaire,
-        (value) {
-      return _then(_value.copyWith(staticQuestionnaire: value));
-    });
-  }
-
-  @override
-  $ClientSearchResponseCopyWith<$Res> get questionnaire {
-    return $ClientSearchResponseCopyWith<$Res>(_value.questionnaire, (value) {
-      return _then(_value.copyWith(questionnaire: value));
-    });
   }
 }
 
@@ -1578,8 +1560,6 @@ abstract class $SavePersonalDataCopyWith<$Res> {
           SavePersonalData value, $Res Function(SavePersonalData) then) =
       _$SavePersonalDataCopyWithImpl<$Res>;
   $Res call({Map<String, dynamic> data, ClientSearchResponse questionnaire});
-
-  $ClientSearchResponseCopyWith<$Res> get questionnaire;
 }
 
 /// @nodoc
@@ -1608,13 +1588,6 @@ class _$SavePersonalDataCopyWithImpl<$Res>
           : questionnaire // ignore: cast_nullable_to_non_nullable
               as ClientSearchResponse,
     ));
-  }
-
-  @override
-  $ClientSearchResponseCopyWith<$Res> get questionnaire {
-    return $ClientSearchResponseCopyWith<$Res>(_value.questionnaire, (value) {
-      return _then(_value.copyWith(questionnaire: value));
-    });
   }
 }
 
@@ -1806,8 +1779,6 @@ abstract class $SaveAddressDataCopyWith<$Res> {
       {Map<String, dynamic> data,
       ClientSearchResponse questionnaire,
       FactAddressSelector factSelector});
-
-  $ClientSearchResponseCopyWith<$Res> get questionnaire;
 }
 
 /// @nodoc
@@ -1841,13 +1812,6 @@ class _$SaveAddressDataCopyWithImpl<$Res>
           : factSelector // ignore: cast_nullable_to_non_nullable
               as FactAddressSelector,
     ));
-  }
-
-  @override
-  $ClientSearchResponseCopyWith<$Res> get questionnaire {
-    return $ClientSearchResponseCopyWith<$Res>(_value.questionnaire, (value) {
-      return _then(_value.copyWith(questionnaire: value));
-    });
   }
 }
 
@@ -2044,8 +2008,6 @@ abstract class $SaveJobDataCopyWith<$Res> {
           SaveJobData value, $Res Function(SaveJobData) then) =
       _$SaveJobDataCopyWithImpl<$Res>;
   $Res call({Map<String, dynamic> data, ClientSearchResponse questionnaire});
-
-  $ClientSearchResponseCopyWith<$Res> get questionnaire;
 }
 
 /// @nodoc
@@ -2074,13 +2036,6 @@ class _$SaveJobDataCopyWithImpl<$Res>
           : questionnaire // ignore: cast_nullable_to_non_nullable
               as ClientSearchResponse,
     ));
-  }
-
-  @override
-  $ClientSearchResponseCopyWith<$Res> get questionnaire {
-    return $ClientSearchResponseCopyWith<$Res>(_value.questionnaire, (value) {
-      return _then(_value.copyWith(questionnaire: value));
-    });
   }
 }
 
@@ -2272,8 +2227,6 @@ abstract class $SavePropertiesDataCopyWith<$Res> {
       {List<FormPropertyModel> properties,
       List<FormVehicleModel> vehicles,
       ClientSearchResponse questionnaire});
-
-  $ClientSearchResponseCopyWith<$Res> get questionnaire;
 }
 
 /// @nodoc
@@ -2307,13 +2260,6 @@ class _$SavePropertiesDataCopyWithImpl<$Res>
           : questionnaire // ignore: cast_nullable_to_non_nullable
               as ClientSearchResponse,
     ));
-  }
-
-  @override
-  $ClientSearchResponseCopyWith<$Res> get questionnaire {
-    return $ClientSearchResponseCopyWith<$Res>(_value.questionnaire, (value) {
-      return _then(_value.copyWith(questionnaire: value));
-    });
   }
 }
 

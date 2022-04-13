@@ -400,8 +400,8 @@ class _PersonalInformationFormViewState
                               SizedBox(height: 24),
                               FormInputWithText(
                                 "agency_document",
-                                initialValue: state.questionnaire.clientData
-                                    ?.agencyDocument?.value,
+                                initialValue: _formGlobalKey.currentState
+                                    ?.fields["agency_document"]?.value,
                                 validators: [
                                   FormBuilderValidators.required(context,
                                       errorText: "Пожалуйста, заполните поле"),
@@ -410,31 +410,6 @@ class _PersonalInformationFormViewState
                                 minLines: 1,
                                 maxLines: 3,
                               ),
-                              // InputWithVariants(
-                              //   name: "agency_document",
-                              //   initialValue: state.questionnaire.clientData
-                              //       ?.agencyDocument?.value,
-                              //   uneditableValue: state.staticQuestionnaire
-                              //           .clientData?.agencyDocument !=
-                              //       null,
-                              //   title: "issuer_of_the_document".tr(),
-                              //   onTap: () => ModalHelpers.showModalWithVariants(
-                              //     context,
-                              //     title: "issuer_of_the_document".tr(),
-                              //     stringVariants: static.geo
-                              //         .findDistrictsByRegionName(_formGlobalKey
-                              //             .currentState
-                              //             ?.fields["admin_area_document"]
-                              //             ?.value)
-                              //         .map((e) => e.name)
-                              //         .toList(),
-                              //     onVariantTap: (text) => _formGlobalKey
-                              //         .currentState?.fields["agency_document"]
-                              //         ?.didChange(text),
-                              //     selectedVariant: _formGlobalKey.currentState
-                              //         ?.fields["agency_document"]?.value,
-                              //   ),
-                              // ),
                               SizedBox(height: 24),
                               InputWithVariants(
                                 name: "citizenship",

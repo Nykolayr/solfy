@@ -49,7 +49,7 @@ class StaticRepository implements IStaticRepository {
   @override
   Future<Either<ErrorsResponse, DictionariesSuccessResponse>>
       getDictionaries() async {
-    print(await _apiClient.getDictionaries());
+    print('console getDictionaries >>  ${await _apiClient.getDictionaries()}');
     try {
       final response = await _apiClient.getDictionaries();
       return Right(response);
