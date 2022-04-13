@@ -15,17 +15,22 @@ part 'client_search_response.g.dart';
 class ClientSearchResponse with _$ClientSearchResponse {
   const factory ClientSearchResponse({
     @JsonKey(name: "clientData") ClientSearchClientDataResponse? clientData,
-    @JsonKey(name: "clientLivingAddress") ClientSearchClientAddressResponse? clientLivingAddress,
+    @JsonKey(name: "clientLivingAddress")
+        ClientSearchClientAddressResponse? clientLivingAddress,
     @JsonKey(name: "clientRegistrationAddress")
         ClientSearchClientAddressResponse? clientRegistrationAddress,
     @JsonKey(name: "clientTemporaryAddress")
         ClientSearchClientAddressResponse? clientTemporaryAddress,
-    @JsonKey(name: "clientIncome") ClientSearchClientIncomeResponse? clientIncome,
-    @JsonKey(name: "clientFamilyData") ClientSearchClientFamilyDataResponse? clientFamilyData,
-    @JsonKey(name: "clientJobInfo") ClientSearchClientJobInfoResponse? clientJobInfo,
+    @JsonKey(name: "clientIncome")
+        ClientSearchClientIncomeResponse? clientIncome,
+    @JsonKey(name: "clientFamilyData")
+        ClientSearchClientFamilyDataResponse? clientFamilyData,
+    @JsonKey(name: "clientJobInfo")
+        ClientSearchClientJobInfoResponse? clientJobInfo,
     @JsonKey(name: "clientProperties")
         List<ClientSearchClientPropertiesItemResponse>? clientProperties,
-    @JsonKey(name: "clientVehicles") List<ClientSearchClientPropertiesItemResponse>? clientVehicles,
+    @JsonKey(name: "clientVehicles")
+        List<ClientSearchClientPropertiesItemResponse>? clientVehicles,
     @JsonKey(name: "code_word") String? codeWord,
   }) = ClientSearchResp;
 
