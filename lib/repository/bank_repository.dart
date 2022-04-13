@@ -26,7 +26,7 @@ class BankRepository implements IBankRepository {
       return Right(response);
     } on DioError catch (error) {
       print(
-          'ошибка clientSearch == ${ErrorsResponse.fromJson(error.response!.data)}');
+          'ошибка clientSearch == ${ErrorsResponse.fromJson(error.response!.data).errors}');
       return Left(ErrorsResponse.fromJson(error.response!.data));
     }
   }

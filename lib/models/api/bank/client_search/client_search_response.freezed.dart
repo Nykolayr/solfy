@@ -431,8 +431,9 @@ class _$ClientSearchResp implements ClientSearchResp {
       @JsonKey(name: "code_word")
           this.codeWord});
 
-  factory _$ClientSearchResp.fromJson(Map<String, dynamic> json) =>
-      _$$ClientSearchRespFromJson(json);
+  factory _$ClientSearchResp.fromJson(Map<String, dynamic> json) {
+    return _$$ClientSearchRespFromJson(exchangev1inv2(json));
+  }
 
   @override
   @JsonKey(name: "clientData")

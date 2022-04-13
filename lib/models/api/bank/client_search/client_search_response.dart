@@ -6,6 +6,7 @@ import 'package:solfy_flutter/models/api/bank/client_search/client_search_client
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_income_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_job_info_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_properties_item_response.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
 
 part 'client_search_response.freezed.dart';
 part 'client_search_response.g.dart';
@@ -34,6 +35,8 @@ class ClientSearchResponse with _$ClientSearchResponse {
     @JsonKey(name: "code_word") String? codeWord,
   }) = ClientSearchResp;
 
-  factory ClientSearchResponse.fromJson(Map<String, dynamic> json) =>
-      _$ClientSearchResponseFromJson(json);
+  factory ClientSearchResponse.fromJson(Map<String, dynamic> json) {
+    print('console 00000 _result.data = json = $json');
+    return _$ClientSearchResponseFromJson(json);
+  }
 }

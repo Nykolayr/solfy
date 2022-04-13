@@ -374,29 +374,29 @@ class _PersonalInformationFormViewState
                                 hintText: "dd_mm_gg".tr(),
                                 headerText: "expiration_date".tr(),
                               ),
-                              SizedBox(height: 24),
-                              InputWithVariants(
-                                name: "admin_area_document",
-                                initialValue: state.questionnaire.clientData
-                                    ?.adminAreaDocument?.value,
-                                uneditableValue: state.staticQuestionnaire
-                                        .clientData?.adminAreaDocument !=
-                                    null,
-                                title: "region_of_issue_of_the_document".tr(),
-                                onTap: () => ModalHelpers.showModalWithVariants(
-                                  context,
-                                  title: "region_of_issue_of_the_document".tr(),
-                                  stringVariants: static.geo.regions
-                                      ?.map((e) => e.name)
-                                      .toList(),
-                                  onVariantTap: (text) => _formGlobalKey
-                                      .currentState
-                                      ?.fields["admin_area_document"]
-                                      ?.didChange(text),
-                                  selectedVariant: _formGlobalKey.currentState
-                                      ?.fields["admin_area_document"]?.value,
-                                ),
-                              ),
+                              // SizedBox(height: 24),
+                              // InputWithVariants(
+                              //   name: "admin_area_document",
+                              //   initialValue: state.questionnaire.clientData
+                              //       ?.adminAreaDocument?.value,
+                              //   uneditableValue: state.staticQuestionnaire
+                              //           .clientData?.adminAreaDocument !=
+                              //       null,
+                              //   title: "region_of_issue_of_the_document".tr(),
+                              //   onTap: () => ModalHelpers.showModalWithVariants(
+                              //     context,
+                              //     title: "region_of_issue_of_the_document".tr(),
+                              //     stringVariants: static.geo.regions
+                              //         ?.map((e) => e.name)
+                              //         .toList(),
+                              //     onVariantTap: (text) => _formGlobalKey
+                              //         .currentState
+                              //         ?.fields["admin_area_document"]
+                              //         ?.didChange(text),
+                              //     selectedVariant: _formGlobalKey.currentState
+                              //         ?.fields["admin_area_document"]?.value,
+                              //   ),
+                              // ),
                               SizedBox(height: 24),
                               FormInputWithText(
                                 "agency_document",
