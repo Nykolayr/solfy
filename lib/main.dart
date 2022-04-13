@@ -96,16 +96,15 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => QuestionnaireBloc(
-              Injector().get<BankRepository>(),
-              Injector().get<ClientSearchDbService>(),
-              Injector("Initial").get<StaticRepository>(),
-              Injector().get<ProfileRepository>()
-            ),
+                Injector().get<BankRepository>(),
+                Injector().get<ClientSearchDbService>(),
+                Injector("Initial").get<StaticRepository>(),
+                Injector().get<ProfileRepository>()),
           ),
         ],
         child: ScreenUtilInit(
           designSize: Size(360, 640),
-          builder: () => MaterialApp.router(
+          builder: (_) => MaterialApp.router(
             builder: (context, widget) {
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

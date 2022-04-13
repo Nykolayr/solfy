@@ -174,20 +174,8 @@ class UserSettingsRecord extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          geoRegionId.hashCode,
-          $mrjc(
-              geoCityId.hashCode,
-              $mrjc(
-                  isMyLocation.hashCode,
-                  $mrjc(
-                      isBiometricEnabled.hashCode,
-                      $mrjc(
-                          isWalletCarouselWatched.hashCode,
-                          $mrjc(searchLastQueries.hashCode,
-                              locale.hashCode))))))));
+  int get hashCode => Object.hash(id, geoRegionId, geoCityId, isMyLocation,
+      isBiometricEnabled, isWalletCarouselWatched, searchLastQueries, locale);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -328,59 +316,68 @@ class UserSettingsRecordsCompanion extends UpdateCompanion<UserSettingsRecord> {
 
 class $UserSettingsRecordsTable extends UserSettingsRecords
     with TableInfo<$UserSettingsRecordsTable, UserSettingsRecord> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $UserSettingsRecordsTable(this._db, [this._alias]);
+  $UserSettingsRecordsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _geoRegionIdMeta =
       const VerificationMeta('geoRegionId');
+  @override
   late final GeneratedColumn<int?> geoRegionId = GeneratedColumn<int?>(
       'geo_region_id', aliasedName, true,
-      typeName: 'INTEGER', requiredDuringInsert: false);
+      type: const IntType(), requiredDuringInsert: false);
   final VerificationMeta _geoCityIdMeta = const VerificationMeta('geoCityId');
+  @override
   late final GeneratedColumn<int?> geoCityId = GeneratedColumn<int?>(
       'geo_city_id', aliasedName, true,
-      typeName: 'INTEGER', requiredDuringInsert: false);
+      type: const IntType(), requiredDuringInsert: false);
   final VerificationMeta _isMyLocationMeta =
       const VerificationMeta('isMyLocation');
+  @override
   late final GeneratedColumn<bool?> isMyLocation = GeneratedColumn<bool?>(
       'is_my_location', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_my_location IN (0, 1))',
       defaultValue: const Constant(false));
   final VerificationMeta _isBiometricEnabledMeta =
       const VerificationMeta('isBiometricEnabled');
+  @override
   late final GeneratedColumn<bool?> isBiometricEnabled = GeneratedColumn<bool?>(
       'is_biometric_enabled', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_biometric_enabled IN (0, 1))',
       defaultValue: const Constant(false));
   final VerificationMeta _isWalletCarouselWatchedMeta =
       const VerificationMeta('isWalletCarouselWatched');
+  @override
   late final GeneratedColumn<bool?> isWalletCarouselWatched =
       GeneratedColumn<bool?>('is_wallet_carousel_watched', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const BoolType(),
           requiredDuringInsert: false,
           defaultConstraints: 'CHECK (is_wallet_carousel_watched IN (0, 1))',
           defaultValue: const Constant(false));
   final VerificationMeta _searchLastQueriesMeta =
       const VerificationMeta('searchLastQueries');
+  @override
   late final GeneratedColumnWithTypeConverter<List<String>, String?>
       searchLastQueries = GeneratedColumn<String?>(
               'search_last_queries', aliasedName, true,
-              typeName: 'TEXT', requiredDuringInsert: false)
+              type: const StringType(), requiredDuringInsert: false)
           .withConverter<List<String>>($UserSettingsRecordsTable.$converter0);
   final VerificationMeta _localeMeta = const VerificationMeta('locale');
+  @override
   late final GeneratedColumn<String?> locale = GeneratedColumn<String?>(
       'locale', aliasedName, false,
-      typeName: 'TEXT',
+      type: const StringType(),
       requiredDuringInsert: false,
       defaultValue: const Constant("ru"));
   @override
@@ -449,13 +446,13 @@ class $UserSettingsRecordsTable extends UserSettingsRecords
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   UserSettingsRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return UserSettingsRecord.fromData(data, _db,
+    return UserSettingsRecord.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $UserSettingsRecordsTable createAlias(String alias) {
-    return $UserSettingsRecordsTable(_db, alias);
+    return $UserSettingsRecordsTable(attachedDatabase, alias);
   }
 
   static TypeConverter<List<String>, String> $converter0 =
@@ -571,10 +568,8 @@ class ClientSearchResponseRecord extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(clientSearchResponse.hashCode,
-          $mrjc(questionnaire.hashCode, currentStage.hashCode))));
+  int get hashCode =>
+      Object.hash(id, clientSearchResponse, questionnaire, currentStage);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -670,36 +665,41 @@ class $ClientSearchResponseRecordsTable extends ClientSearchResponseRecords
     with
         TableInfo<$ClientSearchResponseRecordsTable,
             ClientSearchResponseRecord> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ClientSearchResponseRecordsTable(this._db, [this._alias]);
+  $ClientSearchResponseRecordsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _clientSearchResponseMeta =
       const VerificationMeta('clientSearchResponse');
+  @override
   late final GeneratedColumnWithTypeConverter<ClientSearchResponse, String?>
       clientSearchResponse = GeneratedColumn<String?>(
               'client_search_response', aliasedName, false,
-              typeName: 'TEXT', requiredDuringInsert: true)
+              type: const StringType(), requiredDuringInsert: true)
           .withConverter<ClientSearchResponse>(
               $ClientSearchResponseRecordsTable.$converter0);
   final VerificationMeta _questionnaireMeta =
       const VerificationMeta('questionnaire');
+  @override
   late final GeneratedColumnWithTypeConverter<ClientSearchResponse, String?>
       questionnaire = GeneratedColumn<String?>(
               'questionnaire', aliasedName, false,
-              typeName: 'TEXT', requiredDuringInsert: true)
+              type: const StringType(), requiredDuringInsert: true)
           .withConverter<ClientSearchResponse>(
               $ClientSearchResponseRecordsTable.$converter1);
   final VerificationMeta _currentStageMeta =
       const VerificationMeta('currentStage');
+  @override
   late final GeneratedColumn<int?> currentStage = GeneratedColumn<int?>(
       'current_stage', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultValue: const Constant(1));
   @override
@@ -735,13 +735,13 @@ class $ClientSearchResponseRecordsTable extends ClientSearchResponseRecords
   @override
   ClientSearchResponseRecord map(Map<String, dynamic> data,
       {String? tablePrefix}) {
-    return ClientSearchResponseRecord.fromData(data, _db,
+    return ClientSearchResponseRecord.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $ClientSearchResponseRecordsTable createAlias(String alias) {
-    return $ClientSearchResponseRecordsTable(_db, alias);
+    return $ClientSearchResponseRecordsTable(attachedDatabase, alias);
   }
 
   static TypeConverter<ClientSearchResponse, String> $converter0 =
@@ -892,18 +892,8 @@ class GlobalStoreSetting extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          isWalletCarouselWatched.hashCode,
-          $mrjc(
-              isGeoRequested.hashCode,
-              $mrjc(
-                  isNotificationsRequested.hashCode,
-                  $mrjc(
-                      isPhotoRequested.hashCode,
-                      $mrjc(
-                          isFilesRequested.hashCode, isFirstRun.hashCode)))))));
+  int get hashCode => Object.hash(id, isWalletCarouselWatched, isGeoRequested,
+      isNotificationsRequested, isPhotoRequested, isFilesRequested, isFirstRun);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1032,59 +1022,67 @@ class GlobalStoreSettingsCompanion extends UpdateCompanion<GlobalStoreSetting> {
 
 class $GlobalStoreSettingsTable extends GlobalStoreSettings
     with TableInfo<$GlobalStoreSettingsTable, GlobalStoreSetting> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $GlobalStoreSettingsTable(this._db, [this._alias]);
+  $GlobalStoreSettingsTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _isWalletCarouselWatchedMeta =
       const VerificationMeta('isWalletCarouselWatched');
+  @override
   late final GeneratedColumn<bool?> isWalletCarouselWatched =
       GeneratedColumn<bool?>('is_wallet_carousel_watched', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const BoolType(),
           requiredDuringInsert: false,
           defaultConstraints: 'CHECK (is_wallet_carousel_watched IN (0, 1))',
           defaultValue: const Constant(false));
   final VerificationMeta _isGeoRequestedMeta =
       const VerificationMeta('isGeoRequested');
+  @override
   late final GeneratedColumn<bool?> isGeoRequested = GeneratedColumn<bool?>(
       'is_geo_requested', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_geo_requested IN (0, 1))',
       defaultValue: const Constant(false));
   final VerificationMeta _isNotificationsRequestedMeta =
       const VerificationMeta('isNotificationsRequested');
+  @override
   late final GeneratedColumn<bool?> isNotificationsRequested =
       GeneratedColumn<bool?>('is_notifications_requested', aliasedName, false,
-          typeName: 'INTEGER',
+          type: const BoolType(),
           requiredDuringInsert: false,
           defaultConstraints: 'CHECK (is_notifications_requested IN (0, 1))',
           defaultValue: const Constant(false));
   final VerificationMeta _isPhotoRequestedMeta =
       const VerificationMeta('isPhotoRequested');
+  @override
   late final GeneratedColumn<bool?> isPhotoRequested = GeneratedColumn<bool?>(
       'is_photo_requested', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_photo_requested IN (0, 1))',
       defaultValue: const Constant(false));
   final VerificationMeta _isFilesRequestedMeta =
       const VerificationMeta('isFilesRequested');
+  @override
   late final GeneratedColumn<bool?> isFilesRequested = GeneratedColumn<bool?>(
       'is_files_requested', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_files_requested IN (0, 1))',
       defaultValue: const Constant(false));
   final VerificationMeta _isFirstRunMeta = const VerificationMeta('isFirstRun');
+  @override
   late final GeneratedColumn<bool?> isFirstRun = GeneratedColumn<bool?>(
       'is_first_run', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: false,
       defaultConstraints: 'CHECK (is_first_run IN (0, 1))',
       defaultValue: const Constant(true));
@@ -1155,13 +1153,13 @@ class $GlobalStoreSettingsTable extends GlobalStoreSettings
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   GlobalStoreSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return GlobalStoreSetting.fromData(data, _db,
+    return GlobalStoreSetting.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $GlobalStoreSettingsTable createAlias(String alias) {
-    return $GlobalStoreSettingsTable(_db, alias);
+    return $GlobalStoreSettingsTable(attachedDatabase, alias);
   }
 }
 
