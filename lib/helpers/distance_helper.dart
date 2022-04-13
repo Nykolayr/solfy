@@ -25,5 +25,6 @@ class DistanceHelper {
         return "$distance м";
       }
     }
+    return null;
   }
 }

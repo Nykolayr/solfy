@@ -86,11 +86,11 @@ dependencies:
   device_preview: ^0.1.4-beta
   freezed: ^0.14.5
   json_serializable: ^6.1.5
-  dio_cache_interceptor: ^3.0.1
+  dio_cache_interceptor: ^3.2.6
   retrofit_generator: ^2.0.1+1
-  dio: ^4.0.0
+  dio: ^4.0.6
   flutter_simple_dependency_injection: ^2.0.0
-  dio_cache_interceptor_db_store: ^3.0.2
+  dio_cache_interceptor_db_store: ^4.1.1
   either_dart: ^0.1.3
   pausable_timer: ^1.0.0+2
   flutter_phoenix: ^1.0.0

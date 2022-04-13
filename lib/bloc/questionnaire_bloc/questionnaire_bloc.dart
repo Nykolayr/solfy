@@ -7,6 +7,7 @@ import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_i
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_job_info_item_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_property_item_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_data_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_properties_item_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_response.dart';
@@ -131,80 +132,93 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Персональные данные"
   Future<void> savePersonalData(
       Emitter<QuestionnaireState> emit, SavePersonalData event) async {
-    print('event.data == ${event.data}');
+    print('console event.data == ${event.data}');
+    ValueObject countryBirth = ValueObject(
+      _staticRepository.geo.countryItems
+          ?.firstWhere((element) =>
+              element.countries?.any(
+                  (element) => element.name == event.data["country_birth"]) ??
+              false)
+          .countries
+          ?.firstWhere((element) => element.name == event.data["country_birth"])
+          .id,
+      event.data["country_birth"],
+    );
+    ValueObject residency = ValueObject(
+      _staticRepository.dictionaries.residency?.dictionaryItems
+          ?.firstWhere((element) => element.value == event.data["citizenship"])
+          .id,
+      event.data["citizenship"],
+    );
+    ValueObject docType = ValueObject(
+      _staticRepository.dictionaries.docType?.dictionaryItems
+          ?.firstWhere((element) => element.value == event.data["doc_type"])
+          .id,
+      event.data["doc_type"],
+    );
+    String? mobilePhone = event.data["mobile_phone1"] != null
+        ? (event.data["mobile_phone1"] as String)
+            .replaceAll(" ", "")
+            .replaceAll("+", "")
+            .replaceAll("-", "")
+        : null;
+    ValueObject adminAreaDocument = ValueObject(
+      _staticRepository.geo.regions
+          ?.firstWhere(
+              (element) => element.name == event.data["admin_area_document"])
+          .id,
+      event.data["admin_area_document"],
+    );
+    ValueObject gender = ValueObject(
+      _staticRepository.dictionaries.gender?.dictionaryItems
+          ?.firstWhere((element) => element.value == event.data["gender"])
+          .id,
+      event.data["gender"],
+    );
+    ValueObject agencyDocument = ValueObject(
+      _staticRepository.geo.districts
+          ?.firstWhere(
+              (element) => element.name == event.data["agency_document"])
+          .id,
+      event.data["agency_document"],
+    );
+    ValueObject education = ValueObject(
+      _staticRepository.dictionaries.education?.dictionaryItems
+          ?.firstWhere((element) => element.value == event.data["education"])
+          .id,
+      event.data["education"],
+    );
+    ClientSearchClientDataResponse clientData = ClientSearchClientDataResponse(
+      event.data["last_name"],
+      countryBirth,
+      '', // code_filial
+      event.data["first_name"],
+      docType,
+      event.data["email"],
+      event.data["doc_end_date"],
+      '', // pnfl
+      event.data["inn"],
+      '', //client_id
+      residency,
+      mobilePhone,
+      event.data["doc_number"],
+      event.data["location_birth"],
+      '', // clientCode
+      adminAreaDocument,
+      event.data["doc_series"],
+      gender,
+      event.data["doc_issue_date"],
+      agencyDocument,
+      event.data["date_of_birth"],
+      event.data["middle_name"],
+      '', //status
+      residency,
+      education,
+      event.data["citizenship"],
+    );
 
     final newQuestionnaire = event.questionnaire.copyWith(
-      clientData: event.questionnaire.clientData?.copyWith(
-        lastName: event.data["last_name"],
-        firstName: event.data["first_name"],
-        middleName: event.data["middle_name"],
-        dateOfBirth: event.data["date_of_birth"],
-        inn: event.data["inn"],
-        gender: ValueObject(
-          _staticRepository.dictionaries.gender?.dictionaryItems
-              ?.firstWhere((element) => element.value == event.data["gender"])
-              .id,
-          event.data["gender"],
-        ),
-        docType: ValueObject(
-          _staticRepository.dictionaries.docType?.dictionaryItems
-              ?.firstWhere((element) => element.value == event.data["doc_type"])
-              .id,
-          event.data["doc_type"],
-        ),
-        docSeries: event.data["doc_series"],
-        docNumber: event.data["doc_number"],
-        docIssueDate: event.data["doc_issue_date"],
-        docEndDate: event.data["doc_end_date"],
-        adminAreaDocument: ValueObject(
-          _staticRepository.geo.regions
-              ?.firstWhere((element) =>
-                  element.name == event.data["admin_area_document"])
-              .id,
-          event.data["admin_area_document"],
-        ),
-        agencyDocument: ValueObject(
-          _staticRepository.geo.districts
-              ?.firstWhere(
-                  (element) => element.name == event.data["agency_document"])
-              .id,
-          event.data["agency_document"],
-        ),
-        residency: ValueObject(
-          _staticRepository.dictionaries.residency?.dictionaryItems
-              ?.firstWhere(
-                  (element) => element.value == event.data["citizenship"])
-              .id,
-          event.data["citizenship"],
-        ),
-        countryBirth: ValueObject(
-          _staticRepository.geo.countryItems
-              ?.firstWhere((element) =>
-                  element.countries?.any((element) =>
-                      element.name == event.data["country_birth"]) ??
-                  false)
-              .countries
-              ?.firstWhere(
-                  (element) => element.name == event.data["country_birth"])
-              .id,
-          event.data["country_birth"],
-        ),
-        locationBirth: event.data["location_birth"],
-        mobilePhone: event.data["mobile_phone1"] != null
-            ? (event.data["mobile_phone1"] as String)
-                .replaceAll(" ", "")
-                .replaceAll("+", "")
-                .replaceAll("-", "")
-            : null,
-        email: event.data["email"],
-        education: ValueObject(
-          _staticRepository.dictionaries.education?.dictionaryItems
-              ?.firstWhere(
-                  (element) => element.value == event.data["education"])
-              .id,
-          event.data["education"],
-        ),
-      ),
+      clientData: clientData,
       clientFamilyData: event.questionnaire.clientFamilyData?.copyWith(
         maritalStatus: ValueObject(
           _staticRepository.dictionaries.maritalStatus?.dictionaryItems
@@ -219,9 +233,13 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       ),
       codeWord: event.data["code_word"],
     );
+    print('console newQuestionnaire1 == $newQuestionnaire');
+    print(
+        'console newQuestionnaire22 == ${newQuestionnaire.clientData!.toJson()}');
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(2);
     final newData = await _dbService.getClientSearchResponse();
+    print('console newData == ${newData!.toJson()}');
     if (newData != null) {
       emit(QuestionnaireFoundSuccess(newData.clientSearchResponse,
           newData.questionnaire, newData.currentStage));
