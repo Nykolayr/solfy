@@ -3,9 +3,11 @@ import 'package:geolocator/geolocator.dart';
 /// Вспомогательный класс для локальной работы с distance
 class DistanceHelper {
   /// Если возможно, возвращает расстояние от пользователя до точки ([latitude], [longitude])
-  static Future<String?> getDistanceFromLatLong(double latitude, longitude) async {
+  static Future<String?> getDistanceFromLatLong(
+      double latitude, longitude) async {
     final permission = await Geolocator.checkPermission();
-    if ((permission == LocationPermission.always || permission == LocationPermission.whileInUse)) {
+    if ((permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse)) {
       final currentPosition = await Geolocator.getLastKnownPosition() ??
           await Geolocator.getPositionStream(
             desiredAccuracy: LocationAccuracy.reduced,
