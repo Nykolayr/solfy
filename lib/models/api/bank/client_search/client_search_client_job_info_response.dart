@@ -7,10 +7,12 @@ part 'client_search_client_job_info_response.g.dart';
 
 @freezed
 // ignore_for_file: invalid_annotation_target
-class ClientSearchClientJobInfoResponse with _$ClientSearchClientJobInfoResponse {
+class ClientSearchClientJobInfoResponse
+    with _$ClientSearchClientJobInfoResponse {
   const factory ClientSearchClientJobInfoResponse(
     @JsonKey(name: "employer_name") String? employerName,
-    @JsonKey(name: "employment_position_category") ValueObject? employmentPositionCategory,
+    @JsonKey(name: "employment_position_category")
+        ValueObject? employmentPositionCategory,
     @JsonKey(name: "work_experience") ValueObject? workExperience,
     @JsonKey(name: "worker_number") ValueObject? workerNumber,
     @JsonKey(name: "type_activity") ValueObject? typeActivity,
@@ -21,6 +23,7 @@ class ClientSearchClientJobInfoResponse with _$ClientSearchClientJobInfoResponse
     @JsonKey(name: "type_business") ValueObject? typeBusiness,
   ) = ClientJobInfo;
 
-  factory ClientSearchClientJobInfoResponse.fromJson(Map<String, dynamic> json) =>
+  factory ClientSearchClientJobInfoResponse.fromJson(
+          Map<String, dynamic> json) =>
       _$ClientSearchClientJobInfoResponseFromJson(json);
 }

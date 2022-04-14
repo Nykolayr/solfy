@@ -17,6 +17,7 @@ class ClientSearchClientIncomeResponse with _$ClientSearchClientIncomeResponse {
     @JsonKey(name: "monthly_expenses") int? monthlyExpenses,
   ) = ClientIncome;
 
-  factory ClientSearchClientIncomeResponse.fromJson(Map<String, dynamic> json) =>
+  factory ClientSearchClientIncomeResponse.fromJson(
+          Map<String, dynamic> json) =>
       _$ClientSearchClientIncomeResponseFromJson(json);
 }

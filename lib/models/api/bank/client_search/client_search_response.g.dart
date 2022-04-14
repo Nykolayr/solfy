@@ -7,7 +7,7 @@ part of 'client_search_response.dart';
 // **************************************************************************
 
 _$ClientSearchResp _$$ClientSearchRespFromJson(Map<String, dynamic> json) {
-  print('console 3333 _result.data = json = $json[]}');
+  print('console 3333 _result.data = json = $json');
   return _$ClientSearchResp(
     clientData: json['clientData'] == null
         ? null

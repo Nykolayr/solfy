@@ -7,7 +7,8 @@ part 'client_search_client_properties_item_response.g.dart';
 
 @freezed
 // ignore_for_file: invalid_annotation_target
-class ClientSearchClientPropertiesItemResponse with _$ClientSearchClientPropertiesItemResponse {
+class ClientSearchClientPropertiesItemResponse
+    with _$ClientSearchClientPropertiesItemResponse {
   const factory ClientSearchClientPropertiesItemResponse({
     @JsonKey(name: "market_value_realty") int? marketValueRealty,
     @JsonKey(name: "year_issue") int? yearIssue,
@@ -18,6 +19,7 @@ class ClientSearchClientPropertiesItemResponse with _$ClientSearchClientProperti
     @JsonKey(name: "type_vehicle") ValueObject? typeVehicle,
   }) = ClientPropertiesItem;
 
-  factory ClientSearchClientPropertiesItemResponse.fromJson(Map<String, dynamic> json) =>
+  factory ClientSearchClientPropertiesItemResponse.fromJson(
+          Map<String, dynamic> json) =>
       _$ClientSearchClientPropertiesItemResponseFromJson(json);
 }
