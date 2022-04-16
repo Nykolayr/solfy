@@ -1,5 +1,3 @@
-
-
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('>>>>>>>>>>>>>>>>>>> last_name == ${json['last_name']} ');
   print('>>>>>>>>>>>>>>>>>>> birth_place == ${json['birth_place']} ');
@@ -58,8 +56,6 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     Map type_ownership = address[k]['realty_type'];
     // ignore: unused_local_variable
     String address_string = address[k]['address_string'];
-    print('console address type   >>>> $id == ${address[k]['type']['code']}');
-
     switch (id) {
       case 1:
         clientLivingAddress = {

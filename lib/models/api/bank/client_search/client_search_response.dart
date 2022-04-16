@@ -36,7 +36,6 @@ class ClientSearchResponse with _$ClientSearchResponse {
   }) = ClientSearchResp;
 
   factory ClientSearchResponse.fromJson(Map<String, dynamic> json) {
-    print('console 00000 _result.data = json = $json');
     return _$ClientSearchResponseFromJson(json);
   }
 }
