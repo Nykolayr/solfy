@@ -368,6 +368,7 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                 "Вы не заполнили некоторые поля анкеты",
                               );
                             }
+
                             if (isValid &&
                                 !isVehiclesErrorVisible &&
                                 !isPropertiesErrorVisible) {
@@ -375,8 +376,6 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                               //  context
                               //     .read<QuestionnaireBloc>()
                               //     .add(ClientScore('sdw'));
-                              context.router
-                                  .push(YourRequestCompleteWaitingView());
                               _formGlobalKey.currentState?.save();
                               final questionnaire = (context
                                       .read<QuestionnaireBloc>()
@@ -391,6 +390,12 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                           ? vehicles
                                           : [],
                                       questionnaire));
+
+                              context
+                                  .read<QuestionnaireBloc>()
+                                  .add(await ClientScore('1'));
+                              context.router
+                                  .push(YourRequestCompleteWaitingView());
                             }
                           },
                         ),

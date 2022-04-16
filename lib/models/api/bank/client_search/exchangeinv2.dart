@@ -1,20 +1,11 @@
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('>>>>>>>>>>>>>>>>>>> last_name == ${json['last_name']} ');
-  print('>>>>>>>>>>>>>>>>>>> birth_place == ${json['birth_place']} ');
-  print('>>>>>>>>>>>>>>>>>>> filial == ${json['filial']} ');
-  print('>>>>>>>>>>>>>>>>>>> first_name == ${json['first_name']} ');
-  print('>>>>>>>>>>>>>>>>>>> document == ${json['document']} ');
-  print('>>>>>>>>>>>>>>>>>>> email == ${json['email']} ');
-  print(
-      '>>>>>>>>>>>>>>>>>>> residence_country == ${json['residence_country']} ');
-  print('>>>>>>>>>>>>>>>>>>> residency == ${json['residency']} ');
-  print('>>>>>>>>>>>>>>>>>>> education == ${json['education']} ');
-  print('>>>>>>>>>>>>>>>>>>> gender == ${json['gender']} ');
+
   Map<String, dynamic> clientData = {
-    "last_name": json['last_name'],
+    "last_name": json['last_name'] ?? '',
     "country_birth": json['birth_place']['country'],
-    "code_filial": json['filial']['code'],
-    "first_name": json['first_name'],
+    "code_filial": json['filial']['code'] ?? '1',
+    "first_name": json['first_name'] ?? '',
     "doc_type": json['document']['type'],
     "email": json['email'],
     "doc_end_date": json['document']['end_date'],
@@ -125,9 +116,9 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "type_farm": job['organization_type'],
   };
 
-  List realties = json['realties'];
-  List vehicles = json['vehicles'];
-  List insurances = json['insurances'];
+  List realties = json['realties'] ?? [];
+  List vehicles = json['vehicles'] ?? [];
+  List insurances = json['insurances'] ?? [];
   List clientProperties = [];
   List clientVehicles = [];
   List clientInsurances = [];
@@ -167,10 +158,9 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     'clientJobInfo': clientJobInfo,
     'clientProperties': clientProperties,
     'clientVehicles': clientVehicles,
-    'code_word': code_word,
+    'client_id': json['client_id'],
+    'client_uid': json['client_uid'],
+    'client_code': json['client_code'],
+    'code_word': json['secret_word'],
   };
-}
-
-Map<String, dynamic> valueObject(dynamic id, dynamic code) {
-  return {"id": id, "code": code};
 }

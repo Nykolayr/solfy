@@ -37,11 +37,12 @@ class BankRepository implements IBankRepository {
     print('console clientScore ');
     try {
       final response = await _apiClient.clientScore(request);
-      print('console clientScore =  ${response.toJson()}');
+      print('console clientScore =  ${response.valid}');
       return Right(response);
     } on DioError catch (error) {
+      print('console ошибка $error ');
       print(
-          'ошибка clientScore == ${ErrorsResponse.fromJson(error.response!.data)}');
+          'console ошибка clientScore == ${ErrorsResponse.fromJson(error.response!.data).errors}');
       return Left(ErrorsResponse.fromJson(error.response!.data));
     }
   }

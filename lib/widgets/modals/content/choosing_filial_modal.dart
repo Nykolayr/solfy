@@ -10,7 +10,9 @@ import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 
 class FloatModalChoosingFilial extends StatelessWidget {
   FloatModalChoosingFilial(
-      {required this.filialName, required this.filialAddress, required this.filialId});
+      {required this.filialName,
+      required this.filialAddress,
+      required this.filialId});
 
   final String filialName;
   final String filialAddress;
@@ -49,7 +51,8 @@ class FloatModalChoosingFilial extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Text("choose_another".tr(), style: theme.textStyles.flagIconsTextActive),
+            child: Text("choose_another".tr(),
+                style: theme.textStyles.flagIconsTextActive),
           ),
           SizedBox(height: 24.h),
         ],

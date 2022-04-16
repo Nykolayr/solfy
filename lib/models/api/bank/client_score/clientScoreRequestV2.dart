@@ -8,8 +8,8 @@ Map getMapAdress(
 ) {
   return {
     "type": {"id": id, "code": "REGISTR"},
-    "region": {"id": adress!.adminArea, "code": "6"},
-    "district": {"id": adress.district, "code": "84"},
+    "region": {"id": adress!.adminArea, "code": adress.adminArea.toString()},
+    "district": {"id": adress.district, "code": adress.district.toString()},
     "address_string":
         "${adress.locality}, ${adress.street}, ${adress.houseNumber}, ${adress.apartmentNumber}",
     "location": adress.locality,
@@ -22,8 +22,11 @@ Map getMapAdress(
 
 Map getRealties(ClientScoreClientPropertyItemRequest item) {
   return {
-    "type": {"id": item.typeProperty, "code": "OWN"},
-    "region": {"id": item.regionProperty, "code": "6"},
+    "type": {"id": item.typeProperty, "code": item.typeProperty.toString()},
+    "region": {
+      "id": item.regionProperty,
+      "code": item.regionProperty.toString(),
+    },
     "market_value": item.marketValueRealty.toString(),
   };
 }
@@ -57,9 +60,11 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     address.add(getMapAdress(data.clientTemporaryAddress, 3));
   }
   Map<String, dynamic> map = {
+    "bpm_process_id": null,
     "stage": "INITIAL",
     "order_source": "SOLFY",
-    "questionnaire_id": "",
+    "questionnaire_id": "", //
+    "client_code": "12345678908965", //
     "pinfl": data.clientData!.pnfl,
     "client_id": data.clientData!.clientId,
     "client_uid": data.clientData!.clientId,
@@ -67,7 +72,7 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     "first_name": data.clientData!.firstName,
     "middle_name": data.clientData!.middleName,
     "gender": {"id": data.clientData!.gender, "code": "MALE"},
-    "date_of_birth": data.clientData!.dateOfBirth,
+    "date_of_birth": data.clientData!.dateOfBirth, // переделать
     "tin": data.clientData!.inn,
     "marital_status": {
       "id": data.clientFamilyData!.maritalStatus,
@@ -82,14 +87,15 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
       "number": data.clientData!.docNumber,
       "issue_date": data.clientData!.docIssueDate,
       "end_date": data.clientData!.docEndDate,
-      "given_place": data.clientData!.agencyDocument,
+      "given_place": data.clientData!.agencyDocument, //
     },
     "residency": {"id": data.clientData!.residency, "code": "1"},
     "residence_country": {
       "id": data.clientData!.residenceCountry,
       "code": "UZ"
     },
-    "filial": {"id": data.clientData!.codeFilial.toString(), "code": "00074"},
+    "filial":
+        null, //{"id": data.clientData!.codeFilial.toString(), "code": "00074"},
     "birth_place": {
       "country": {"id": data.clientData!.countryBirth, "code": "UZ"},
       "location": data.clientData!.locationBirth,
@@ -140,11 +146,15 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     "realties": realties,
     "vehicles": vehicles,
     "secret_word": data.secretWord,
-    "chosen_insurance_company_uuid": null,
-    "local_card": {"card_uuid": null, "card_number": null, "expiry_date": null},
-    "card_filial": {"id": null, "code": null},
-    "client_acceptance": false,
-    "use_solfy_card_to_pay_premium": false
+    "client_id": data.client,
+    "client_uid": data.secretWord,
+    "client_code": data.secretWord,
   };
+  printWrapped('console map >>>>>>>> $map');
   return map;
+}
+
+void printWrapped(String text) {
+  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
