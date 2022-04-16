@@ -1,4 +1,4 @@
-import 'package:solfy_flutter/models/api/bank/client_search/value_object_response.dart';
+
 
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('>>>>>>>>>>>>>>>>>>> last_name == ${json['last_name']} ');

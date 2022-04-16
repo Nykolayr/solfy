@@ -432,7 +432,7 @@ class _$ClientSearchResp implements ClientSearchResp {
           this.codeWord});
 
   factory _$ClientSearchResp.fromJson(Map<String, dynamic> json) {
-    if (json['last_name '] == null) {
+    if (json['last_name'] == null) {
       return _$$ClientSearchRespFromJson(json);
     } else {
       return _$$ClientSearchRespFromJson(exchangev1inv2(json));
