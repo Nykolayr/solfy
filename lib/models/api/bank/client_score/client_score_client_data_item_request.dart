@@ -35,7 +35,7 @@ class ClientScoreClientDataItemRequest {
   @JsonKey(name: 'client_code')
   String? clientCode;
   @JsonKey(name: 'admin_area_document')
-  int? adminAreaDocument;
+  String? adminAreaDocument;
   @JsonKey(name: 'doc_series')
   String? docSeries;
   @JsonKey(name: 'gender')
@@ -43,7 +43,7 @@ class ClientScoreClientDataItemRequest {
   @JsonKey(name: 'doc_issue_date')
   String? docIssueDate;
   @JsonKey(name: 'agency_document')
-  int? agencyDocument;
+  String? agencyDocument;
   @JsonKey(name: 'date_of_birth')
   String? dateOfBirth;
   @JsonKey(name: 'middle_name')
@@ -84,8 +84,10 @@ class ClientScoreClientDataItemRequest {
     this.education,
     this.citizenship,
   });
-  factory ClientScoreClientDataItemRequest.fromJson(Map<String, dynamic> json) =>
+  factory ClientScoreClientDataItemRequest.fromJson(
+          Map<String, dynamic> json) =>
       _$ClientScoreClientDataItemRequestFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ClientScoreClientDataItemRequestToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$ClientScoreClientDataItemRequestToJson(this);
 }

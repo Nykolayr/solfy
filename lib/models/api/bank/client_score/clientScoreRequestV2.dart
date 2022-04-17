@@ -63,11 +63,11 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     "bpm_process_id": null,
     "stage": "INITIAL",
     "order_source": "SOLFY",
-    "questionnaire_id": "", //
-    "client_code": "12345678908965", //
+    "questionnaire_id": null, //
     "pinfl": data.clientData!.pnfl,
     "client_id": data.clientData!.clientId,
-    "client_uid": data.clientData!.clientId,
+    "client_code": data.clientData!.clientCode,
+    "client_uid": data.clientData!.adminAreaDocument,
     "last_name": data.clientData!.lastName,
     "first_name": data.clientData!.firstName,
     "middle_name": data.clientData!.middleName,
@@ -146,9 +146,6 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     "realties": realties,
     "vehicles": vehicles,
     "secret_word": data.secretWord,
-    "client_id": data.client,
-    "client_uid": data.secretWord,
-    "client_code": data.secretWord,
   };
   printWrapped('console map >>>>>>>> $map');
   return map;

@@ -400,8 +400,8 @@ class _PersonalInformationFormViewState
                               SizedBox(height: 24),
                               FormInputWithText(
                                 "agency_document",
-                                initialValue: state.questionnaire.clientData
-                                    ?.agencyDocument?.value,
+                                initialValue: state
+                                    .questionnaire.clientData?.agencyDocument,
                                 validators: [
                                   FormBuilderValidators.required(context,
                                       errorText: "Пожалуйста, заполните поле"),

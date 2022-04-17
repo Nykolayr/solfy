@@ -4,7 +4,8 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'] ?? '',
     "country_birth": json['birth_place']['country'],
-    "code_filial": json['filial']['code'] ?? '1',
+    "code_filial":
+        json['filial'] != null ? json['filial']['code'] ?? '1' : null,
     "first_name": json['first_name'] ?? '',
     "doc_type": json['document']['type'],
     "email": json['email'],
@@ -17,17 +18,19 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "doc_number": json['document']['number'],
     "location_birth": json['birth_place']['location'],
     "client_code": json['client_code'],
-    "admin_area_document": null,
+    //вместо admin_area_document client_uid
+    "admin_area_document": json['client_uid'],
     "doc_series": json['document']['series'],
     "gender": json['gender'],
     "doc_issue_date": json['document']['issue_date'],
-    "agency_document": {"id": 1, "code": json['document']['given_place']},
+    "agency_document": json['document']['given_place'],
     "date_of_birth": json['date_of_birth'],
     "middle_name": json['middle_name'],
     "status": 'не знаю что такое status',
     "residency": json['residency'],
     "education": json['education'],
     "citizenship": int.parse(json['residency']['code']),
+    'client_uid': json['client_uid'],
   };
 
   Map<String, dynamic>? clientLivingAddress;
@@ -147,7 +150,6 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     });
   });
 
-  String code_word = "secret_word";
   return {
     'clientData': clientData,
     'clientLivingAddress': clientLivingAddress,
@@ -158,9 +160,9 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     'clientJobInfo': clientJobInfo,
     'clientProperties': clientProperties,
     'clientVehicles': clientVehicles,
-    'client_id': json['client_id'],
-    'client_uid': json['client_uid'],
-    'client_code': json['client_code'],
     'code_word': json['secret_word'],
   };
 }
+//  "client_id": data.clientData,
+//     "client_uid": data.secretWord,
+//     "client_code": data.secretWord,

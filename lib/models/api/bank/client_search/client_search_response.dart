@@ -33,9 +33,6 @@ class ClientSearchResponse with _$ClientSearchResponse {
     @JsonKey(name: "clientVehicles")
         List<ClientSearchClientPropertiesItemResponse>? clientVehicles,
     @JsonKey(name: "code_word") String? codeWord,
-    @JsonKey(name: "client_id") String? client_id,
-    @JsonKey(name: "client_uid") String? client_uid,
-    @JsonKey(name: "client_code") String? client_code,
   }) = ClientSearchResp;
 
   factory ClientSearchResponse.fromJson(Map<String, dynamic> json) {

@@ -38,11 +38,11 @@ class _$ClientSearchClientDataResponseTearOff {
       @JsonKey(name: "doc_number") String? docNumber,
       @JsonKey(name: "location_birth") String? locationBirth,
       @JsonKey(name: "client_code") String? clientCode,
-      @JsonKey(name: "admin_area_document") ValueObject? adminAreaDocument,
+      @JsonKey(name: "admin_area_document") String? adminAreaDocument,
       @JsonKey(name: "doc_series") String? docSeries,
       @JsonKey(name: "gender") ValueObject? gender,
       @JsonKey(name: "doc_issue_date") String? docIssueDate,
-      @JsonKey(name: "agency_document") ValueObject? agencyDocument,
+      @JsonKey(name: "agency_document") String? agencyDocument,
       @JsonKey(name: "date_of_birth") String? dateOfBirth,
       @JsonKey(name: "middle_name") String? middleName,
       @JsonKey(name: "status") String? status,
@@ -121,7 +121,7 @@ mixin _$ClientSearchClientDataResponse {
   @JsonKey(name: "client_code")
   String? get clientCode => throw _privateConstructorUsedError;
   @JsonKey(name: "admin_area_document")
-  ValueObject? get adminAreaDocument => throw _privateConstructorUsedError;
+  String? get adminAreaDocument => throw _privateConstructorUsedError;
   @JsonKey(name: "doc_series")
   String? get docSeries => throw _privateConstructorUsedError;
   @JsonKey(name: "gender")
@@ -129,7 +129,7 @@ mixin _$ClientSearchClientDataResponse {
   @JsonKey(name: "doc_issue_date")
   String? get docIssueDate => throw _privateConstructorUsedError;
   @JsonKey(name: "agency_document")
-  ValueObject? get agencyDocument => throw _privateConstructorUsedError;
+  String? get agencyDocument => throw _privateConstructorUsedError;
   @JsonKey(name: "date_of_birth")
   String? get dateOfBirth => throw _privateConstructorUsedError;
   @JsonKey(name: "middle_name")
@@ -171,11 +171,11 @@ abstract class $ClientSearchClientDataResponseCopyWith<$Res> {
       @JsonKey(name: "doc_number") String? docNumber,
       @JsonKey(name: "location_birth") String? locationBirth,
       @JsonKey(name: "client_code") String? clientCode,
-      @JsonKey(name: "admin_area_document") ValueObject? adminAreaDocument,
+      @JsonKey(name: "admin_area_document") String? adminAreaDocument,
       @JsonKey(name: "doc_series") String? docSeries,
       @JsonKey(name: "gender") ValueObject? gender,
       @JsonKey(name: "doc_issue_date") String? docIssueDate,
-      @JsonKey(name: "agency_document") ValueObject? agencyDocument,
+      @JsonKey(name: "agency_document") String? agencyDocument,
       @JsonKey(name: "date_of_birth") String? dateOfBirth,
       @JsonKey(name: "middle_name") String? middleName,
       @JsonKey(name: "status") String? status,
@@ -286,7 +286,7 @@ class _$ClientSearchClientDataResponseCopyWithImpl<$Res>
       adminAreaDocument: adminAreaDocument == freezed
           ? _value.adminAreaDocument
           : adminAreaDocument // ignore: cast_nullable_to_non_nullable
-              as ValueObject?,
+              as String?,
       docSeries: docSeries == freezed
           ? _value.docSeries
           : docSeries // ignore: cast_nullable_to_non_nullable
@@ -302,7 +302,7 @@ class _$ClientSearchClientDataResponseCopyWithImpl<$Res>
       agencyDocument: agencyDocument == freezed
           ? _value.agencyDocument
           : agencyDocument // ignore: cast_nullable_to_non_nullable
-              as ValueObject?,
+              as String?,
       dateOfBirth: dateOfBirth == freezed
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
@@ -354,11 +354,11 @@ abstract class $ClientDataCopyWith<$Res>
       @JsonKey(name: "doc_number") String? docNumber,
       @JsonKey(name: "location_birth") String? locationBirth,
       @JsonKey(name: "client_code") String? clientCode,
-      @JsonKey(name: "admin_area_document") ValueObject? adminAreaDocument,
+      @JsonKey(name: "admin_area_document") String? adminAreaDocument,
       @JsonKey(name: "doc_series") String? docSeries,
       @JsonKey(name: "gender") ValueObject? gender,
       @JsonKey(name: "doc_issue_date") String? docIssueDate,
-      @JsonKey(name: "agency_document") ValueObject? agencyDocument,
+      @JsonKey(name: "agency_document") String? agencyDocument,
       @JsonKey(name: "date_of_birth") String? dateOfBirth,
       @JsonKey(name: "middle_name") String? middleName,
       @JsonKey(name: "status") String? status,
@@ -470,7 +470,7 @@ class _$ClientDataCopyWithImpl<$Res>
       adminAreaDocument == freezed
           ? _value.adminAreaDocument
           : adminAreaDocument // ignore: cast_nullable_to_non_nullable
-              as ValueObject?,
+              as String?,
       docSeries == freezed
           ? _value.docSeries
           : docSeries // ignore: cast_nullable_to_non_nullable
@@ -486,7 +486,7 @@ class _$ClientDataCopyWithImpl<$Res>
       agencyDocument == freezed
           ? _value.agencyDocument
           : agencyDocument // ignore: cast_nullable_to_non_nullable
-              as ValueObject?,
+              as String?,
       dateOfBirth == freezed
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
@@ -596,7 +596,7 @@ class _$ClientData implements ClientData {
   final String? clientCode;
   @override
   @JsonKey(name: "admin_area_document")
-  final ValueObject? adminAreaDocument;
+  final String? adminAreaDocument;
   @override
   @JsonKey(name: "doc_series")
   final String? docSeries;
@@ -608,7 +608,7 @@ class _$ClientData implements ClientData {
   final String? docIssueDate;
   @override
   @JsonKey(name: "agency_document")
-  final ValueObject? agencyDocument;
+  final String? agencyDocument;
   @override
   @JsonKey(name: "date_of_birth")
   final String? dateOfBirth;
@@ -766,11 +766,11 @@ abstract class ClientData implements ClientSearchClientDataResponse {
       @JsonKey(name: "doc_number") String? docNumber,
       @JsonKey(name: "location_birth") String? locationBirth,
       @JsonKey(name: "client_code") String? clientCode,
-      @JsonKey(name: "admin_area_document") ValueObject? adminAreaDocument,
+      @JsonKey(name: "admin_area_document") String? adminAreaDocument,
       @JsonKey(name: "doc_series") String? docSeries,
       @JsonKey(name: "gender") ValueObject? gender,
       @JsonKey(name: "doc_issue_date") String? docIssueDate,
-      @JsonKey(name: "agency_document") ValueObject? agencyDocument,
+      @JsonKey(name: "agency_document") String? agencyDocument,
       @JsonKey(name: "date_of_birth") String? dateOfBirth,
       @JsonKey(name: "middle_name") String? middleName,
       @JsonKey(name: "status") String? status,
@@ -828,7 +828,7 @@ abstract class ClientData implements ClientSearchClientDataResponse {
   String? get clientCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "admin_area_document")
-  ValueObject? get adminAreaDocument => throw _privateConstructorUsedError;
+  String? get adminAreaDocument => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "doc_series")
   String? get docSeries => throw _privateConstructorUsedError;
@@ -840,7 +840,7 @@ abstract class ClientData implements ClientSearchClientDataResponse {
   String? get docIssueDate => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "agency_document")
-  ValueObject? get agencyDocument => throw _privateConstructorUsedError;
+  String? get agencyDocument => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "date_of_birth")
   String? get dateOfBirth => throw _privateConstructorUsedError;

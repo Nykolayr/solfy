@@ -162,13 +162,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             .replaceAll("+", "")
             .replaceAll("-", "")
         : null;
-    ValueObject adminAreaDocument = ValueObject(
-      _staticRepository.geo.regions
-          ?.firstWhere(
-              (element) => element.name == event.data["admin_area_document"])
-          .id,
-      event.data["admin_area_document"],
-    );
+    String? adminAreaDocument = event.data["admin_area_document"] != null
+        ? (event.data["admin_area_document"] as String)
+        : null;
     ValueObject gender = ValueObject(
       _staticRepository.dictionaries.gender?.dictionaryItems
           ?.firstWhere((element) => element.value == event.data["gender"])
@@ -208,7 +204,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       event.data["doc_series"],
       gender,
       event.data["doc_issue_date"],
-      agencyDocument,
+      event.data["agency_document"],
       event.data["date_of_birth"],
       event.data["middle_name"],
       '', //status
@@ -549,12 +545,13 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         docNumber: questionnaire?.clientData?.docNumber,
         locationBirth: questionnaire?.clientData?.locationBirth,
         clientCode: questionnaire?.clientData?.clientCode,
-        adminAreaDocument: questionnaire?.clientData?.adminAreaDocument?.id,
+        adminAreaDocument:
+            questionnaire?.clientData?.adminAreaDocument.toString(),
         docSeries: questionnaire?.clientData?.docSeries,
         gender: questionnaire?.clientData?.gender?.id,
         docIssueDate:
             formatDateForRequest(questionnaire?.clientData?.docIssueDate),
-        agencyDocument: questionnaire?.clientData?.agencyDocument?.id,
+        agencyDocument: questionnaire?.clientData?.agencyDocument,
         dateOfBirth:
             formatDateForRequest(questionnaire?.clientData?.dateOfBirth),
         middleName: questionnaire?.clientData?.middleName,

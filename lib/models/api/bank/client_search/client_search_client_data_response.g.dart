@@ -29,10 +29,7 @@ _$ClientData _$$ClientDataFromJson(Map<String, dynamic> json) => _$ClientData(
       json['doc_number'] as String?,
       json['location_birth'] as String?,
       json['client_code'] as String?,
-      json['admin_area_document'] == null
-          ? null
-          : ValueObject.fromJson(
-              json['admin_area_document'] as Map<String, dynamic>),
+      json['admin_area_document'] as String?,
       json['doc_series'] as String?,
       json['gender'] == null
           ? null
@@ -40,8 +37,7 @@ _$ClientData _$$ClientDataFromJson(Map<String, dynamic> json) => _$ClientData(
       json['doc_issue_date'] as String?,
       json['agency_document'] == null
           ? null
-          : ValueObject.fromJson(
-              json['agency_document'] as Map<String, dynamic>),
+          : json['agency_document'] as String,
       json['date_of_birth'] as String?,
       json['middle_name'] as String?,
       json['status'] as String?,
