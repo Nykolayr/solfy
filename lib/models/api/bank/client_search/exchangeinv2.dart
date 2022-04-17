@@ -3,6 +3,11 @@ import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('>>>>>>>>>>>>>>>>>>> last_name == ${json['last_name']} ');
   printWrapped('console clientSearch =  $json');
+  print('------------------------------------------------------');
+  print('------------------------------------------------------');
+  print('console  date == ${formatDateForRequest(json['date_of_birth'])} ');
+  print('console  date == ${formatFormDate(json['date_of_birth'])} ');
+
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'] ?? '',
     "country_birth": json['birth_place']['country'],
@@ -27,7 +32,9 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "gender": json['gender'],
     "doc_issue_date": json['document']['issue_date'],
     "agency_document": json['document']['given_place'],
-    "date_of_birth": json['date_of_birth'],
+    "date_of_birth": json['date_of_birth'] == null
+        ? null
+        : formatFormDate(json['date_of_birth']),
     "middle_name": json['middle_name'],
     "status": 'не знаю что такое status',
     "residency": json['residency'],
@@ -40,7 +47,7 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   Map<String, dynamic>? clientRegistrationAddress;
   Map<String, dynamic>? clientTemporaryAddress;
 
-  List address = json['addresses'];
+  List address = json['addresses'] ?? [];
   for (int k = 0; k < address.length; k++) {
     int id = address[k]['type']['id'];
     Map district = address[k]['district'];
@@ -55,7 +62,7 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     String address_string = address[k]['address_string'];
     switch (id) {
       case 1:
-        clientLivingAddress = {
+        clientRegistrationAddress = {
           "house_number": houseNumber,
           "district": district,
           "apartment_number": apartment_number,
@@ -66,7 +73,7 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
         };
         break;
       case 2:
-        clientRegistrationAddress = {
+        clientLivingAddress = {
           "house_number": houseNumber,
           "district": district,
           "apartment_number": apartment_number,
@@ -93,12 +100,20 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
 
   Map<String, dynamic> income = json['income'];
   Map<String, dynamic> clientIncome = {
-    "add_income_amount": int.parse(income['add_income_amount']),
-    "loan_expenses": int.parse(income['loan_expenses']),
+    "add_income_amount": income['add_income_amount'] == null
+        ? null
+        : int.parse(income['add_income_amount']),
+    "loan_expenses": income['loan_expenses'] == null
+        ? null
+        : int.parse(income['loan_expenses']),
     "add_income_source": income['add_income_source'],
     "add_income": income['add_income'],
-    "monthly_income": int.parse(income['monthly_income']),
-    "monthly_expenses": int.parse(income['monthly_expenses']),
+    "monthly_income": income['monthly_income'] == null
+        ? null
+        : int.parse(income['monthly_income']),
+    "monthly_expenses": income['monthly_expenses'] == null
+        ? null
+        : int.parse(income['monthly_expenses']),
   };
 
   Map<String, dynamic> clientFamilyData = {
@@ -122,36 +137,51 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "type_farm": job['organization_type'],
   };
 
-  List realties = json['realties'] ?? [];
-  List vehicles = json['vehicles'] ?? [];
-  List insurances = json['insurances'] ?? [];
-  List clientProperties = [];
-  List clientVehicles = [];
-  List clientInsurances = [];
+  List? realties = json['realties'];
+  List? vehicles = json['vehicles'];
+  List? insurances = json['insurances'];
+  List? clientProperties = [];
+  List? clientVehicles = [];
+  List? clientInsurances = [];
 
-  realties.forEach((element) {
-    clientProperties.add({
-      "market_value_realty": int.parse(element['market_value']),
-      "region_property": element['region'],
-      "type_property": element['type'],
+  if (realties != null) {
+    realties.forEach((element) {
+      clientProperties!.add({
+        "market_value_realty": element['market_value'] == null
+            ? null
+            : int.parse(element['market_value']),
+        "region_property": element['region'],
+        "type_property": element['type'],
+      });
     });
-  });
-
-  vehicles.forEach((element) {
-    clientVehicles.add({
-      "year_issue": element['year_issue'],
-      "model_vehicle": element['model'],
-      "market_value_vehicle": int.parse(element['market_value']),
-      "type_vehicle": element['type'],
+  } else {
+    clientProperties = null;
+  }
+  if (vehicles != null) {
+    vehicles.forEach((element) {
+      clientVehicles!.add({
+        "year_issue": element['year_issue'],
+        "model_vehicle": element['model'],
+        "market_value_vehicle": element['market_value'] == null
+            ? null
+            : int.parse(element['market_value']),
+        "type_vehicle": element['type'],
+      });
     });
-  });
-  insurances.forEach((element) {
-    clientInsurances.add({
-      "company": element['company'],
-      "company_tin": element['company_tin'],
-      "policy_amount": element['policy_amount'],
+  } else {
+    clientVehicles = null;
+  }
+  if (insurances != null) {
+    insurances.forEach((element) {
+      clientInsurances!.add({
+        "company": element['company'],
+        "company_tin": element['company_tin'],
+        "policy_amount": element['policy_amount'],
+      });
     });
-  });
+  } else {
+    clientInsurances = null;
+  }
 
   return {
     'clientData': clientData,
@@ -166,6 +196,22 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     'code_word': json['secret_word'],
   };
 }
+
+String? formatDateForRequest(String? date) {
+  if (date == null) {
+    return null;
+  }
+  return "${date.substring(6, 10)}-${date.substring(3, 5)}-${date.substring(0, 2)}";
+}
+
+String? formatFormDate(String? date) {
+  if (date == null) {
+    return null;
+  }
+  final datetime = DateTime.parse(date);
+  return "${datetime.day < 10 ? "0${datetime.day}" : datetime.day}.${datetime.month < 10 ? "0${datetime.month}" : datetime.month}.${datetime.year}";
+}
+
 //  "client_id": data.clientData,
 //     "client_uid": data.secretWord,
 //     "client_code": data.secretWord,

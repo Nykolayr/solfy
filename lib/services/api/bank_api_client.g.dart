@@ -40,6 +40,7 @@ class _BankApiClient implements BankApiClient {
     final _data = <String, dynamic>{};
     // TODO: тут подмена request для отправки V2
     _data.addAll(clientScoreRequestV2(request));
+
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ClientScoreResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_address_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_data_item_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_family_data_item_request.dart';
@@ -79,7 +80,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> clientSearch(
       Emitter<QuestionnaireState> emit, ClientSearch event) async {
     final dbResponse = await _dbService.getClientSearchResponse();
-    print('dbResponse == ${dbResponse}');
+    printWrapped('dbResponse == ${dbResponse}');
     if (dbResponse != null) {
       emit(QuestionnaireFoundSuccess(
         dbResponse.clientSearchResponse,
@@ -171,18 +172,17 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           .id,
       event.data["gender"],
     );
-    ValueObject agencyDocument = ValueObject(
-      _staticRepository.geo.districts
-          ?.firstWhere(
-              (element) => element.name == event.data["agency_document"])
-          .id,
-      event.data["agency_document"],
-    );
     ValueObject education = ValueObject(
       _staticRepository.dictionaries.education?.dictionaryItems
           ?.firstWhere((element) => element.value == event.data["education"])
           .id,
       event.data["education"],
+    );
+    ValueObject citizenship = ValueObject(
+      _staticRepository.dictionaries.residency?.dictionaryItems
+          ?.firstWhere((element) => element.value == event.data["citizenship"])
+          .id,
+      event.data["citizenship"],
     );
     ClientSearchClientDataResponse clientData = ClientSearchClientDataResponse(
       event.data["last_name"],
@@ -210,7 +210,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       '', //status
       residency,
       education,
-      event.data["citizenship"],
+      citizenship.id,
     );
 
     final newQuestionnaire = event.questionnaire.copyWith(
@@ -229,13 +229,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       ),
       codeWord: event.data["code_word"],
     );
-    print('console newQuestionnaire1 == $newQuestionnaire');
-    print(
-        'console newQuestionnaire22 == ${newQuestionnaire.clientData!.toJson()}');
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(2);
     final newData = await _dbService.getClientSearchResponse();
-    print('console newData == ${newData!.toJson()}');
+    printWrapped('console newData == ${newData!.toJson()}');
     if (newData != null) {
       emit(QuestionnaireFoundSuccess(newData.clientSearchResponse,
           newData.questionnaire, newData.currentStage));
@@ -526,8 +523,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       Emitter<QuestionnaireState> emit, ClientScore event) async {
     final questionnaire =
         (await _dbService.getClientSearchResponse())?.questionnaire;
-    print('console  phone=  ${questionnaire?.clientData?.mobilePhone}');
-    print("console  Отправка анкеты ${questionnaire?.toJson()}");
+    printWrapped("console  Отправка анкеты ${questionnaire?.toJson()}");
     final request = ClientScoreRequest(
       clientData: ClientScoreClientDataItemRequest(
         lastName: questionnaire?.clientData?.lastName,

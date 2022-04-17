@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';

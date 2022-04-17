@@ -501,6 +501,12 @@ class _AddressFormViewState extends State<AddressFormView> {
                                             ? FactAddressSelector
                                                 .SameAsTempAddress
                                             : FactAddressSelector.New;
+                                    print(
+                                        'adresssss111 === ${_formGlobalKey.currentState?.value}');
+                                    print(
+                                        'adresssss2222 === ${state.questionnaire.clientLivingAddress}');
+                                    print('adresssss2222 === $factSelector');
+                                    return;
                                     context.read<QuestionnaireBloc>().add(
                                           SaveAddressData(
                                             _formGlobalKey

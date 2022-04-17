@@ -394,8 +394,8 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                               context
                                   .read<QuestionnaireBloc>()
                                   .add(await ClientScore('1'));
-                              context.router
-                                  .push(YourRequestCompleteWaitingView());
+                              // context.router
+                              //     .push(YourRequestCompleteWaitingView());
                             }
                           },
                         ),

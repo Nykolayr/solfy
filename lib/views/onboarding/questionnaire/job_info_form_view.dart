@@ -64,6 +64,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
         isAdditional = false;
         _firstItem.isEnabled = true;
       }
+      isOwnership = questionnaire.clientIncome?.addIncomeSource!.id == 13;
     }
     WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {}));
     super.initState();
@@ -539,10 +540,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                     ?.value,
                                               );
                                             }),
-                                        if (isOwnership ||
-                                            state.questionnaire.clientIncome
-                                                    ?.addIncomeSource!.id ==
-                                                13)
+                                        if (isOwnership)
                                           Column(
                                             children: [
                                               SizedBox(height: 24.h),
@@ -551,7 +549,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                   initialValue: state
                                                       .questionnaire
                                                       .clientIncome
-                                                      ?.add_real_estate_type
+                                                      ?.addIncome
                                                       ?.value,
                                                   title:
                                                       "real_estate_type".tr(),
@@ -584,7 +582,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                   initialValue: state
                                                       .questionnaire
                                                       .clientIncome
-                                                      ?.add_type_ownership
+                                                      ?.addIncomeSource
                                                       ?.value,
                                                   title: "type_ownership".tr(),
                                                   onTap: () {
