@@ -1,6 +1,8 @@
+import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
+
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('>>>>>>>>>>>>>>>>>>> last_name == ${json['last_name']} ');
-
+  printWrapped('console clientSearch =  $json');
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'] ?? '',
     "country_birth": json['birth_place']['country'],
@@ -18,6 +20,7 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "doc_number": json['document']['number'],
     "location_birth": json['birth_place']['location'],
     "client_code": json['client_code'],
+
     //вместо admin_area_document client_uid
     "admin_area_document": json['client_uid'],
     "doc_series": json['document']['series'],

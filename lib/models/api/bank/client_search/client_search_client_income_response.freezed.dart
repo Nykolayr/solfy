@@ -26,6 +26,8 @@ class _$ClientSearchClientIncomeResponseTearOff {
       @JsonKey(name: "add_income_amount") int? addIncomeAmount,
       @JsonKey(name: "loan_expenses") int? loanExpenses,
       @JsonKey(name: "add_income_source") ValueObject? addIncomeSource,
+      @JsonKey(name: "add_real_estate_type") ValueObject? add_real_estate_type,
+      @JsonKey(name: "add_type_ownership") ValueObject? add_type_ownership,
       @JsonKey(name: "add_income") ValueObject? addIncome,
       @JsonKey(name: "monthly_income") int? monthlyIncome,
       @JsonKey(name: "monthly_expenses") int? monthlyExpenses) {
@@ -33,6 +35,8 @@ class _$ClientSearchClientIncomeResponseTearOff {
       addIncomeAmount,
       loanExpenses,
       addIncomeSource,
+      add_real_estate_type,
+      add_type_ownership,
       addIncome,
       monthlyIncome,
       monthlyExpenses,
@@ -56,7 +60,11 @@ mixin _$ClientSearchClientIncomeResponse {
   int? get loanExpenses => throw _privateConstructorUsedError;
   @JsonKey(name: "add_income_source")
   ValueObject? get addIncomeSource => throw _privateConstructorUsedError;
-  @JsonKey(name: "add_income")
+  @JsonKey(name: "add_income_source")
+  ValueObject? get add_real_estate_type => throw _privateConstructorUsedError;
+  @JsonKey(name: "add_real_estate_type")
+  ValueObject? get add_type_ownership => throw _privateConstructorUsedError;
+  @JsonKey(name: "add_type_ownership")
   ValueObject? get addIncome => throw _privateConstructorUsedError;
   @JsonKey(name: "monthly_income")
   int? get monthlyIncome => throw _privateConstructorUsedError;
@@ -79,6 +87,8 @@ abstract class $ClientSearchClientIncomeResponseCopyWith<$Res> {
       {@JsonKey(name: "add_income_amount") int? addIncomeAmount,
       @JsonKey(name: "loan_expenses") int? loanExpenses,
       @JsonKey(name: "add_income_source") ValueObject? addIncomeSource,
+      @JsonKey(name: "add_real_estate_type") ValueObject? add_real_estate_type,
+      @JsonKey(name: "add_type_ownership") ValueObject? add_type_ownership,
       @JsonKey(name: "add_income") ValueObject? addIncome,
       @JsonKey(name: "monthly_income") int? monthlyIncome,
       @JsonKey(name: "monthly_expenses") int? monthlyExpenses});
@@ -98,6 +108,8 @@ class _$ClientSearchClientIncomeResponseCopyWithImpl<$Res>
     Object? addIncomeAmount = freezed,
     Object? loanExpenses = freezed,
     Object? addIncomeSource = freezed,
+    Object? add_real_estate_type = freezed,
+    Object? add_type_ownership = freezed,
     Object? addIncome = freezed,
     Object? monthlyIncome = freezed,
     Object? monthlyExpenses = freezed,
@@ -114,6 +126,14 @@ class _$ClientSearchClientIncomeResponseCopyWithImpl<$Res>
       addIncomeSource: addIncomeSource == freezed
           ? _value.addIncomeSource
           : addIncomeSource // ignore: cast_nullable_to_non_nullable
+              as ValueObject?,
+      add_real_estate_type: add_real_estate_type == freezed
+          ? _value.add_real_estate_type
+          : add_real_estate_type // ignore: cast_nullable_to_non_nullable
+              as ValueObject?,
+      add_type_ownership: add_type_ownership == freezed
+          ? _value.add_type_ownership
+          : add_type_ownership // ignore: cast_nullable_to_non_nullable
               as ValueObject?,
       addIncome: addIncome == freezed
           ? _value.addIncome
@@ -142,6 +162,8 @@ abstract class $ClientIncomeCopyWith<$Res>
       {@JsonKey(name: "add_income_amount") int? addIncomeAmount,
       @JsonKey(name: "loan_expenses") int? loanExpenses,
       @JsonKey(name: "add_income_source") ValueObject? addIncomeSource,
+      @JsonKey(name: "add_real_estate_type") ValueObject? add_real_estate_type,
+      @JsonKey(name: "add_type_ownership") ValueObject? add_type_ownership,
       @JsonKey(name: "add_income") ValueObject? addIncome,
       @JsonKey(name: "monthly_income") int? monthlyIncome,
       @JsonKey(name: "monthly_expenses") int? monthlyExpenses});
@@ -163,6 +185,8 @@ class _$ClientIncomeCopyWithImpl<$Res>
     Object? addIncomeAmount = freezed,
     Object? loanExpenses = freezed,
     Object? addIncomeSource = freezed,
+    Object? add_real_estate_type = freezed,
+    Object? add_type_ownership = freezed,
     Object? addIncome = freezed,
     Object? monthlyIncome = freezed,
     Object? monthlyExpenses = freezed,
@@ -179,6 +203,14 @@ class _$ClientIncomeCopyWithImpl<$Res>
       addIncomeSource == freezed
           ? _value.addIncomeSource
           : addIncomeSource // ignore: cast_nullable_to_non_nullable
+              as ValueObject?,
+      add_type_ownership == freezed
+          ? _value.add_type_ownership
+          : add_type_ownership // ignore: cast_nullable_to_non_nullable
+              as ValueObject?,
+      addIncome == freezed
+          ? _value.addIncome
+          : addIncome // ignore: cast_nullable_to_non_nullable
               as ValueObject?,
       addIncome == freezed
           ? _value.addIncome
@@ -203,6 +235,8 @@ class _$ClientIncome implements ClientIncome {
       @JsonKey(name: "add_income_amount") this.addIncomeAmount,
       @JsonKey(name: "loan_expenses") this.loanExpenses,
       @JsonKey(name: "add_income_source") this.addIncomeSource,
+      @JsonKey(name: "add_real_estate_type") this.add_real_estate_type,
+      @JsonKey(name: "add_type_ownership") this.add_type_ownership,
       @JsonKey(name: "add_income") this.addIncome,
       @JsonKey(name: "monthly_income") this.monthlyIncome,
       @JsonKey(name: "monthly_expenses") this.monthlyExpenses);
@@ -220,6 +254,12 @@ class _$ClientIncome implements ClientIncome {
   @JsonKey(name: "add_income_source")
   final ValueObject? addIncomeSource;
   @override
+  @JsonKey(name: "add_real_estate_type")
+  final ValueObject? add_real_estate_type;
+  @override
+  @JsonKey(name: "add_type_ownership")
+  final ValueObject? add_type_ownership;
+  @override
   @JsonKey(name: "add_income")
   final ValueObject? addIncome;
   @override
@@ -231,7 +271,7 @@ class _$ClientIncome implements ClientIncome {
 
   @override
   String toString() {
-    return 'ClientSearchClientIncomeResponse(addIncomeAmount: $addIncomeAmount, loanExpenses: $loanExpenses, addIncomeSource: $addIncomeSource, addIncome: $addIncome, monthlyIncome: $monthlyIncome, monthlyExpenses: $monthlyExpenses)';
+    return 'ClientSearchClientIncomeResponse(addIncomeAmount: $addIncomeAmount, loanExpenses: $loanExpenses, addIncomeSource: $addIncomeSource, add_real_estate_type: $add_real_estate_type, add_type_ownership: $add_type_ownership, addIncome: $addIncome, monthlyIncome: $monthlyIncome, monthlyExpenses: $monthlyExpenses)';
   }
 
   @override
@@ -247,6 +287,12 @@ class _$ClientIncome implements ClientIncome {
             (identical(other.addIncomeSource, addIncomeSource) ||
                 const DeepCollectionEquality()
                     .equals(other.addIncomeSource, addIncomeSource)) &&
+            (identical(other.add_real_estate_type, add_real_estate_type) ||
+                const DeepCollectionEquality().equals(
+                    other.add_real_estate_type, add_real_estate_type)) &&
+            (identical(other.add_type_ownership, add_type_ownership) ||
+                const DeepCollectionEquality()
+                    .equals(other.add_type_ownership, add_type_ownership)) &&
             (identical(other.addIncome, addIncome) ||
                 const DeepCollectionEquality()
                     .equals(other.addIncome, addIncome)) &&
@@ -264,6 +310,8 @@ class _$ClientIncome implements ClientIncome {
       const DeepCollectionEquality().hash(addIncomeAmount) ^
       const DeepCollectionEquality().hash(loanExpenses) ^
       const DeepCollectionEquality().hash(addIncomeSource) ^
+      const DeepCollectionEquality().hash(add_real_estate_type) ^
+      const DeepCollectionEquality().hash(add_type_ownership) ^
       const DeepCollectionEquality().hash(addIncome) ^
       const DeepCollectionEquality().hash(monthlyIncome) ^
       const DeepCollectionEquality().hash(monthlyExpenses);
@@ -284,6 +332,8 @@ abstract class ClientIncome implements ClientSearchClientIncomeResponse {
       @JsonKey(name: "add_income_amount") int? addIncomeAmount,
       @JsonKey(name: "loan_expenses") int? loanExpenses,
       @JsonKey(name: "add_income_source") ValueObject? addIncomeSource,
+      @JsonKey(name: "add_real_estate_type") ValueObject? add_real_estate_type,
+      @JsonKey(name: "add_type_ownership") ValueObject? add_type_ownership,
       @JsonKey(name: "add_income") ValueObject? addIncome,
       @JsonKey(name: "monthly_income") int? monthlyIncome,
       @JsonKey(name: "monthly_expenses") int? monthlyExpenses) = _$ClientIncome;

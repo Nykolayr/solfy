@@ -132,6 +132,7 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
         "code": "MORE_10_YEAR"
       }
     },
+ 
     "income": {
       "monthly_income": data.clientIncome!.monthlyIncome.toString(),
       "monthly_expenses": data.clientIncome!.monthlyExpenses.toString(),

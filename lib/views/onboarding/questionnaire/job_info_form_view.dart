@@ -539,7 +539,10 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                     ?.value,
                                               );
                                             }),
-                                        if (isOwnership)
+                                        if (isOwnership ||
+                                            state.questionnaire.clientIncome
+                                                    ?.addIncomeSource!.id ==
+                                                13)
                                           Column(
                                             children: [
                                               SizedBox(height: 24.h),
@@ -548,7 +551,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                   initialValue: state
                                                       .questionnaire
                                                       .clientIncome
-                                                      ?.addIncome
+                                                      ?.add_real_estate_type
                                                       ?.value,
                                                   title:
                                                       "real_estate_type".tr(),
@@ -581,7 +584,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                   initialValue: state
                                                       .questionnaire
                                                       .clientIncome
-                                                      ?.addIncomeSource
+                                                      ?.add_type_ownership
                                                       ?.value,
                                                   title: "type_ownership".tr(),
                                                   onTap: () {

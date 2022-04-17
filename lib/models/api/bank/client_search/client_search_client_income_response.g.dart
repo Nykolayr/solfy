@@ -14,6 +14,14 @@ _$ClientIncome _$$ClientIncomeFromJson(Map<String, dynamic> json) =>
           ? null
           : ValueObject.fromJson(
               json['add_income_source'] as Map<String, dynamic>),
+      json['add_real_estate_type'] == null
+          ? null
+          : ValueObject.fromJson(
+              json['add_real_estate_type'] as Map<String, dynamic>),
+      json['add_type_ownership'] == null
+          ? null
+          : ValueObject.fromJson(
+              json['add_type_ownership'] as Map<String, dynamic>),
       json['add_income'] == null
           ? null
           : ValueObject.fromJson(json['add_income'] as Map<String, dynamic>),
@@ -26,6 +34,8 @@ Map<String, dynamic> _$$ClientIncomeToJson(_$ClientIncome instance) =>
       'add_income_amount': instance.addIncomeAmount,
       'loan_expenses': instance.loanExpenses,
       'add_income_source': instance.addIncomeSource,
+      'add_real_estate_type': instance.add_real_estate_type,
+      'add_type_ownership': instance.add_type_ownership,
       'add_income': instance.addIncome,
       'monthly_income': instance.monthlyIncome,
       'monthly_expenses': instance.monthlyExpenses,

@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';
@@ -19,10 +20,8 @@ class BankRepository implements IBankRepository {
   @override
   Future<Either<ErrorsResponse, ClientSearchResp>> clientSearch(
       ClientSearchRequest request) async {
-    print('console clientSearch ');
     try {
       final response = await _apiClient.clientSearch(request);
-      print('console clientSearch =  ${response.toJson()}');
       return Right(response);
     } on DioError catch (error) {
       print(

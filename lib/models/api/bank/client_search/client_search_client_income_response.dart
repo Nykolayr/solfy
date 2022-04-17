@@ -12,6 +12,8 @@ class ClientSearchClientIncomeResponse with _$ClientSearchClientIncomeResponse {
     @JsonKey(name: "add_income_amount") int? addIncomeAmount,
     @JsonKey(name: "loan_expenses") int? loanExpenses,
     @JsonKey(name: "add_income_source") ValueObject? addIncomeSource,
+    @JsonKey(name: "add_real_estate_type") ValueObject? add_real_estate_type,
+    @JsonKey(name: "add_type_ownership") ValueObject? add_type_ownership,
     @JsonKey(name: "add_income") ValueObject? addIncome,
     @JsonKey(name: "monthly_income") int? monthlyIncome,
     @JsonKey(name: "monthly_expenses") int? monthlyExpenses,
