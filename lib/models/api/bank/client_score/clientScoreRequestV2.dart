@@ -1,16 +1,16 @@
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_address_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_property_item_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
 
 Map getMapAdress({
   required ClientScoreClientAddressRequest? adress,
   required int id,
 }) {
-  print('object === $id == ${adress!.toJson()}');
   return {
     "type": {"id": id, "code": "$id"},
     "region": {
-      "id": adress.adminArea ?? 1,
+      "id": adress!.adminArea ?? 1,
       "code": adress.adminArea.toString()
     },
     "district": {
@@ -43,18 +43,23 @@ Map getRealties(ClientScoreClientPropertyItemRequest item) {
 
 Map getVehicles(ClientScoreClientPropertyItemRequest item) {
   return {
-    "type": {"id": item.typeVehicle ?? 1, "code": "$item.typeVehicle"},
+    "type": {"id": item.typeVehicle ?? 1, "code": "${item.typeVehicle}"},
     "model": item.modelVehicle,
     "year_issue": item.yearIssue,
     "market_value": item.marketValueVehicle.toString(),
   };
 }
 
-Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
+Future<Map<String, dynamic>> clientScoreRequestV2(
+    ClientScoreRequest data) async {
+  await Future.delayed(Duration(milliseconds: 500));
+  print('clientScoreRequestV2 clientIncome =${data.clientIncome!.toJson()}');
+  print(
+      'clientScoreRequestV2 clientIncome =${data.clientIncome!.addIncomeSource}');
   List<Map>? vehicles = [];
   if (data.clientVehicles != null) {
     data.clientVehicles!.forEach((element) {
-      vehicles!.add(getRealties(element));
+      vehicles!.add(getVehicles(element));
     });
   } else
     vehicles = null;
@@ -67,14 +72,17 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     realties = null;
   }
   List<Map> address = [];
-  print('clientLivingAddress = ${data.clientLivingAddress}');
-  if (data.clientLivingAddress != null) {
-    address.add(getMapAdress(adress: data.clientLivingAddress, id: 1));
+
+  if (data.clientLivingAddress != null &&
+      data.clientLivingAddress!.street != null) {
+    address.add(getMapAdress(adress: data.clientLivingAddress, id: 2));
   }
-  if (data.clientRegistrationAddress != null) {
-    address.add(getMapAdress(adress: data.clientRegistrationAddress, id: 2));
+  if (data.clientRegistrationAddress != null &&
+      data.clientRegistrationAddress!.street != null) {
+    address.add(getMapAdress(adress: data.clientRegistrationAddress, id: 1));
   }
-  if (data.clientTemporaryAddress != null) {
+  if (data.clientTemporaryAddress != null &&
+      data.clientTemporaryAddress!.street != null) {
     address.add(getMapAdress(adress: data.clientTemporaryAddress, id: 3));
   }
   Map<String, dynamic> map = {
@@ -82,10 +90,15 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
     "stage": "INITIAL",
     "order_source": "SOLFY",
     "questionnaire_id": null, //
-    "pinfl": data.clientData!.pnfl,
-    "client_id": data.clientData!.clientId,
-    "client_code": data.clientData!.clientCode,
-    "client_uid": data.clientData!.adminAreaDocument,
+    "pinfl": (data.clientData!.pnfl != null && data.clientData!.pnfl != '')
+        ? data.clientData!.pnfl
+        : await LocalData().loadJson('pinfl'),
+    "client_id":
+        (data.clientData!.clientId != null && data.clientData!.clientId != '')
+            ? data.clientData!.clientId
+            : await LocalData().loadJson('client_id'),
+    "client_code": await LocalData().loadJson('client_code'),
+    "client_uid": await LocalData().loadJson('client_uid'),
     "last_name": data.clientData!.lastName,
     "first_name": data.clientData!.firstName,
     "middle_name": data.clientData!.middleName,
@@ -173,15 +186,21 @@ Map<String, dynamic> clientScoreRequestV2(ClientScoreRequest data) {
       "monthly_income": data.clientIncome!.monthlyIncome.toString(),
       "monthly_expenses": data.clientIncome!.monthlyExpenses.toString(),
       "loan_expenses": data.clientIncome!.loanExpenses.toString(),
-      "add_income": {
-        "id": data.clientIncome!.addIncome,
-        "code": "${data.clientIncome!.addIncome}"
-      },
-      "add_income_amount": data.clientIncome!.addIncomeAmount.toString(),
-      "add_income_source": {
-        "id": data.clientIncome!.addIncomeSource,
-        "code": "${data.clientIncome!.addIncomeSource}"
-      }
+      "add_income": (data.clientIncome!.addIncome == null)
+          ? null
+          : {
+              "id": data.clientIncome!.addIncome,
+              "code": "${data.clientIncome!.addIncome}"
+            },
+      "add_income_amount": (data.clientIncome!.addIncomeAmount == null)
+          ? null
+          : data.clientIncome!.addIncomeAmount.toString(),
+      "add_income_source": (data.clientIncome!.addIncomeSource == null)
+          ? null
+          : {
+              "id": data.clientIncome!.addIncomeSource,
+              "code": "${data.clientIncome!.addIncomeSource}"
+            }
     },
     "realties": realties,
     "vehicles": vehicles,

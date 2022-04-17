@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
@@ -7,7 +10,10 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('------------------------------------------------------');
   print('console  date == ${formatDateForRequest(json['date_of_birth'])} ');
   print('console  date == ${formatFormDate(json['date_of_birth'])} ');
-
+  LocalData().saveJson('client_id', json['client_id'] ?? '');
+  LocalData().saveJson('client_uid', json['client_uid'] ?? '');
+  LocalData().saveJson('pinfl', json['pinfl'] ?? '');
+  LocalData().saveJson('client_code', json['client_code'] ?? '');
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'] ?? '',
     "country_birth": json['birth_place']['country'],
@@ -215,3 +221,21 @@ String? formatFormDate(String? date) {
 //  "client_id": data.clientData,
 //     "client_uid": data.secretWord,
 //     "client_code": data.secretWord,
+
+class LocalData {
+  Future<void> saveJson(String key, String text) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, text);
+  }
+
+  Future<String?> loadJson(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Set<String> setKeys = prefs.getKeys();
+    if (setKeys.contains(key)) {
+      return prefs.getString(key);
+    } else {
+      await saveJson('', key);
+      return '';
+    }
+  }
+}

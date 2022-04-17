@@ -372,10 +372,6 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                             if (isValid &&
                                 !isVehiclesErrorVisible &&
                                 !isPropertiesErrorVisible) {
-                              // context.router.push(ChoosingFilialRoute());
-                              //  context
-                              //     .read<QuestionnaireBloc>()
-                              //     .add(ClientScore('sdw'));
                               _formGlobalKey.currentState?.save();
                               final questionnaire = (context
                                       .read<QuestionnaireBloc>()
@@ -394,8 +390,8 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                               context
                                   .read<QuestionnaireBloc>()
                                   .add(await ClientScore('1'));
-                              // context.router
-                              //     .push(YourRequestCompleteWaitingView());
+                              context.router
+                                  .push(YourRequestCompleteWaitingView());
                             }
                           },
                         ),
