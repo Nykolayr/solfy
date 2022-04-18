@@ -486,7 +486,8 @@ class _PersonalInformationFormViewState
                               Divider(),
                               SizedBox(height: 6),
                               Text(
-                                "contact_details".tr(),
+                                "contact_details".tr() +
+                                    '  =${state.questionnaire.clientData!.mobilePhone}',
                                 style: theme.textStyles.formTitleText,
                                 textAlign: TextAlign.left,
                               ),
@@ -501,7 +502,8 @@ class _PersonalInformationFormViewState
                                             ?.mobilePhone !=
                                         null
                                     ? _phoneMaskFormatter.maskText(state
-                                        .questionnaire.clientData!.mobilePhone!)
+                                        .questionnaire.clientData!.mobilePhone!
+                                        .toString())
                                     : null,
                                 uneditableValue: state.staticQuestionnaire
                                         .clientData?.mobilePhone !=

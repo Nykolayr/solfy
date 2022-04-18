@@ -111,12 +111,14 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           true,
         );
         final response = await _bankRepository.clientSearch(request);
+        printWrapped('responst ==  == ${response.isRight}');
         if (response.isRight) {
           final clientData = response.right.clientData?.copyWith(
             docIssueDate:
                 formatFormDate(response.right.clientData?.docIssueDate),
             docEndDate: formatFormDate(response.right.clientData?.docEndDate),
           );
+          printWrapped('clientData >>>>>>>==== ${clientData!.toJson()}');
           await _dbService.saveClientSearchResponse(
               response.right.copyWith(clientData: clientData));
           final dbResponse = await _dbService.getClientSearchResponse();

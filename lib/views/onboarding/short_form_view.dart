@@ -41,7 +41,6 @@ class _ShortFormViewState extends State<ShortFormView> {
 
   @override
   Widget build(BuildContext context) {
-    
     AppTheme theme = context.read<AppTheme>();
     try {
       var store = LocalStorage("auth");
@@ -68,7 +67,8 @@ class _ShortFormViewState extends State<ShortFormView> {
         child: FooterLayout(
           footer: Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom == 0 ? 24.h : 16.h,
+              bottom:
+                  MediaQuery.of(context).viewInsets.bottom == 0 ? 24.h : 16.h,
               right: 16,
               left: 16,
               top: 16,
@@ -79,24 +79,32 @@ class _ShortFormViewState extends State<ShortFormView> {
                     text: "continue".tr(),
                     isLoadingMode: loadingButtonMode,
                     onTap: () async {
-                      final isValid = _formKey.currentState?.validate() ?? false;
+                      final isValid =
+                          _formKey.currentState?.validate() ?? false;
                       setState(() {
                         validationMode = true;
                       });
                       if (isValid) {
                         _formKey.currentState?.save();
                         var store = LocalStorage("auth");
-                        store.setItem("passportSeries", _formKey.currentState?.value["passportSeries"]);
-                        store.setItem("passportName", _formKey.currentState?.value["passportName"]);
-                        store.setItem("pin_fl", _formKey.currentState?.value["pin_fl"]);
+                        store.setItem("passportSeries",
+                            _formKey.currentState?.value["passportSeries"]);
+                        store.setItem("passportName",
+                            _formKey.currentState?.value["passportName"]);
+                        store.setItem(
+                            "pin_fl", _formKey.currentState?.value["pin_fl"]);
+
                         context.read<QuestionnaireBloc>().add(
                               ClientSearch(
-                                series: _formKey.currentState?.value["passportSeries"],
-                                number: _formKey.currentState?.value["passportName"],
+                                series: _formKey
+                                    .currentState?.value["passportSeries"],
+                                number: _formKey
+                                    .currentState?.value["passportName"],
                                 pinFl: _formKey.currentState?.value["pin_fl"],
                               ),
                             );
-                        context.router.replaceAll([YourRequestWaitingChatView()]);
+                        context.router
+                            .replaceAll([YourRequestWaitingChatView()]);
                       }
                     },
                   ),
@@ -142,9 +150,10 @@ class _ShortFormViewState extends State<ShortFormView> {
                                 headerText: "pin_fl".tr(),
                                 hintText: "00000000000000",
                                 isSuffixInStack: true,
-                                suffixIcon:
-                                    Icon(SolfyIcons.info, size: 24.r, color: theme.colors.gray1),
-                                onSuffixTap: () => ModalHelpers.showPinFlModal(context),
+                                suffixIcon: Icon(SolfyIcons.info,
+                                    size: 24.r, color: theme.colors.gray1),
+                                onSuffixTap: () =>
+                                    ModalHelpers.showPinFlModal(context),
                                 keyboardType: TextInputType.number,
                                 maskFormatter: MaskTextInputFormatter(
                                   mask: "##############",
