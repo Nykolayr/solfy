@@ -500,8 +500,9 @@ class _PersonalInformationFormViewState
                                 initialValue: state.questionnaire.clientData
                                             ?.mobilePhone !=
                                         null
-                                    ? _phoneMaskFormatter.maskText(state
-                                        .questionnaire.clientData!.mobilePhone!)
+                                    ? _phoneMaskFormatter.maskText('+' +
+                                        state.questionnaire.clientData!
+                                            .mobilePhone!)
                                     : null,
                                 uneditableValue: state.staticQuestionnaire
                                         .clientData?.mobilePhone !=

@@ -111,12 +111,14 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           true,
         );
         final response = await _bankRepository.clientSearch(request);
+        printWrapped('responst ==== ${response.isRight}');
         if (response.isRight) {
           final clientData = response.right.clientData?.copyWith(
             docIssueDate:
                 formatFormDate(response.right.clientData?.docIssueDate),
             docEndDate: formatFormDate(response.right.clientData?.docEndDate),
           );
+          printWrapped('clientData >>>>>>>==== $clientData');
           await _dbService.saveClientSearchResponse(
               response.right.copyWith(clientData: clientData));
           final dbResponse = await _dbService.getClientSearchResponse();
@@ -252,6 +254,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ),
       codeWord: event.data["code_word"],
     );
+    printWrapped('newQuestionnaire === ${newQuestionnaire.toJson()}');
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(2);
     final newData = await _dbService.getClientSearchResponse();
@@ -488,26 +491,20 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> saveJobData(
       Emitter<QuestionnaireState> emit, SaveJobData event) async {
     print('SaveJobData == ${event.data}');
-    print('additional == ${event.data['additional']}');
-    print('loan_expenses == ${event.data['loan_expenses']}');
-    print('additional_type == ${event.data['additional_type']}');
-    print('real_estate_type == ${event.data['real_estate_type']}');
-    print('type_ownership == ${event.data['type_ownership']}');
-    print('monthly_expenses == ${event.data['monthly_expenses']}');
-    print('additional_type == ${event.data['additional_type']}');
     final newQuestionnaire = event.questionnaire.copyWith(
         clientJobInfo: (event.questionnaire.clientJobInfo == null)
             ? ClientSearchClientJobInfoResponse(
-                event.data["employer_name"],
+                event.data["employer_name"], // employer_name
                 ValueObject(
                   _staticRepository
                       .dictionaries.employmentPositionCategory?.dictionaryItems
                       ?.firstWhere(
-                          (element) => element.value == event.data["category"],
+                          (element) =>
+                              element.value == event.data["position_category"],
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["category"],
-                ),
+                ), // employment_position_category
                 ValueObject(
                   _staticRepository.dictionaries.workExperience?.dictionaryItems
                       ?.firstWhere(
@@ -516,7 +513,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["work_experience"],
-                ),
+                ), //work_experience
                 ValueObject(
                   _staticRepository.dictionaries.workerNumber?.dictionaryItems
                       ?.firstWhere(
@@ -525,7 +522,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["worker_number"],
-                ),
+                ), //worker_number
                 ValueObject(
                   _staticRepository.dictionaries.typeActivity?.dictionaryItems
                       ?.firstWhere(
@@ -534,7 +531,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["activity_type"],
-                ),
+                ), //type_activity
                 ValueObject(
                   _staticRepository.dictionaries.typeFarm?.dictionaryItems
                       ?.firstWhere(
@@ -542,7 +539,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["farm_type"],
-                ),
+                ), // type_farm
                 ValueObject(
                   _staticRepository
                       .dictionaries.lastWorkExperience?.dictionaryItems
@@ -553,7 +550,17 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["last_work_experience"],
-                ),
+                ), //last_work_experience
+                ValueObject(
+                  _staticRepository
+                      .dictionaries.lastWorkExperience?.dictionaryItems
+                      ?.firstWhere(
+                          (element) => element.value == event.data["type_farm"],
+                          orElse: () => DictionariesDictionaryItemResponse())
+                      .id,
+                  event.data["type_farm"],
+                ), //type_organization
+                event.data["employer_inn"], // employer_id
                 ValueObject(
                   _staticRepository
                       .dictionaries.lastWorkExperience?.dictionaryItems
@@ -564,19 +571,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["last_work_experience"],
-                ),
-                event.data["employer_inn"],
-                ValueObject(
-                  _staticRepository
-                      .dictionaries.lastWorkExperience?.dictionaryItems
-                      ?.firstWhere(
-                          (element) =>
-                              element.value ==
-                              event.data["last_work_experience"],
-                          orElse: () => DictionariesDictionaryItemResponse())
-                      .id,
-                  event.data["last_work_experience"],
-                ),
+                ), //type_business
               )
             : event.questionnaire.clientJobInfo!.copyWith(
                 typeActivity: ValueObject(
@@ -641,9 +636,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ? ClientSearchClientIncomeResponse(
                 (event.data["additional"] is String)
                     ? int.parse(event.data["additional"])
-                    : event.data["additional"],
+                    : event.data["additional"], //addIncomeAmount
                 int.parse((event.data["loan_expenses"] as String)
-                    .replaceAll(" ", "")),
+                    .replaceAll(" ", "")), //loanExpenses
                 ValueObject(
                   _staticRepository
                       .dictionaries.addIncomeSource?.dictionaryItems
@@ -653,7 +648,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                           orElse: () => DictionariesDictionaryItemResponse())
                       .id,
                   event.data["additional_type"],
-                ),
+                ), //addIncomeSource
                 (event.data["real_estate_type"] == null)
                     ? null
                     : ValueObject(
@@ -667,7 +662,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                                     DictionariesDictionaryItemResponse())
                             .id,
                         event.data["real_estate_type"],
-                      ),
+                      ), //add_real_estate_type
                 (event.data["type_ownership"] == null)
                     ? null
                     : ValueObject(
@@ -681,20 +676,20 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                                     DictionariesDictionaryItemResponse())
                             .id,
                         event.data["type_ownership"],
-                      ),
+                      ), //add_type_ownership
                 event.data["additional_type"] != null
                     ? ValueObject(1, "Да")
-                    : ValueObject(0, "Нет"),
+                    : ValueObject(0, "Нет"), //addIncome
                 int.parse((event.data["monthly_expenses"] as String)
-                    .replaceAll(" ", "")),
+                    .replaceAll(" ", "")), //monthlyIncome
                 int.parse((event.data["monthly_income"] as String)
-                    .replaceAll(" ", "")),
+                    .replaceAll(" ", "")), //monthlyExpenses
               )
             : event.questionnaire.clientIncome!.copyWith(
                 monthlyIncome: int.parse(event.data["monthly_income"] != null
                     ? (event.data["monthly_income"] as String)
                         .replaceAll(" ", "")
-                    : ""),
+                    : ""), //addIncomeAmount
                 monthlyExpenses: int.tryParse(
                     event.data["monthly_expenses"] != null
                         ? (event.data["monthly_expenses"] as String)
@@ -710,7 +705,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                 addIncomeAmount: int.tryParse(event.data["additional"] != null
                     ? (event.data["additional"] as String).replaceAll(" ", "")
                     : ""),
-                addIncomeSource: (event.data["additional "] == null)
+                addIncomeSource: (event.data["additional_type"] == null)
                     ? null
                     : ValueObject(
                         _staticRepository
@@ -725,8 +720,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                         event.data["additional_type"],
                       ),
               ));
-    print('clientJobInfo == ${newQuestionnaire.clientJobInfo!.toJson()}');
-    print('clientIncome == ${newQuestionnaire.clientIncome!.toJson()}');
+
+    print('clientJobInfo >>>>> == ${newQuestionnaire.clientJobInfo!.toJson()}');
+    print('clientIncome >>>>>>> == ${newQuestionnaire.clientIncome!.toJson()}');
+
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(4);
     final newData = await _dbService.getClientSearchResponse();
@@ -742,8 +739,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Ваше имущество"
   Future<void> savePropertiesData(
       Emitter<QuestionnaireState> emit, SavePropertiesData event) async {
-    print('properties event === ${event.properties.first.marketValue}');
-    print('vehicles event === ${event.vehicles.first.marketValueName}');
+    print(
+        'properties event >>>>>>>>> === ${event.properties.first.marketValue}');
+    print(
+        'vehicles event === >>>>>>>> ${event.vehicles.first.marketValueName}');
     final properties = event.properties
         .map(
           (e) => ClientSearchClientPropertiesItemResponse(
@@ -789,10 +788,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     );
     await _dbService.updateQuestionnaire(newQuestionnaire);
     ClientSearchResponseRecord? st = await _dbService.getClientSearchResponse();
-    print(
-        'newQuestionnaire properties === ${st!.questionnaire.clientProperties!.first.toJson()}');
-    print(
-        'newQuestionnaire vehicles === ${st.questionnaire.clientVehicles!.first.toJson()}');
+    printWrapped(
+        'newQuestionnaire last >>>>>>>>> === ${st!.questionnaire.toJson()}');
     await _dbService.updateCurrentStage(5);
     final newData = await _dbService.getClientSearchResponse();
     if (newData != null) {

@@ -373,12 +373,17 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                 !isVehiclesErrorVisible &&
                                 !isPropertiesErrorVisible) {
                               _formGlobalKey.currentState?.save();
-                              final questionnaire = (context
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 200,
+                                ),
+                              );
+                              final questionnaire = await (context
                                       .read<QuestionnaireBloc>()
                                       .state as QuestionnaireFoundSuccess)
                                   .questionnaire;
                               context.read<QuestionnaireBloc>().add(
-                                  SavePropertiesData(
+                                  await SavePropertiesData(
                                       properties.first.marketValue.text != ""
                                           ? properties
                                           : [],
@@ -386,7 +391,11 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                           ? vehicles
                                           : [],
                                       questionnaire));
-
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 200,
+                                ),
+                              );
                               context
                                   .read<QuestionnaireBloc>()
                                   .add(await ClientScore('1'));

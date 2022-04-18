@@ -540,76 +540,76 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                                     ?.value,
                                               );
                                             }),
-                                        if (isOwnership)
-                                          Column(
-                                            children: [
-                                              SizedBox(height: 24.h),
-                                              InputWithVariants(
-                                                  name: "type_property",
-                                                  initialValue: state
-                                                      .questionnaire
-                                                      .clientIncome
-                                                      ?.addIncome
-                                                      ?.value,
-                                                  title:
-                                                      "real_estate_type".tr(),
-                                                  onTap: () {
-                                                    ModalHelpers
-                                                        .showModalWithVariants(
-                                                      context,
-                                                      title: "real_estate_type"
-                                                          .tr(),
-                                                      variants: static
-                                                          .dictionaries
-                                                          .typeProperty,
-                                                      onVariantTap: (text) =>
-                                                          _formGlobalKey
-                                                              .currentState
-                                                              ?.fields[
-                                                                  "type_property"]
-                                                              ?.didChange(text),
-                                                      selectedVariant:
-                                                          _formGlobalKey
-                                                              .currentState
-                                                              ?.fields[
-                                                                  "type_property"]
-                                                              ?.value,
-                                                    );
-                                                  }),
-                                              SizedBox(height: 24.h),
-                                              InputWithVariants(
-                                                  name: "type_ownership",
-                                                  initialValue: state
-                                                      .questionnaire
-                                                      .clientIncome
-                                                      ?.addIncomeSource
-                                                      ?.value,
-                                                  title: "type_ownership".tr(),
-                                                  onTap: () {
-                                                    ModalHelpers
-                                                        .showModalWithVariants(
-                                                      context,
-                                                      title:
-                                                          "type_ownership".tr(),
-                                                      variants: static
-                                                          .dictionaries
-                                                          .typeOwnership,
-                                                      onVariantTap: (text) =>
-                                                          _formGlobalKey
-                                                              .currentState
-                                                              ?.fields[
-                                                                  "type_ownership"]
-                                                              ?.didChange(text),
-                                                      selectedVariant:
-                                                          _formGlobalKey
-                                                              .currentState
-                                                              ?.fields[
-                                                                  "type_ownership"]
-                                                              ?.value,
-                                                    );
-                                                  }),
-                                            ],
-                                          ),
+                                        // if (isOwnership)
+                                        //   Column(
+                                        //     children: [
+                                        //       SizedBox(height: 24.h),
+                                        //       InputWithVariants(
+                                        //           name: "type_property",
+                                        //           initialValue: state
+                                        //               .questionnaire
+                                        //               .clientIncome
+                                        //               ?.addIncome
+                                        //               ?.value,
+                                        //           title:
+                                        //               "real_estate_type".tr(),
+                                        //           onTap: () {
+                                        //             ModalHelpers
+                                        //                 .showModalWithVariants(
+                                        //               context,
+                                        //               title: "real_estate_type"
+                                        //                   .tr(),
+                                        //               variants: static
+                                        //                   .dictionaries
+                                        //                   .typeProperty,
+                                        //               onVariantTap: (text) =>
+                                        //                   _formGlobalKey
+                                        //                       .currentState
+                                        //                       ?.fields[
+                                        //                           "type_property"]
+                                        //                       ?.didChange(text),
+                                        //               selectedVariant:
+                                        //                   _formGlobalKey
+                                        //                       .currentState
+                                        //                       ?.fields[
+                                        //                           "type_property"]
+                                        //                       ?.value,
+                                        //             );
+                                        //           }),
+                                        //       SizedBox(height: 24.h),
+                                        //       InputWithVariants(
+                                        //           name: "type_ownership",
+                                        //           initialValue: state
+                                        //               .questionnaire
+                                        //               .clientIncome
+                                        //               ?.addIncomeSource
+                                        //               ?.value,
+                                        //           title: "type_ownership".tr(),
+                                        //           onTap: () {
+                                        //             ModalHelpers
+                                        //                 .showModalWithVariants(
+                                        //               context,
+                                        //               title:
+                                        //                   "type_ownership".tr(),
+                                        //               variants: static
+                                        //                   .dictionaries
+                                        //                   .typeOwnership,
+                                        //               onVariantTap: (text) =>
+                                        //                   _formGlobalKey
+                                        //                       .currentState
+                                        //                       ?.fields[
+                                        //                           "type_ownership"]
+                                        //                       ?.didChange(text),
+                                        //               selectedVariant:
+                                        //                   _formGlobalKey
+                                        //                       .currentState
+                                        //                       ?.fields[
+                                        //                           "type_ownership"]
+                                        //                       ?.value,
+                                        //             );
+                                        //           }),
+                                        //     ],
+                                        //   ),
                                       ],
                                     )
                                   : SizedBox(),

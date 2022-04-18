@@ -1,29 +1,32 @@
-import 'dart:convert';
-
+import 'package:localstorage/localstorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
-  print('>>>>>>>>>>>>>>>>>>> last_name == ${json['last_name']} ');
   printWrapped('console clientSearch =  $json');
   print('------------------------------------------------------');
-  print('------------------------------------------------------');
-  print('console  date == ${formatDateForRequest(json['date_of_birth'])} ');
-  print('console  date == ${formatFormDate(json['date_of_birth'])} ');
-  LocalData().saveJson('client_id', json['client_id'] ?? '');
-  LocalData().saveJson('client_uid', json['client_uid'] ?? '');
-  LocalData().saveJson('pinfl', json['pinfl'] ?? '');
-  LocalData().saveJson('client_code', json['client_code'] ?? '');
+  print('data == ${json['pinfl']} == ${json['verified_phone_number']}');
+  var store = LocalStorage("auth");
+  // String seriaStored = store.getItem("passportSeries");
+  // String numberStored = store.getItem("passportName");
+
+  String pinfl =
+      (json['pinfl'] != null) ? json['pinfl'] : store.getItem("pin_fl");
+
+  LocalData().saveJson('client_id', json['client_id']);
+  LocalData().saveJson('client_uid', json['client_uid']);
+  LocalData().saveJson('pinfl', pinfl);
+  LocalData().saveJson('client_code', json['client_code']);
   Map<String, dynamic> clientData = {
-    "last_name": json['last_name'] ?? '',
+    "last_name": json['last_name'],
     "country_birth": json['birth_place']['country'],
     "code_filial":
         json['filial'] != null ? json['filial']['code'] ?? '1' : null,
-    "first_name": json['first_name'] ?? '',
+    "first_name": json['first_name'],
     "doc_type": json['document']['type'],
     "email": json['email'],
     "doc_end_date": json['document']['end_date'],
-    "pnfl": json['pinfl'],
+    "pnfl": pinfl,
     "inn": json['tin'],
     "client_id": json['client_id'],
     "residence_county": json['residence_country'],
@@ -45,10 +48,12 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "status": 'не знаю что такое status',
     "residency": json['residency'],
     "education": json['education'],
-    "citizenship": int.parse(json['residency']['code']),
+    "citizenship": (json['residency'] == null)
+        ? null
+        : int.parse(json['residency']['code']),
     'client_uid': json['client_uid'],
   };
-
+  print('data222 == ${clientData['pnfl']} == ${clientData['mobile_phone1']}');
   Map<String, dynamic>? clientLivingAddress;
   Map<String, dynamic>? clientRegistrationAddress;
   Map<String, dynamic>? clientTemporaryAddress;

@@ -162,7 +162,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "employer_tin": data.clientJobInfo!.employerId,
       "organization_type": {
         "id": data.clientJobInfo!.typeBusiness,
-        "code": "RETAIL"
+        "code": "${data.clientJobInfo!.typeBusiness}"
       },
       "employment_position_category": {
         "id": data.clientJobInfo!.employmentPositionCategory,
