@@ -49,6 +49,7 @@ class _BankApiClient implements BankApiClient {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ClientScoreResp.fromJson(_result.data!);
+    showApi = _result.data!;
     return value;
   }
 

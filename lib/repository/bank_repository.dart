@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';
@@ -38,7 +39,11 @@ class BankRepository implements IBankRepository {
       print('console clientScore =  ${response.valid}');
       return Right(response);
     } on DioError catch (error) {
-      print('console ошибка $error ');
+      showApi = {
+        'status': error.response!.statusMessage,
+        'message': error.response!.data
+      };
+      print('console ошибка ${error.response} ');
       print(
           'console ошибка clientScore == ${ErrorsResponse.fromJson(error.response!.data).errors}');
       return Left(ErrorsResponse.fromJson(error.response!.data));

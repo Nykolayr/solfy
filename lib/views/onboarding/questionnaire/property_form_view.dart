@@ -382,6 +382,11 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                       .read<QuestionnaireBloc>()
                                       .state as QuestionnaireFoundSuccess)
                                   .questionnaire;
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 200,
+                                ),
+                              );
                               context.read<QuestionnaireBloc>().add(
                                   await SavePropertiesData(
                                       properties.first.marketValue.text != ""
@@ -399,6 +404,11 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                               context
                                   .read<QuestionnaireBloc>()
                                   .add(await ClientScore('1'));
+                              await Future.delayed(
+                                Duration(
+                                  milliseconds: 200,
+                                ),
+                              );
                               context.router
                                   .push(YourRequestCompleteWaitingView());
                             }

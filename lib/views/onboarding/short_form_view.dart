@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
@@ -19,8 +20,11 @@ import 'package:solfy_flutter/widgets/passport_form_fields.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Экран с краткой анкетой пользователя для получения полной с сервера
+
 class ShortFormView extends StatefulWidget {
-  const ShortFormView({Key? key}) : super(key: key);
+  const ShortFormView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ShortFormViewState createState() => _ShortFormViewState();
@@ -33,9 +37,10 @@ class _ShortFormViewState extends State<ShortFormView> {
   String? _seriaStored = "";
   String? _numberStored = "";
   String? _pinflStored = "";
-
+  late LocalStorage store;
   @override
   void initState() {
+    store = LocalStorage("auth");
     super.initState();
   }
 
@@ -43,15 +48,28 @@ class _ShortFormViewState extends State<ShortFormView> {
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
     try {
-      var store = LocalStorage("auth");
       _seriaStored = store.getItem("passportSeries");
       _numberStored = store.getItem("passportName");
       _pinflStored = store.getItem("pin_fl");
-    } catch (e) {}
+      if (_pinflStored == '') print('console LocalStorage error $_pinflStored');
+    } catch (e) {
+      print('console LocalStorage error $e');
+    }
     return Scaffold(
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
-          onTap: () => context.router.replaceAll([BaseTabRoute()]),
+          onTap: () async {
+            if (store.getItem("error") != '') {
+              _seriaStored = "";
+              _numberStored = "";
+              _pinflStored = "";
+              store.setItem("passportSeries", '');
+              store.setItem("passportName", '');
+              store.setItem("pin_fl", '');
+              store.setItem("error", '');
+            }
+            context.router.replaceAll([BaseTabRoute()]);
+          },
           child: Icon(
             SolfyIcons.close,
             color: theme.colors.secondaryItemsColor,

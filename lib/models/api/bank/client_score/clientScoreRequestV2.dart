@@ -3,6 +3,9 @@ import 'package:solfy_flutter/models/api/bank/client_score/client_score_client_p
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
 
+Map<String, dynamic> showMap = {};
+Map<String, dynamic> showApi = {};
+
 Map getMapAdress({
   required ClientScoreClientAddressRequest? adress,
   required int id,
@@ -93,12 +96,14 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     "pinfl": (data.clientData!.pnfl != null && data.clientData!.pnfl != '')
         ? data.clientData!.pnfl
         : await LocalData().loadJson('pinfl'),
-    "client_id":
-        (data.clientData!.clientId != null && data.clientData!.clientId != '')
-            ? data.clientData!.clientId
-            : await LocalData().loadJson('client_id'),
-    "client_code": await LocalData().loadJson('client_code'),
-    "client_uid": await LocalData().loadJson('client_uid'),
+    "client_id": null,
+    // (data.clientData!.clientId != null && data.clientData!.clientId != '')
+    //     ? data.clientData!.clientId
+    //     : await LocalData().loadJson('client_id'),
+    "client_code": null,
+    //  await LocalData().loadJson('client_code'),
+    "client_uid": null,
+    // await LocalData().loadJson('client_uid'),
     "last_name": data.clientData!.lastName,
     "first_name": data.clientData!.firstName,
     "middle_name": data.clientData!.middleName,
@@ -161,8 +166,8 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "employer_name": data.clientJobInfo!.employerName,
       "employer_tin": data.clientJobInfo!.employerId,
       "organization_type": {
-        "id": data.clientJobInfo!.typeBusiness,
-        "code": "${data.clientJobInfo!.typeBusiness}"
+        "id": data.clientJobInfo!.typeFarm,
+        "code": "${data.clientJobInfo!.typeFarm}"
       },
       "employment_position_category": {
         "id": data.clientJobInfo!.employmentPositionCategory,
@@ -202,11 +207,12 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
               "code": "${data.clientIncome!.addIncomeSource}"
             }
     },
-    "realties": realties,
-    "vehicles": vehicles,
+    "realties": (realties == null || realties.isEmpty) ? null : realties,
+    "vehicles": (vehicles == null || vehicles.isEmpty) ? null : vehicles,
     "secret_word": data.secretWord,
   };
   printWrapped('console map >>>>>>>> $map');
+  showMap = map;
   return map;
 }
 

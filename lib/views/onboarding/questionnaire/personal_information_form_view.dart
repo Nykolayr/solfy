@@ -642,8 +642,18 @@ class _PersonalInformationFormViewState
                                     );
                                   }
                                   if (isValid) {
+                                    await Future.delayed(
+                                      Duration(
+                                        milliseconds: 200,
+                                      ),
+                                    );
                                     context.router.push(AddressFormView());
                                     _formGlobalKey.currentState?.save();
+                                    await Future.delayed(
+                                      Duration(
+                                        milliseconds: 200,
+                                      ),
+                                    );
                                     context.read<QuestionnaireBloc>().add(
                                         SavePersonalData(
                                             _formGlobalKey

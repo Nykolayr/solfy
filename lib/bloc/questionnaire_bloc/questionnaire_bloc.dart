@@ -255,10 +255,20 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       codeWord: event.data["code_word"],
     );
     printWrapped('newQuestionnaire === ${newQuestionnaire.toJson()}');
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(2);
     final newData = await _dbService.getClientSearchResponse();
     printWrapped('console newData == ${newData!.toJson()}');
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     if (newData != null) {
       emit(QuestionnaireFoundSuccess(newData.clientSearchResponse,
           newData.questionnaire, newData.currentStage));
@@ -475,8 +485,18 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     }
     print(
         'SaveAddressData555  == ${newQuestionnaire.clientRegistrationAddress!.toJson()}');
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(3);
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     final newData = await _dbService.getClientSearchResponse();
     if (newData != null) {
       emit(QuestionnaireFoundSuccess(
@@ -490,7 +510,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Работа и доходы"
   Future<void> saveJobData(
       Emitter<QuestionnaireState> emit, SaveJobData event) async {
-    print('SaveJobData == ${event.data}');
+    print('SaveJobData >>>>>>>> == ${event.data}');
     final newQuestionnaire = event.questionnaire.copyWith(
         clientJobInfo: (event.questionnaire.clientJobInfo == null)
             ? ClientSearchClientJobInfoResponse(
@@ -552,8 +572,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                   event.data["last_work_experience"],
                 ), //last_work_experience
                 ValueObject(
-                  _staticRepository
-                      .dictionaries.lastWorkExperience?.dictionaryItems
+                  _staticRepository.dictionaries.typeFarm!.dictionaryItems
                       ?.firstWhere(
                           (element) => element.value == event.data["type_farm"],
                           orElse: () => DictionariesDictionaryItemResponse())
@@ -574,6 +593,14 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                 ), //type_business
               )
             : event.questionnaire.clientJobInfo!.copyWith(
+                typeOrganization: ValueObject(
+                  _staticRepository.dictionaries.typeFarm?.dictionaryItems
+                      ?.firstWhere(
+                          (element) => element.value == event.data["farm_type"],
+                          orElse: () => DictionariesDictionaryItemResponse())
+                      .id,
+                  event.data["farm_type"],
+                ),
                 typeActivity: ValueObject(
                   _staticRepository.dictionaries.typeActivity?.dictionaryItems
                       ?.firstWhere(
@@ -720,13 +747,25 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                         event.data["additional_type"],
                       ),
               ));
-
+    event.questionnaire.clientJobInfo!
+        .copyWith(typeOrganization: ValueObject(2, 'lkkd'));
+    print(
+        'typeOrganization111 >>> ${event.questionnaire.clientJobInfo!.typeOrganization}');
     print('clientJobInfo >>>>> == ${newQuestionnaire.clientJobInfo!.toJson()}');
     print('clientIncome >>>>>>> == ${newQuestionnaire.clientIncome!.toJson()}');
-
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     await _dbService.updateQuestionnaire(newQuestionnaire);
     await _dbService.updateCurrentStage(4);
     final newData = await _dbService.getClientSearchResponse();
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     if (newData != null) {
       emit(QuestionnaireFoundSuccess(
         newData.clientSearchResponse,
@@ -739,10 +778,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Ваше имущество"
   Future<void> savePropertiesData(
       Emitter<QuestionnaireState> emit, SavePropertiesData event) async {
-    print(
-        'properties event >>>>>>>>> === ${event.properties.first.marketValue}');
-    print(
-        'vehicles event === >>>>>>>> ${event.vehicles.first.marketValueName}');
     final properties = event.properties
         .map(
           (e) => ClientSearchClientPropertiesItemResponse(
@@ -792,6 +827,11 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         'newQuestionnaire last >>>>>>>>> === ${st!.questionnaire.toJson()}');
     await _dbService.updateCurrentStage(5);
     final newData = await _dbService.getClientSearchResponse();
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     if (newData != null) {
       emit(QuestionnaireFoundSuccess(
         newData.clientSearchResponse,
@@ -804,6 +844,11 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Отправка анкеты
   Future<void> clientScore(
       Emitter<QuestionnaireState> emit, ClientScore event) async {
+    await Future.delayed(
+      Duration(
+        milliseconds: 200,
+      ),
+    );
     final questionnaire =
         (await _dbService.getClientSearchResponse())?.questionnaire;
     printWrapped("console  Отправка анкеты ${questionnaire?.toJson()}");

@@ -55,7 +55,7 @@ class CardStatus extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              width: (172 / 6 * (currentStage - 1)).w,
+                              width: (172 / 4 * (currentStage - 1)).w,
                               height: 4,
                               decoration: BoxDecoration(
                                 color: theme.colors.secondaryItemsColor,

@@ -501,7 +501,11 @@ class _AddressFormViewState extends State<AddressFormView> {
                                             ? FactAddressSelector
                                                 .SameAsTempAddress
                                             : FactAddressSelector.New;
-
+                                    await Future.delayed(
+                                      Duration(
+                                        milliseconds: 200,
+                                      ),
+                                    );
                                     context.read<QuestionnaireBloc>().add(
                                           SaveAddressData(
                                             _formGlobalKey

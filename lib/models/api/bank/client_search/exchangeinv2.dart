@@ -7,16 +7,14 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('------------------------------------------------------');
   print('data == ${json['pinfl']} == ${json['verified_phone_number']}');
   var store = LocalStorage("auth");
-  // String seriaStored = store.getItem("passportSeries");
-  // String numberStored = store.getItem("passportName");
 
   String pinfl =
       (json['pinfl'] != null) ? json['pinfl'] : store.getItem("pin_fl");
 
-  LocalData().saveJson('client_id', json['client_id']);
-  LocalData().saveJson('client_uid', json['client_uid']);
+  LocalData().saveJson('client_id', json['client_id'] ?? '');
+  LocalData().saveJson('client_uid', json['client_uid'] ?? '');
   LocalData().saveJson('pinfl', pinfl);
-  LocalData().saveJson('client_code', json['client_code']);
+  LocalData().saveJson('client_code', json['client_code'] ?? '');
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'],
     "country_birth": json['birth_place']['country'],

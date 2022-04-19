@@ -634,7 +634,11 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                   if (isValid && !isSelectorErrorVisible) {
                                     context.router.push(PropertyFormView());
                                     _formGlobalKey.currentState?.save();
-
+                                    await Future.delayed(
+                                      Duration(
+                                        milliseconds: 200,
+                                      ),
+                                    );
                                     context.read<QuestionnaireBloc>().add(
                                           SaveJobData(
                                             _formGlobalKey
