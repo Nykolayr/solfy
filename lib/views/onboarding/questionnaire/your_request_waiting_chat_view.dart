@@ -2,14 +2,18 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:solfy_flutter/bloc/feed_bloc/feed_bloc.dart';
+import 'package:solfy_flutter/bloc/feeds_bloc/feeds_bloc.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/feed/feeds_view.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
 import 'package:solfy_flutter/widgets/chat_item.dart';
 import 'package:solfy_flutter/widgets/chat_loading_item.dart';
@@ -53,13 +57,28 @@ class _YourRequestWaitingChatViewState
   bool isAnyError = false;
   String? errorMessage;
   String? errorCode;
-
+  bool isTimeOut = true;
+  int timeOut = 30; // secund
+  late FeedsBloc block2;
   @override
   void initState() {
     var store = LocalStorage("auth");
     Timer(Duration(milliseconds: 1000), () {
       setState(() {
         isSecondItemVisible = true;
+      });
+      store.setItem("error", 'error');
+      Timer(Duration(seconds: timeOut), () {
+        setState(() {
+          print('console >>>> timeout == $isTimeOut');
+          if (isTimeOut) {
+            isFinalTextVisible = true;
+            isAnyError = true;
+            errorMessage =
+                'К сожалению, мы не смогли получить информацию о вас. Пожалуйста, попробуйте снова через несколько минут.';
+            errorCode = '907';
+          }
+        });
       });
       Timer(Duration(milliseconds: 1100), () {
         setState(() {
@@ -73,6 +92,7 @@ class _YourRequestWaitingChatViewState
             setState(() {
               store.setItem("error", '');
               isFinalTextVisible = true;
+              isTimeOut = false;
             });
             Timer(
                 Duration(
@@ -96,6 +116,7 @@ class _YourRequestWaitingChatViewState
                     .errors
                     .errors![0]
                     .code;
+                isTimeOut = false;
               });
             });
 
@@ -110,6 +131,7 @@ class _YourRequestWaitingChatViewState
         }
       });
     });
+
     super.initState();
   }
 
@@ -119,7 +141,18 @@ class _YourRequestWaitingChatViewState
     return Scaffold(
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
-          onTap: () => context.router.replaceAll([BaseTabRoute()]),
+          onTap: () async {
+            LocalStorage store = await LocalStorage("auth");
+            store.setItem("passportSeries", '');
+            store.setItem("passportName", '');
+            store.setItem("pin_fl", '');
+            store.setItem("error", '');
+            context.router.pushAndPopUntil(
+              BaseTabRoute(),
+              predicate: (route) => true,
+            );
+            // context.router.replaceAll([BaseTabRoute()]);
+          },
           child: Icon(
             SolfyIcons.close,
             color: theme.colors.secondaryItemsColor,
@@ -219,22 +252,48 @@ class _YourRequestWaitingChatViewState
                                             padding: EdgeInsets.only(right: 16),
                                             child: LongButtonWithText(
                                                 text: "Понятно",
-                                                onTap: () {
-                                                  final bloc = context.read<
-                                                      QuestionnaireBloc>();
-                                                  errorCode = (bloc.state
-                                                          as QuestionnaireFoundError)
-                                                      .errors
-                                                      .errors![0]
-                                                      .code;
+                                                onTap: () async {
+                                                  if (!isTimeOut) {
+                                                    final bloc = context.read<
+                                                        QuestionnaireBloc>();
+                                                    errorCode = (bloc.state
+                                                            as QuestionnaireFoundError)
+                                                        .errors
+                                                        .errors![0]
+                                                        .code;
+                                                  }
                                                   if (errorCode == '907') {
                                                     context.router.replaceAll(
                                                         [ShortFormView()]);
                                                   } else if (errorCode ==
                                                       '906') {
-                                                    context.router.replaceAll(
-                                                        [BaseTabRoute()]);
+                                                    LocalStorage store =
+                                                        await LocalStorage(
+                                                            "auth");
+                                                    store.setItem(
+                                                        "passportSeries", '');
+                                                    store.setItem(
+                                                        "passportName", '');
+                                                    store.setItem("pin_fl", '');
+                                                    store.setItem("error", '');
+                                                    context.router
+                                                        .pushAndPopUntil(
+                                                      BaseTabRoute(),
+                                                      predicate: (route) =>
+                                                          true,
+                                                    );
+                                                    // context.router.replaceAll(
+                                                    //     [BaseTabRoute()]);
                                                   } else {
+                                                    LocalStorage store =
+                                                        await LocalStorage(
+                                                            "auth");
+                                                    store.setItem(
+                                                        "passportSeries", '');
+                                                    store.setItem(
+                                                        "passportName", '');
+                                                    store.setItem("pin_fl", '');
+                                                    store.setItem("error", '');
                                                     context.router.pop();
                                                   }
                                                 }))

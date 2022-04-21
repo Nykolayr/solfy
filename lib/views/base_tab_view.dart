@@ -66,22 +66,30 @@ class _BaseTabViewState extends State<BaseTabView> {
                 switch (index) {
                   case 0:
                     if (tabsRouter.activeIndex != index) {
-                      context.read<BaseTabUpdaterBloc>().add(const UpdateFeed());
+                      context
+                          .read<BaseTabUpdaterBloc>()
+                          .add(const UpdateFeed());
                     }
                     break;
                   case 1:
                     if (tabsRouter.activeIndex != index) {
-                      context.read<BaseTabUpdaterBloc>().add(const UpdateCatalog());
+                      context
+                          .read<BaseTabUpdaterBloc>()
+                          .add(const UpdateCatalog());
                     }
                     break;
                   case 2:
                     if (tabsRouter.activeIndex != index) {
-                      context.read<BaseTabUpdaterBloc>().add(const UpdateWallet());
+                      context
+                          .read<BaseTabUpdaterBloc>()
+                          .add(const UpdateWallet());
                     }
                     break;
                   case 3:
                     if (tabsRouter.activeIndex != index) {
-                      context.read<BaseTabUpdaterBloc>().add(const UpdateProfile());
+                      context
+                          .read<BaseTabUpdaterBloc>()
+                          .add(const UpdateProfile());
                     }
                     break;
                   default:

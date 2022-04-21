@@ -159,44 +159,55 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     },
     "addresses": address,
     "job": {
-      "activity_type": {
-        "id": data.clientJobInfo!.typeActivity,
-        "code": "EMPLOYEE"
-      },
+      "activity_type": (data.clientJobInfo!.typeActivity == null)
+          ? null
+          : {
+              "id": data.clientJobInfo!.typeActivity,
+              "code": data.clientJobInfo!.typeActivity,
+            },
       "employer_name": data.clientJobInfo!.employerName,
       "employer_tin": data.clientJobInfo!.employerId,
-      "organization_type": {
-        "id": data.clientJobInfo!.typeFarm,
-        "code": "${data.clientJobInfo!.typeFarm}"
-      },
-      "employment_position_category": {
-        "id": data.clientJobInfo!.employmentPositionCategory,
-        "code": "SPECIALIST"
-      },
-      "employee_count": {
-        "id": data.clientJobInfo!.workerNumber,
-        "code": "MORE_1000"
-      },
-      "last_work_experience": {
-        "id": data.clientJobInfo!.lastWorkExperience,
-        "code": "MORE_10_YEAR"
-      },
-      "work_experience": {
-        "id": data.clientJobInfo!.lastWorkExperience,
-        "code": "MORE_10_YEAR"
-      }
+      "organization_type": (data.clientJobInfo!.typeFarm == null)
+          ? null
+          : {
+              "id": data.clientJobInfo!.typeFarm,
+              "code": "${data.clientJobInfo!.typeFarm}"
+            },
+      "employment_position_category":
+          (data.clientJobInfo!.employmentPositionCategory == null)
+              ? null
+              : {
+                  "id": data.clientJobInfo!.employmentPositionCategory,
+                  "code": data.clientJobInfo!.employmentPositionCategory,
+                },
+      "employee_count": (data.clientJobInfo!.workerNumber == null)
+          ? null
+          : {
+              "id": data.clientJobInfo!.workerNumber,
+              "code": data.clientJobInfo!.workerNumber,
+            },
+      "last_work_experience": (data.clientJobInfo!.lastWorkExperience == null)
+          ? null
+          : {
+              "id": data.clientJobInfo!.lastWorkExperience,
+              "code": data.clientJobInfo!.lastWorkExperience,
+            },
+      "work_experience": (data.clientJobInfo!.workExperience == null)
+          ? null
+          : {
+              "id": data.clientJobInfo!.workExperience,
+              "code": data.clientJobInfo!.workExperience,
+            }
     },
 
     "income": {
       "monthly_income": data.clientIncome!.monthlyIncome.toString(),
       "monthly_expenses": data.clientIncome!.monthlyExpenses.toString(),
       "loan_expenses": data.clientIncome!.loanExpenses.toString(),
-      "add_income": (data.clientIncome!.addIncome == null)
-          ? null
-          : {
-              "id": data.clientIncome!.addIncome,
-              "code": "${data.clientIncome!.addIncome}"
-            },
+      "add_income": {
+        "id": data.clientIncome!.addIncome,
+        "code": "${data.clientIncome!.addIncome}"
+      },
       "add_income_amount": (data.clientIncome!.addIncomeAmount == null)
           ? null
           : data.clientIncome!.addIncomeAmount.toString(),

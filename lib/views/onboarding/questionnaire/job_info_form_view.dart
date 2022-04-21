@@ -245,7 +245,8 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                         SizedBox(height: 24.h),
                                         InputWithVariants(
                                           name: "category",
-                                          title: "position_category".tr(),
+                                          title: "position_category".tr() +
+                                              'dsewe',
                                           initialValue: state
                                               .questionnaire
                                               .clientJobInfo

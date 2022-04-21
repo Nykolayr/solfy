@@ -52,7 +52,6 @@ class _FeedsViewState extends State<FeedsView> {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
-
     return BlocListener<FeedBloc, FeedState>(
       listener: (context, state) async {
         if (state is FeedLoading) {
@@ -124,7 +123,8 @@ class _FeedsViewState extends State<FeedsView> {
                                         ),
                                       ],
                                     ),
-                                    child: CardStatus(state.wallet.walletStatus),
+                                    child:
+                                        CardStatus(state.wallet.walletStatus),
                                   )
                                 : SizedBox(),
                             state.wallet.walletStatus.status == "active"
@@ -135,7 +135,8 @@ class _FeedsViewState extends State<FeedsView> {
                               padding: EdgeInsets.symmetric(horizontal: 16.w),
                               child: SearchInput(
                                 hintText: "store_or_category".tr(),
-                                onTap: () => context.router.push(auto.SearchStoresRoute()),
+                                onTap: () => context.router
+                                    .push(auto.SearchStoresRoute()),
                               ),
                             ),
                             SizedBox(height: 20.h),
@@ -145,7 +146,8 @@ class _FeedsViewState extends State<FeedsView> {
                               itemCount: state.feeds.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: EdgeInsets.only(bottom: 12.h),
-                                child: FeedShortItem(state.feeds[index].getModel()),
+                                child: FeedShortItem(
+                                    state.feeds[index].getModel()),
                               ),
                             ),
                           ],

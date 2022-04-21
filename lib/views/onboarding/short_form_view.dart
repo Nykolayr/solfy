@@ -51,10 +51,8 @@ class _ShortFormViewState extends State<ShortFormView> {
       _seriaStored = store.getItem("passportSeries");
       _numberStored = store.getItem("passportName");
       _pinflStored = store.getItem("pin_fl");
-      if (_pinflStored == '') print('console LocalStorage error $_pinflStored');
-    } catch (e) {
-      print('console LocalStorage error $e');
-    }
+      if (_pinflStored == '') print('LocalStorage error $_pinflStored');
+    } catch (e) {}
     return Scaffold(
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
@@ -68,6 +66,7 @@ class _ShortFormViewState extends State<ShortFormView> {
               store.setItem("pin_fl", '');
               store.setItem("error", '');
             }
+
             context.router.replaceAll([BaseTabRoute()]);
           },
           child: Icon(
