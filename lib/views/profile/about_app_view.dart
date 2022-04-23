@@ -108,32 +108,33 @@ class AboutAppView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16.h),
-                  Text('Ответ сервера:'),
-                  SizedBox(height: 16.h),
-                  Column(
-                    children: showApi.entries
-                        .map(
-                          (e) => paer(
-                            e.key,
-                            e.value,
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  SizedBox(height: 16.h),
-                  Text('Отправляемые данные'),
-                  SizedBox(height: 16.h),
-                  Column(
-                    children: showMap.entries
-                        .map(
-                          (e) => paer(
-                            e.key,
-                            e.value,
-                          ),
-                        )
-                        .toList(),
-                  ),
+                  // TODO  ответ сервера и выходные данные
+                  // SizedBox(height: 16.h),
+                  // Text('Ответ сервера:'),
+                  // SizedBox(height: 16.h),
+                  // Column(
+                  //   children: showApi.entries
+                  //       .map(
+                  //         (e) => paer(
+                  //           e.key,
+                  //           e.value,
+                  //         ),
+                  //       )
+                  //       .toList(),
+                  // ),
+                  // SizedBox(height: 16.h),
+                  // Text('Отправляемые данные'),
+                  // SizedBox(height: 16.h),
+                  // Column(
+                  //   children: showMap.entries
+                  //       .map(
+                  //         (e) => paer(
+                  //           e.key,
+                  //           e.value,
+                  //         ),
+                  //       )
+                  //       .toList(),
+                  // ),
                 ],
               ),
             ),
