@@ -3,9 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
+  print('------------------------------------------------------');
   printWrapped('console clientSearch =  $json');
   print('------------------------------------------------------');
   print('data == ${json['pinfl']} == ${json['verified_phone_number']}');
+
   var store = LocalStorage("auth");
 
   String pinfl =
@@ -124,11 +126,14 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
         ? null
         : int.parse(income['monthly_expenses']),
   };
+  Map tempHasChildren = json['has_children'];
 
+  int countChildren = 0;
+  if (tempHasChildren['id'] == 1) countChildren = json['children_count'];
   Map<String, dynamic> clientFamilyData = {
     "marital_status": json['marital_status'],
     "children": json['has_children'],
-    "children_number": json['children_count'],
+    "children_number": countChildren,
   };
 
   Map<String, dynamic> job = json['job'];
@@ -192,6 +197,8 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     clientInsurances = null;
   }
 
+  printWrapped('out clientData === clientFamilyData');
+  print('------------------------------------------------------');
   return {
     'clientData': clientData,
     'clientLivingAddress': clientLivingAddress,

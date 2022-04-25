@@ -567,6 +567,13 @@ class _PersonalInformationFormViewState
                                         FormInputWithText(
                                           "children_number",
                                           validators: [
+                                            (text) {
+                                              if (text!.trim() == '0') {
+                                                return "Пожалуйста, заполните поле ненулевым количеством";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
                                             FormBuilderValidators.required(
                                                 context,
                                                 errorText:

@@ -118,7 +118,12 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                 formatFormDate(response.right.clientData?.docIssueDate),
             docEndDate: formatFormDate(response.right.clientData?.docEndDate),
           );
-          printWrapped('clientData >>>>>>>==== $clientData');
+          print('-------------------------------------');
+          printWrapped('clientData >>>>>>>==== ${clientData}');
+          print('-------------------------------------');
+          printWrapped(
+              'clientFamilyData >>>>>>>==== ${response.right.clientFamilyData}');
+          print('-------------------------------------');
           await _dbService.saveClientSearchResponse(
               response.right.copyWith(clientData: clientData));
           final dbResponse = await _dbService.getClientSearchResponse();
@@ -140,6 +145,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Персональные данные"
   Future<void> savePersonalData(
       Emitter<QuestionnaireState> emit, SavePersonalData event) async {
+    printWrapped('console step1 === ${event.data}');
+    print(
+        'console ------------------------------------------------------------');
     ValueObject countryBirth = ValueObject(
       _staticRepository.geo.countryItems
           ?.firstWhere((element) =>
@@ -274,7 +282,15 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ),
       codeWord: event.data["code_word"],
     );
-    printWrapped('newQuestionnaire === ${newQuestionnaire.toJson()}');
+    print(
+        'console ------------------------------------------------------------');
+    printWrapped('clientData === ${newQuestionnaire.clientData!.toJson()}');
+    print(
+        'console ------------------------------------------------------------');
+    printWrapped(
+        'clientFamilyData === ${newQuestionnaire.clientFamilyData!.toJson()}');
+    print(
+        'console ------------------------------------------------------------');
     await Future.delayed(
       Duration(
         milliseconds: 200,
