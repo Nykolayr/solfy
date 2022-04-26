@@ -166,11 +166,11 @@ class _YourRequestWaitingChatViewState
       body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SizedBox(
-            height: 700,
+            height: MediaQuery.of(context).size.height - 140,
             child: ListView(
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height - 90,
+                    height: MediaQuery.of(context).size.height - 140,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
