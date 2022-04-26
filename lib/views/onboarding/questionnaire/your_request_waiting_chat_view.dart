@@ -69,16 +69,17 @@ class _YourRequestWaitingChatViewState
       });
       store.setItem("error", 'error');
       Timer(Duration(seconds: timeOut), () {
-        setState(() {
-          print('console >>>> timeout == $isTimeOut');
-          if (isTimeOut) {
+        if (isTimeOut) {
+          setState(() {
+            print('console >>>> timeout == $isTimeOut');
+
             isFinalTextVisible = true;
             isAnyError = true;
             errorMessage =
                 'К сожалению, мы не смогли получить информацию о вас. Пожалуйста, попробуйте снова через несколько минут.';
             errorCode = '907';
-          }
-        });
+          });
+        }
       });
       Timer(Duration(milliseconds: 1100), () {
         setState(() {
@@ -166,11 +167,11 @@ class _YourRequestWaitingChatViewState
       body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height - 120,
+            height: MediaQuery.of(context).size.height - 115,
             child: ListView(
               children: [
                 SizedBox(
-                    height: MediaQuery.of(context).size.height - 120,
+                    height: MediaQuery.of(context).size.height - 115,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

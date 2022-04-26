@@ -124,9 +124,22 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           printWrapped(
               'clientFamilyData >>>>>>>==== ${response.right.clientFamilyData}');
           print('-------------------------------------');
-          await _dbService.saveClientSearchResponse(
-              response.right.copyWith(clientData: clientData));
+          await _dbService.saveClientSearchResponse(response.right.copyWith(
+            clientData: clientData,
+          ));
+          await Future.delayed(
+            Duration(
+              milliseconds: 100,
+            ),
+          );
           final dbResponse = await _dbService.getClientSearchResponse();
+          await Future.delayed(
+            Duration(
+              milliseconds: 100,
+            ),
+          );
+          printWrapped('clientData dbResponse2222 >>>>>>>==== ${dbResponse}');
+
           if (dbResponse != null) {
             emit(QuestionnaireFoundSuccess(
               dbResponse.clientSearchResponse,

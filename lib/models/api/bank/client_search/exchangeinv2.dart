@@ -126,16 +126,16 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
         ? null
         : int.parse(income['monthly_expenses']),
   };
-  Map tempHasChildren = json['has_children'];
-
   int countChildren = 0;
-  if (tempHasChildren['id'] == 1) countChildren = json['children_count'];
+  if (json['has_children'] != null) {
+    Map tempHasChildren = json['has_children'];
+    if (tempHasChildren['id'] == 1) countChildren = json['children_count'];
+  }
   Map<String, dynamic> clientFamilyData = {
     "marital_status": json['marital_status'],
     "children": json['has_children'],
     "children_number": countChildren,
   };
-
   Map<String, dynamic> job = json['job'];
 
   Map<String, dynamic> clientJobInfo = {
