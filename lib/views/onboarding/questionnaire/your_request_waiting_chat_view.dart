@@ -3,15 +3,18 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:solfy_flutter/bloc/feed_bloc/feed_bloc.dart';
 import 'package:solfy_flutter/bloc/feeds_bloc/feeds_bloc.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/feed/feeds_view.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
 import 'package:solfy_flutter/widgets/chat_item.dart';
 import 'package:solfy_flutter/widgets/chat_loading_item.dart';
@@ -56,25 +59,27 @@ class _YourRequestWaitingChatViewState
   String? errorMessage;
   String? errorCode;
   bool isTimeOut = true;
-  int timeOut = 30; // seconds
+  int timeOut = 30; // secund
   late FeedsBloc block2;
   @override
   void initState() {
+    var store = LocalStorage("auth");
     Timer(Duration(milliseconds: 1000), () {
       setState(() {
         isSecondItemVisible = true;
       });
-      LocalData().saveJson("error", 'error');
+      store.setItem("error", 'error');
       Timer(Duration(seconds: timeOut), () {
-        if (isTimeOut) {
-          setState(() {
+        setState(() {
+          print('console >>>> timeout == $isTimeOut');
+          if (isTimeOut) {
             isFinalTextVisible = true;
             isAnyError = true;
             errorMessage =
                 'К сожалению, мы не смогли получить информацию о вас. Пожалуйста, попробуйте снова через несколько минут.';
             errorCode = '907';
-          });
-        }
+          }
+        });
       });
       Timer(Duration(milliseconds: 1100), () {
         setState(() {
@@ -86,7 +91,7 @@ class _YourRequestWaitingChatViewState
         if (bloc.state is QuestionnaireFoundSuccess) {
           Timer(Duration(milliseconds: 1300), () {
             setState(() {
-              LocalData().saveJson("error", '');
+              store.setItem("error", '');
               isFinalTextVisible = true;
               isTimeOut = false;
             });
@@ -99,7 +104,7 @@ class _YourRequestWaitingChatViewState
           });
         } else {
           if (bloc.state is QuestionnaireFoundError) {
-            LocalData().saveJson("error", 'error');
+            store.setItem("error", 'error');
             Timer(Duration(seconds: 2), () {
               setState(() {
                 isFinalTextVisible = true;
@@ -127,7 +132,6 @@ class _YourRequestWaitingChatViewState
         }
       });
     });
-
     super.initState();
   }
 
