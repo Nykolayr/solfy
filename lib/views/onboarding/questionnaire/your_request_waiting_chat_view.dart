@@ -68,16 +68,17 @@ class _YourRequestWaitingChatViewState
       });
       store.setItem("error", 'error');
       Timer(Duration(seconds: timeOut), () {
-        setState(() {
-          print('console >>>> timeout == $isTimeOut');
-          if (isTimeOut) {
+        if (isTimeOut) {
+          setState(() {
+            print('console >>>> timeout == $isTimeOut');
+
             isFinalTextVisible = true;
             isAnyError = true;
             errorMessage =
                 'К сожалению, мы не смогли получить информацию о вас. Пожалуйста, попробуйте снова через несколько минут.';
             errorCode = '907';
-          }
-        });
+          });
+        }
       });
       Timer(Duration(milliseconds: 1100), () {
         setState(() {
@@ -100,33 +101,32 @@ class _YourRequestWaitingChatViewState
               context.router.replaceAll([YourRequestView()]);
             });
           });
-        } else {
-          if (bloc.state is QuestionnaireFoundError) {
-            store.setItem("error", 'error');
-            Timer(Duration(seconds: 2), () {
-              setState(() {
-                isFinalTextVisible = true;
-                isAnyError = true;
-                errorMessage = (bloc.state as QuestionnaireFoundError)
-                    .errors
-                    .errors![0]
-                    .message;
-                errorCode = (bloc.state as QuestionnaireFoundError)
-                    .errors
-                    .errors![0]
-                    .code;
-                isTimeOut = false;
-              });
+        }
+        if (bloc.state is QuestionnaireFoundError) {
+          store.setItem("error", 'error');
+          Timer(Duration(seconds: 2), () {
+            setState(() {
+              isFinalTextVisible = true;
+              isAnyError = true;
+              errorMessage = (bloc.state as QuestionnaireFoundError)
+                  .errors
+                  .errors![0]
+                  .message;
+              errorCode = (bloc.state as QuestionnaireFoundError)
+                  .errors
+                  .errors![0]
+                  .code;
+              isTimeOut = false;
             });
+          });
 
-            ModalHelpers.showError(
-                    context, (bloc.state as QuestionnaireFoundError).errors)
-                .then((value) {
-              Timer(Duration(seconds: 6), () {
-                //context.router.pop();
-              });
+          ModalHelpers.showError(
+                  context, (bloc.state as QuestionnaireFoundError).errors)
+              .then((value) {
+            Timer(Duration(seconds: 6), () {
+              //context.router.pop();
             });
-          }
+          });
         }
       });
     });
@@ -260,6 +260,8 @@ class _YourRequestWaitingChatViewState
                                                 .code;
                                           }
                                           if (errorCode == '907') {
+                                            var store = LocalStorage("auth");
+                                            store.setItem("error", 'error');
                                             context.router
                                                 .replaceAll([ShortFormView()]);
                                           } else if (errorCode == '906') {

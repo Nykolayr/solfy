@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
@@ -19,6 +20,10 @@ import 'package:solfy_flutter/widgets/passport_form_fields.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Экран с краткой анкетой пользователя для получения полной с сервера
+String? seriaStored = "";
+String? numberStored = "";
+String? pinflStored = "";
+bool errorChat = false;
 
 class ShortFormView extends StatefulWidget {
   const ShortFormView({
@@ -30,6 +35,18 @@ class ShortFormView extends StatefulWidget {
 }
 
 class _ShortFormViewState extends State<ShortFormView> {
+  getStr() {
+    var store = LocalStorage("auth");
+    if (store.getItem("error") != '') {
+      setState(() {
+        _seriaStored = seriaStored;
+        _numberStored = numberStored;
+        _pinflStored = pinflStored;
+        _formKey.currentState?.activate();
+      });
+    }
+  }
+
   bool validationMode = false;
   bool loadingButtonMode = false;
   final _formKey = GlobalKey<FormBuilderState>();
@@ -38,21 +55,14 @@ class _ShortFormViewState extends State<ShortFormView> {
   String? _pinflStored = "";
   @override
   void initState() {
+    getStr();
     super.initState();
-  }
-
-  getStr() async {
-    _seriaStored = await LocalData().loadJson("passportSeries");
-    _numberStored = await LocalData().loadJson("passportName");
-    _pinflStored = await LocalData().loadJson("pin_fl");
   }
 
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
-    try {} catch (e) {
-      getStr();
-    }
+
     return Scaffold(
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
@@ -61,6 +71,9 @@ class _ShortFormViewState extends State<ShortFormView> {
               _seriaStored = "";
               _numberStored = "";
               _pinflStored = "";
+              seriaStored = _seriaStored;
+              numberStored = _numberStored;
+              pinflStored = _pinflStored;
               LocalData().saveJson("passportSeries", '');
               LocalData().saveJson("passportName", '');
               LocalData().saveJson("pin_fl", '');
@@ -102,6 +115,11 @@ class _ShortFormViewState extends State<ShortFormView> {
                       });
                       if (isValid) {
                         _formKey.currentState?.save();
+                        seriaStored =
+                            _formKey.currentState?.value["passportSeries"];
+                        numberStored =
+                            _formKey.currentState?.value["passportName"];
+                        pinflStored = _formKey.currentState?.value["pin_fl"];
                         LocalData().saveJson("passportSeries",
                             _formKey.currentState?.value["passportSeries"]);
                         LocalData().saveJson("passportName",
