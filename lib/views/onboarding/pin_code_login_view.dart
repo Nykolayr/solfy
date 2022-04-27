@@ -69,12 +69,14 @@ class _PinCodeLoginViewState extends State<PinCodeLoginView> {
                     return VirtualKeyboard(
                       maxLength: _pinCodeLength,
                       textController: _textController,
-                      biometricType: state is AvailableBiometricType ? state.type : null,
+                      biometricType:
+                          state is AvailableBiometricType ? state.type : null,
                       additionalButton: GestureDetector(
                         onTap: () => ModalHelpers.showLogoutModal(context),
                         child: Text(
-                          "Выйти",
-                          style: theme.textStyles.virtualKeyboardText.copyWith(fontSize: 14.sp),
+                          "log_out".tr(),
+                          style: theme.textStyles.virtualKeyboardText
+                              .copyWith(fontSize: 14.sp),
                         ),
                       ),
                     );

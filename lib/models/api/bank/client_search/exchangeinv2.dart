@@ -1,4 +1,3 @@
-import 'package:localstorage/localstorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 
@@ -8,10 +7,8 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   print('------------------------------------------------------');
   print('data == ${json['pinfl']} == ${json['verified_phone_number']}');
 
-  var store = LocalStorage("auth");
-
   String pinfl =
-      (json['pinfl'] != null) ? json['pinfl'] : store.getItem("pin_fl");
+      (json['pinfl'] != null) ? json['pinfl'] : LocalData().loadJson("pin_fl");
 
   LocalData().saveJson('client_id', json['client_id'] ?? '');
   LocalData().saveJson('client_uid', json['client_uid'] ?? '');

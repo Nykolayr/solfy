@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
@@ -37,36 +36,36 @@ class _ShortFormViewState extends State<ShortFormView> {
   String? _seriaStored = "";
   String? _numberStored = "";
   String? _pinflStored = "";
-  late LocalStorage store;
   @override
   void initState() {
-    store = LocalStorage("auth");
     super.initState();
+  }
+
+  getStr() async {
+    _seriaStored = await LocalData().loadJson("passportSeries");
+    _numberStored = await LocalData().loadJson("passportName");
+    _pinflStored = await LocalData().loadJson("pin_fl");
   }
 
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
-    try {
-      _seriaStored = store.getItem("passportSeries");
-      _numberStored = store.getItem("passportName");
-      _pinflStored = store.getItem("pin_fl");
-      if (_pinflStored == '') print('LocalStorage error $_pinflStored');
-    } catch (e) {}
+    try {} catch (e) {
+      getStr();
+    }
     return Scaffold(
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
           onTap: () async {
-            if (store.getItem("error") != '') {
+            if (LocalData().loadJson("passportSeries") != '') {
               _seriaStored = "";
               _numberStored = "";
               _pinflStored = "";
-              store.setItem("passportSeries", '');
-              store.setItem("passportName", '');
-              store.setItem("pin_fl", '');
-              store.setItem("error", '');
+              LocalData().saveJson("passportSeries", '');
+              LocalData().saveJson("passportName", '');
+              LocalData().saveJson("pin_fl", '');
+              LocalData().saveJson("error", '');
             }
-
             context.router.replaceAll([BaseTabRoute()]);
           },
           child: Icon(
@@ -103,12 +102,11 @@ class _ShortFormViewState extends State<ShortFormView> {
                       });
                       if (isValid) {
                         _formKey.currentState?.save();
-                        var store = LocalStorage("auth");
-                        store.setItem("passportSeries",
+                        LocalData().saveJson("passportSeries",
                             _formKey.currentState?.value["passportSeries"]);
-                        store.setItem("passportName",
+                        LocalData().saveJson("passportName",
                             _formKey.currentState?.value["passportName"]);
-                        store.setItem(
+                        LocalData().saveJson(
                             "pin_fl", _formKey.currentState?.value["pin_fl"]);
                         context.read<QuestionnaireBloc>().add(
                               ClientSearch(

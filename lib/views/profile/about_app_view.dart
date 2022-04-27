@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
-import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 import 'package:solfy_flutter/models/enums.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/custom_divider.dart';

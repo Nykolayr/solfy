@@ -139,8 +139,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ),
           );
           printWrapped('clientData dbResponse2222 >>>>>>>==== ${dbResponse}');
-
           if (dbResponse != null) {
+            printWrapped('clientData success');
             emit(QuestionnaireFoundSuccess(
               dbResponse.clientSearchResponse,
               dbResponse.questionnaire,

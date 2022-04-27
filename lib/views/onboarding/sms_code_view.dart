@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:solfy_flutter/bloc/sms_code_bloc/sms_code_bloc.dart';
@@ -134,7 +133,8 @@ class _SmsCodeViewState extends State<SmsCodeView> {
                         if (state is ValidationError && _errorVisible) {
                           return Text(
                             state.errors.errors?.first.message ?? "",
-                            style: theme.textStyles.descriptionText.copyWith(color: Colors.red),
+                            style: theme.textStyles.descriptionText
+                                .copyWith(color: Colors.red),
                             textAlign: TextAlign.center,
                           );
                         }
@@ -162,7 +162,8 @@ class _SmsCodeViewState extends State<SmsCodeView> {
                           ),
                           TextSpan(text: 'и выражаю моё '),
                           TextSpan(
-                            text: 'согласие на обработку моих\nперсональных данных',
+                            text:
+                                'согласие на обработку моих\nперсональных данных',
                             style: theme.textStyles.descriptionTextClickable,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () => ModalHelpers.showAgreementModal(

@@ -3,17 +3,15 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:solfy_flutter/bloc/feed_bloc/feed_bloc.dart';
 import 'package:solfy_flutter/bloc/feeds_bloc/feeds_bloc.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
+import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
-import 'package:solfy_flutter/views/feed/feeds_view.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
 import 'package:solfy_flutter/widgets/chat_item.dart';
 import 'package:solfy_flutter/widgets/chat_loading_item.dart';
@@ -58,21 +56,18 @@ class _YourRequestWaitingChatViewState
   String? errorMessage;
   String? errorCode;
   bool isTimeOut = true;
-  int timeOut = 30; // secund
+  int timeOut = 30; // seconds
   late FeedsBloc block2;
   @override
   void initState() {
-    var store = LocalStorage("auth");
     Timer(Duration(milliseconds: 1000), () {
       setState(() {
         isSecondItemVisible = true;
       });
-      store.setItem("error", 'error');
+      LocalData().saveJson("error", 'error');
       Timer(Duration(seconds: timeOut), () {
         if (isTimeOut) {
           setState(() {
-            print('console >>>> timeout == $isTimeOut');
-
             isFinalTextVisible = true;
             isAnyError = true;
             errorMessage =
@@ -91,7 +86,7 @@ class _YourRequestWaitingChatViewState
         if (bloc.state is QuestionnaireFoundSuccess) {
           Timer(Duration(milliseconds: 1300), () {
             setState(() {
-              store.setItem("error", '');
+              LocalData().saveJson("error", '');
               isFinalTextVisible = true;
               isTimeOut = false;
             });
@@ -104,7 +99,7 @@ class _YourRequestWaitingChatViewState
           });
         } else {
           if (bloc.state is QuestionnaireFoundError) {
-            store.setItem("error", 'error');
+            LocalData().saveJson("error", 'error');
             Timer(Duration(seconds: 2), () {
               setState(() {
                 isFinalTextVisible = true;
@@ -143,11 +138,10 @@ class _YourRequestWaitingChatViewState
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
           onTap: () async {
-            LocalStorage store = await LocalStorage("auth");
-            store.setItem("passportSeries", '');
-            store.setItem("passportName", '');
-            store.setItem("pin_fl", '');
-            store.setItem("error", '');
+            LocalData().saveJson("passportSeries", '');
+            LocalData().saveJson("passportName", '');
+            LocalData().saveJson("pin_fl", '');
+            LocalData().saveJson("error", '');
             context.router.pushAndPopUntil(
               BaseTabRoute(),
               predicate: (route) => true,
@@ -164,151 +158,141 @@ class _YourRequestWaitingChatViewState
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
       ),
-      body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 115,
-            child: ListView(
-              children: [
-                SizedBox(
-                    height: MediaQuery.of(context).size.height - 115,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SafeArea(
+        maintainBottomViewPadding: true,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: double.infinity,
+                child: Text(
+                  "your_application".tr(),
+                  style: theme.textStyles.mainBigText,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                padding: EdgeInsets.only(
+                  bottom: 12,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          child: Text(
-                            "your_application".tr(),
-                            style: theme.textStyles.mainBigText,
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
+                        theme.icons.logoSmallChat,
+                        SizedBox(width: 8.w),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                theme.icons.logoSmallChat,
-                                SizedBox(width: 8.w),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ChatItem("checking_data".tr(),
-                                        radius: radiusFirst),
-                                    SizedBox(height: 4.h),
-                                    isSecondItemVisible
-                                        ? Column(
-                                            children: [
-                                              ChatItem(
-                                                  "making_a_request_to_the_traffic_police"
-                                                      .tr(),
-                                                  radius: radiusMiddle),
-                                              SizedBox(height: 4.h),
-                                            ],
-                                          )
-                                        : SizedBox(),
-                                    isStartLoadingVisible
-                                        ? ChatLoadingItem(radius: radiusLast)
-                                        : SizedBox(),
-                                    isThirdItemVisible
-                                        ? ChatItem(
-                                            "receiving_data_from_the_pension_fund"
-                                                .tr(),
-                                            radius: radiusLast,
-                                            height: 72,
-                                          )
-                                        : SizedBox(),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 24.h),
-                            isFinalLoadingVisible
-                                ? Column(children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        theme.icons.logoSmallChat,
-                                        SizedBox(width: 8.w),
-                                        isFinalTextVisible
-                                            ? ChatItem(
-                                                !isAnyError
-                                                    ? "thanks_can_continue".tr()
-                                                    : errorMessage!,
-                                                radius: radiusMiddle,
-                                              )
-                                            : ChatLoadingItem(
-                                                radius: radiusMiddle),
-                                      ],
-                                    ),
-                                    isAnyError
-                                        ? SizedBox(
-                                            height: 44,
-                                          )
-                                        : Container(),
-                                    isAnyError
-                                        ? Padding(
-                                            padding: EdgeInsets.only(right: 16),
-                                            child: LongButtonWithText(
-                                                text: "Понятно",
-                                                onTap: () async {
-                                                  if (!isTimeOut) {
-                                                    final bloc = context.read<
-                                                        QuestionnaireBloc>();
-                                                    errorCode = (bloc.state
-                                                            as QuestionnaireFoundError)
-                                                        .errors
-                                                        .errors![0]
-                                                        .code;
-                                                  }
-                                                  if (errorCode == '907') {
-                                                    context.router.replaceAll(
-                                                        [ShortFormView()]);
-                                                  } else if (errorCode ==
-                                                      '906') {
-                                                    LocalStorage store =
-                                                        await LocalStorage(
-                                                            "auth");
-                                                    store.setItem(
-                                                        "passportSeries", '');
-                                                    store.setItem(
-                                                        "passportName", '');
-                                                    store.setItem("pin_fl", '');
-                                                    store.setItem("error", '');
-                                                    context.router
-                                                        .pushAndPopUntil(
-                                                      BaseTabRoute(),
-                                                      predicate: (route) =>
-                                                          true,
-                                                    );
-                                                    // context.router.replaceAll(
-                                                    //     [BaseTabRoute()]);
-                                                  } else {
-                                                    LocalStorage store =
-                                                        await LocalStorage(
-                                                            "auth");
-                                                    store.setItem(
-                                                        "passportSeries", '');
-                                                    store.setItem(
-                                                        "passportName", '');
-                                                    store.setItem("pin_fl", '');
-                                                    store.setItem("error", '');
-                                                    context.router.pop();
-                                                  }
-                                                }))
-                                        : Container()
-                                  ])
+                            ChatItem("checking_data".tr(), radius: radiusFirst),
+                            SizedBox(height: 4.h),
+                            isSecondItemVisible
+                                ? Column(
+                                    children: [
+                                      ChatItem(
+                                          "making_a_request_to_the_traffic_police"
+                                              .tr(),
+                                          radius: radiusMiddle),
+                                      SizedBox(height: 4.h),
+                                    ],
+                                  )
+                                : SizedBox(),
+                            isStartLoadingVisible
+                                ? ChatLoadingItem(radius: radiusLast)
+                                : SizedBox(),
+                            isThirdItemVisible
+                                ? ChatItem(
+                                    "receiving_data_from_the_pension_fund".tr(),
+                                    radius: radiusLast,
+                                    height: 72,
+                                  )
                                 : SizedBox(),
                           ],
                         ),
                       ],
-                    ))
-              ],
-            ),
-          )),
+                    ),
+                    SizedBox(height: 24.h),
+                    isFinalLoadingVisible
+                        ? Column(children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                theme.icons.logoSmallChat,
+                                SizedBox(width: 8.w),
+                                isFinalTextVisible
+                                    ? ChatItem(
+                                        !isAnyError
+                                            ? "thanks_can_continue".tr()
+                                            : errorMessage!,
+                                        radius: radiusMiddle,
+                                      )
+                                    : ChatLoadingItem(radius: radiusMiddle),
+                              ],
+                            ),
+                            isAnyError
+                                ? SizedBox(
+                                    height: 44,
+                                  )
+                                : Container(),
+                            isAnyError
+                                ? Padding(
+                                    padding: EdgeInsets.only(right: 16),
+                                    child: LongButtonWithText(
+                                        text: "Понятно",
+                                        onTap: () async {
+                                          if (!isTimeOut) {
+                                            final bloc = context
+                                                .read<QuestionnaireBloc>();
+                                            errorCode = (bloc.state
+                                                    as QuestionnaireFoundError)
+                                                .errors
+                                                .errors![0]
+                                                .code;
+                                          }
+                                          if (errorCode == '907') {
+                                            context.router
+                                                .replaceAll([ShortFormView()]);
+                                          } else if (errorCode == '906') {
+                                            LocalData()
+                                                .saveJson("passportSeries", '');
+                                            LocalData()
+                                                .saveJson("passportName", '');
+                                            LocalData().saveJson("pin_fl", '');
+                                            LocalData().saveJson("error", '');
+                                            context.router.pushAndPopUntil(
+                                              BaseTabRoute(),
+                                              predicate: (route) => true,
+                                            );
+                                            // context.router.replaceAll(
+                                            //     [BaseTabRoute()]);
+                                          } else {
+                                            LocalData()
+                                                .saveJson("passportSeries", '');
+                                            LocalData()
+                                                .saveJson("passportName", '');
+                                            LocalData().saveJson("pin_fl", '');
+                                            LocalData().saveJson("error", '');
+                                            context.router.pop();
+                                          }
+                                        }))
+                                : Container()
+                          ])
+                        : SizedBox(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
