@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/catalog/points/points_point_item_response.dart';
 import 'package:solfy_flutter/models/entities/catalog/point_item_view_model.dart';
 

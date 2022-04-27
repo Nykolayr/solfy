@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/wallet/schedules/schedules_schedule_item_response.dart';
 
 part 'schedules_response.freezed.dart';

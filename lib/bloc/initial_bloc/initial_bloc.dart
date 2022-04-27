@@ -174,6 +174,7 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
       await UserSettingsDbService.saveLocale('uz');
       return Locale('uz');
     }
+    return null;
   }
 
   /// Получаем массив байтов по картинке из ассетов

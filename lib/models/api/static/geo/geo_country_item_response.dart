@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/static/geo/geo_country_response.dart';
 
 part 'geo_country_item_response.freezed.dart';

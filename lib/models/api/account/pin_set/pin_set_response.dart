@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'pin_set_response.freezed.dart';
 part 'pin_set_response.g.dart';
@@ -12,5 +11,6 @@ class PinSetResponse with _$PinSetResponse {
     @JsonKey(name: "target") String? target,
   ) = PinSetResp;
 
-  factory PinSetResponse.fromJson(Map<String, dynamic> json) => _$PinSetResponseFromJson(json);
+  factory PinSetResponse.fromJson(Map<String, dynamic> json) =>
+      _$PinSetResponseFromJson(json);
 }

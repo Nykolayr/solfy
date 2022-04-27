@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/helpers/distance_helper.dart';
 import 'package:solfy_flutter/models/api/catalog/shop/shop_shop_item_response.dart';
 import 'package:solfy_flutter/models/entities/wallet/condition_item_view_model.dart';

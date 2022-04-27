@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_address_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_data_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_client_family_data_response.dart';

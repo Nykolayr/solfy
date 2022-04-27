@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:solfy_flutter/bloc/store_bloc/store_bloc.dart';
 import 'package:solfy_flutter/bloc/store_shops_update_bloc/store_shops_update_bloc.dart';

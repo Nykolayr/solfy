@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'pin_forgot_response.freezed.dart';
 part 'pin_forgot_response.g.dart';

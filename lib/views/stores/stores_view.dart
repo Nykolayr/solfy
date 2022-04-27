@@ -1,17 +1,14 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solfy_flutter/bloc/categories_bloc/categories_bloc.dart';
 import 'package:solfy_flutter/bloc/language_changer_bloc/language_changer_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
-import 'package:solfy_flutter/models/api/catalog/filter_request.dart';
 import 'package:solfy_flutter/repository/catalog_repository.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
@@ -20,7 +17,6 @@ import 'package:solfy_flutter/widgets/categories_stores_list.dart';
 import 'package:solfy_flutter/widgets/filter_icon.dart';
 import 'package:solfy_flutter/widgets/header_app_bar.dart';
 import 'package:solfy_flutter/widgets/map_stores.dart';
-import 'package:solfy_flutter/widgets/no_stores.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Стартовая страница магазинов

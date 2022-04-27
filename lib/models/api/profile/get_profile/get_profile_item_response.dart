@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/profile/get_profile/get_profile_city_item_response.dart';
 import 'package:solfy_flutter/models/api/profile/get_profile/get_profile_language_item_response.dart';
 import 'package:solfy_flutter/models/api/profile/get_profile/get_profile_wallet_item_response.dart';

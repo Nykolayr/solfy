@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'sms_send_response.freezed.dart';
 part 'sms_send_response.g.dart';

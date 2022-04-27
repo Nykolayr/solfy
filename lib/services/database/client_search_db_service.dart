@@ -67,6 +67,7 @@ class ClientSearchDbService {
     if (list.isNotEmpty) {
       return list.first;
     }
+    return null;
   }
 
   /// Получение текущей стадии анкеты

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'get_profile_card_item_response.freezed.dart';
 part 'get_profile_card_item_response.g.dart';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:solfy_flutter/bloc/history_bloc/history_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/styles/themes.dart';

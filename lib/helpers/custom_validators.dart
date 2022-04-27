@@ -12,6 +12,7 @@ class CustomValidators {
       print(e);
       return "Введите валидную дату";
     }
+    return null;
   }
 
   static String? checkIsBeforeCurrentDate(String? date) {
@@ -22,5 +23,6 @@ class CustomValidators {
     } catch (e) {
       return "Введите валидную дату";
     }
+    return null;
   }
 }

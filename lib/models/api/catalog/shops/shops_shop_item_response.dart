@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/catalog/shops/shops_shop_brand_item_response.dart';
 import 'package:solfy_flutter/models/api/catalog/shops/shops_shop_geo_item_response.dart';
 

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/api/static/dictionaries/dictionaries_filial_item_response.dart';
 
 part 'dictionaries_filial_response.freezed.dart';

@@ -6,8 +6,10 @@ class UserSettingsDbService {
   static Database _db = DB.instance;
 
   /// Сохранить гео-данные пользователя
-  static Future<void> saveGeo({int? regionId, int? cityId, bool isMyLocation = false}) async {
-    final List<UserSettingsRecord> list = await _db.select(_db.userSettingsRecords).get();
+  static Future<void> saveGeo(
+      {int? regionId, int? cityId, bool isMyLocation = false}) async {
+    final List<UserSettingsRecord> list =
+        await _db.select(_db.userSettingsRecords).get();
     if (list.isEmpty) {
       await _db.into(_db.userSettingsRecords).insert(
             UserSettingsRecordsCompanion(
@@ -29,7 +31,8 @@ class UserSettingsDbService {
 
   /// Сохранить данные о состоянии режима авторизации по биометрии
   static Future<void> saveBiometric(bool biometric) async {
-    final List<UserSettingsRecord> list = await _db.select(_db.userSettingsRecords).get();
+    final List<UserSettingsRecord> list =
+        await _db.select(_db.userSettingsRecords).get();
     if (list.isEmpty) {
       await _db.into(_db.userSettingsRecords).insert(
             UserSettingsRecordsCompanion(
@@ -47,7 +50,8 @@ class UserSettingsDbService {
 
   /// Сохранить актуальную локализацию
   static Future<void> saveLocale(String locale) async {
-    final List<UserSettingsRecord> list = await _db.select(_db.userSettingsRecords).get();
+    final List<UserSettingsRecord> list =
+        await _db.select(_db.userSettingsRecords).get();
     if (list.isEmpty) {
       await _db.into(_db.userSettingsRecords).insert(
             UserSettingsRecordsCompanion(
@@ -65,7 +69,8 @@ class UserSettingsDbService {
 
   /// Сохранить последние запросы поиска категорий и магазинов
   static Future<void> saveLastQueries(List<String> queries) async {
-    final List<UserSettingsRecord> list = await _db.select(_db.userSettingsRecords).get();
+    final List<UserSettingsRecord> list =
+        await _db.select(_db.userSettingsRecords).get();
     if (list.isEmpty) {
       await _db.into(_db.userSettingsRecords).insert(
             UserSettingsRecordsCompanion(
@@ -87,6 +92,7 @@ class UserSettingsDbService {
     if (list.isNotEmpty) {
       return list.first;
     }
+    return null;
   }
 
   /// Получить текущую локализацию приложения
@@ -109,7 +115,8 @@ class UserSettingsDbService {
 
   /// Очистить записи
   static Future<void> clear() async {
-    final List<UserSettingsRecord> list = await _db.select(_db.userSettingsRecords).get();
+    final List<UserSettingsRecord> list =
+        await _db.select(_db.userSettingsRecords).get();
     list.forEach((element) async {
       await _db.delete(_db.userSettingsRecords).delete(element);
     });

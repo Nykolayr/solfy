@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:solfy_flutter/models/entities/feeds/feed_item_view_model.dart';
 
 part 'brands_feed_item_response.freezed.dart';

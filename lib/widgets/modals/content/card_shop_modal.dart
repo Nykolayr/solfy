@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:solfy_flutter/bloc/store_bloc/store_bloc.dart';
 import 'package:solfy_flutter/bloc/store_shops_update_bloc/store_shops_update_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
