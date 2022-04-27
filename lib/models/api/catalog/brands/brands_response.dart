@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:solfy_flutter/helpers/distance_helper.dart';
 import 'package:solfy_flutter/models/api/catalog/brands/brands_brand_item_response.dart';
