@@ -8,7 +8,7 @@ part of 'bank_api_client.dart';
 
 class _BankApiClient implements BankApiClient {
   _BankApiClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://api-edge.docu.ru/bank/v2/';
+    baseUrl ??= '$apiUrl/bank/v2/';
   }
 
   final Dio _dio;

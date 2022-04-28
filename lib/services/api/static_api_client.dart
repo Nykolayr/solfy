@@ -4,10 +4,11 @@ import 'package:solfy_flutter/models/api/static/agreements/agreement_response.da
 
 import 'package:solfy_flutter/models/api/static/dictionaries/dictionaries_response.dart';
 import 'package:solfy_flutter/models/api/static/geo/geo_response.dart';
+import 'package:solfy_flutter/services/api/const_api.dart';
 
 part 'static_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/static/v1/")
+// @RestApi(baseUrl: "$apiUrl/static/v1/")
 abstract class StaticApiClient {
   factory StaticApiClient(Dio dio, {String baseUrl}) = _StaticApiClient;
 

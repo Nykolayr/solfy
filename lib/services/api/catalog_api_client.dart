@@ -11,9 +11,11 @@ import 'package:solfy_flutter/models/api/catalog/search/search_response.dart';
 import 'package:solfy_flutter/models/api/catalog/shop/shop_response.dart';
 import 'package:solfy_flutter/models/api/catalog/shops/shops_response.dart';
 
+import 'const_api.dart';
+
 part 'catalog_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/catalog/v1/")
+// @RestApi(baseUrl: "$apiUrl/catalog/v1/")
 abstract class CatalogApiClient {
   factory CatalogApiClient(Dio dio, {String baseUrl}) = _CatalogApiClient;
 

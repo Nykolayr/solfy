@@ -5,10 +5,11 @@ import 'package:solfy_flutter/models/api/bank/client_score/client_score_request.
 import 'package:solfy_flutter/models/api/bank/client_score/client_score_response.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_request.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/client_search_response.dart';
+import 'package:solfy_flutter/services/api/const_api.dart';
 
 part 'bank_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/bank/v2/")
+// @RestApi(baseUrl: "$apiUrl/bank/v2/")
 abstract class BankApiClient {
   factory BankApiClient(Dio dio, {String baseUrl}) = _BankApiClient;
 

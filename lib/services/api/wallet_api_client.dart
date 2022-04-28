@@ -8,10 +8,11 @@ import 'package:solfy_flutter/models/api/wallet/refillment/refillment_request.da
 import 'package:solfy_flutter/models/api/wallet/refillment/refillment_response.dart';
 import 'package:solfy_flutter/models/api/wallet/schedules/schedules_response.dart';
 import 'package:solfy_flutter/models/api/wallet/wallet_get/wallet_get_response.dart';
+import 'package:solfy_flutter/services/api/const_api.dart';
 
 part 'wallet_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/")
+// @RestApi(baseUrl: "$apiUrl/")
 abstract class WalletApiClient {
   factory WalletApiClient(Dio dio, {String baseUrl}) = _WalletApiClient;
 

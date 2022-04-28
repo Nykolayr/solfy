@@ -8,7 +8,7 @@ part of 'catalog_api_client.dart';
 
 class _CatalogApiClient implements CatalogApiClient {
   _CatalogApiClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://api-edge.docu.ru/catalog/v1/';
+    baseUrl ??= '$apiUrl/catalog/v1/';
   }
 
   final Dio _dio;

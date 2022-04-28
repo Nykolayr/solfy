@@ -17,10 +17,11 @@ import 'package:solfy_flutter/models/api/profile/pin_update/pin_update_response.
 import 'package:solfy_flutter/models/api/profile/report/report_response.dart';
 import 'package:solfy_flutter/models/api/profile/set_settings/set_settings_request.dart';
 import 'package:solfy_flutter/models/api/profile/set_settings/set_settings_response.dart';
+import 'package:solfy_flutter/services/api/const_api.dart';
 
 part 'profile_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/profile/")
+// @RestApi(baseUrl: "$apiUrl/profile/")
 abstract class ProfileApiClient {
   factory ProfileApiClient(Dio dio, {String baseUrl}) = _ProfileApiClient;
 
@@ -50,10 +51,14 @@ abstract class ProfileApiClient {
 
   @POST("v1/report")
   Future<ReportResp> sendLetter(
-      @Part(contentType: "application/json") String email,
-      @Part(contentType: "application/json") String message,
-      @Part(name: "additional_data", contentType: "application/json") String additionalData,
-      @Part(name: "files[]", contentType: "application/json") List<File> images);
+      @Part(contentType: "application/json")
+          String email,
+      @Part(contentType: "application/json")
+          String message,
+      @Part(name: "additional_data", contentType: "application/json")
+          String additionalData,
+      @Part(name: "files[]", contentType: "application/json")
+          List<File> images);
 
   @POST("v1/email_update")
   Future<EmailUpdateResp> updateEmail(@Body() EmailUpdateRequest request);
