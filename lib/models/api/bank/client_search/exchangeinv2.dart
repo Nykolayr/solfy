@@ -17,8 +17,7 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'],
     "country_birth": json['birth_place']['country'],
-    "code_filial":
-        json['filial'] != null ? json['filial']['code'] ?? '1' : null,
+    "code_filial": json['filial'] != null ? json['filial']['id'] ?? '1' : null,
     "first_name": json['first_name'],
     "doc_type": json['document']['type'],
     "email": json['email'],
@@ -47,7 +46,9 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "education": json['education'],
     "citizenship": (json['residency'] == null)
         ? null
-        : int.parse(json['residency']['code']),
+        : (json['residency']['id'] is String)
+            ? int.parse(json['residency']['id'])
+            : json['residency']['id'],
     'client_uid': json['client_uid'],
   };
   print('data222 == ${clientData['pnfl']} == ${clientData['mobile_phone1']}');
@@ -57,15 +58,17 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
 
   List address = json['addresses'] ?? [];
   for (int k = 0; k < address.length; k++) {
-    int id = address[k]['type']['id'];
-    Map district = address[k]['district'];
+    int id = (address[k]['type']['id'] is String)
+        ? int.parse(address[k]['type']['id'])
+        : address[k]['type']['id'];
+    Map? district = address[k]['district'] ?? null;
     String apartment_number = address[k]['house_number'];
     String houseNumber = address[k]['apartment_number'];
     String locality = address[k]['location'];
-    Map admin_area = address[k]['region'];
+    Map? admin_area = address[k]['region'] ?? null;
 
     String street = address[k]['street'];
-    Map type_ownership = address[k]['realty_type'];
+    Map? type_ownership = address[k]['realty_type'] ?? null;
     // ignore: unused_local_variable
     String address_string = address[k]['address_string'];
     switch (id) {
