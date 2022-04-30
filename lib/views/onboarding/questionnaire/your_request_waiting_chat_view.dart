@@ -80,7 +80,7 @@ class _YourRequestWaitingChatViewState
           });
         }
       });
-      Timer(Duration(milliseconds: 1100), () {
+      Timer(Duration(milliseconds: 3000), () {
         setState(() {
           isThirdItemVisible = true;
           isStartLoadingVisible = false;

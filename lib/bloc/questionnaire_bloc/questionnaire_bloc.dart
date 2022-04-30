@@ -85,7 +85,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> clientSearch(
       Emitter<QuestionnaireState> emit, ClientSearch event) async {
     final dbResponse = await _dbService.getClientSearchResponse();
-    printWrapped('dbResponse == ${dbResponse}');
+    printWrapped('dbResponse == ${dbResponse != null}');
     if (dbResponse != null) {
       emit(QuestionnaireFoundSuccess(
         dbResponse.clientSearchResponse,
@@ -118,12 +118,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                 formatFormDate(response.right.clientData?.docIssueDate),
             docEndDate: formatFormDate(response.right.clientData?.docEndDate),
           );
-          print('-------------------------------------');
-          printWrapped('clientData >>>>>>>==== ${clientData}');
-          print('-------------------------------------');
-          printWrapped(
-              'clientFamilyData >>>>>>>==== ${response.right.clientFamilyData}');
-          print('-------------------------------------');
           await _dbService.saveClientSearchResponse(response.right.copyWith(
             clientData: clientData,
           ));
@@ -138,7 +132,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
               milliseconds: 100,
             ),
           );
-          printWrapped('clientData dbResponse2222 >>>>>>>==== ${dbResponse}');
           if (dbResponse != null) {
             printWrapped('clientData success');
             emit(QuestionnaireFoundSuccess(

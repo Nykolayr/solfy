@@ -135,6 +135,7 @@ class _ShortFormViewState extends State<ShortFormView> {
                                 pinFl: _formKey.currentState?.value["pin_fl"],
                               ),
                             );
+                        await Future.delayed(Duration(milliseconds: 1000));
                         context.router
                             .replaceAll([YourRequestWaitingChatView()]);
                       }
