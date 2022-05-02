@@ -94,8 +94,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       ));
     } else {
       var res = await _profileRepository.getProfile();
+      print('phone111 == ${res.right.profile!.toJson()}');
       if (res.isRight) {
-        print('phone == ${res.right.profile!.phone}');
+        print('phone2222 ==  ${res.isRight} == ${res.right.profile!.phone}');
       }
       if (event.number != null && res.isRight) {
         String? phone = res.right.profile!.phone!
@@ -111,7 +112,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           true,
         );
         final response = await _bankRepository.clientSearch(request);
-        printWrapped('responst ==== ${response.isRight}');
+        printWrapped('responst ==== ${response.right.toJson()}');
         if (response.isRight) {
           final clientData = response.right.clientData?.copyWith(
             docIssueDate:
