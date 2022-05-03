@@ -16,16 +16,16 @@ import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Экран с ожиданием отправки анкеты
-class YourRequestCompleteWaitingView extends StatefulWidget {
-  const YourRequestCompleteWaitingView({Key? key}) : super(key: key);
+class YourRequestCardWaitingView extends StatefulWidget {
+  const YourRequestCardWaitingView({Key? key}) : super(key: key);
 
   @override
-  _YourRequestCompleteWaitingViewState createState() =>
-      _YourRequestCompleteWaitingViewState();
+  _YourRequestCardWaitingViewState createState() =>
+      _YourRequestCardWaitingViewState();
 }
 
-class _YourRequestCompleteWaitingViewState
-    extends State<YourRequestCompleteWaitingView> {
+class _YourRequestCardWaitingViewState
+    extends State<YourRequestCardWaitingView> {
   final radiusFirst = BorderRadius.only(
     bottomLeft: (Radius.circular(8)),
     bottomRight: (Radius.circular(8)),
@@ -117,12 +117,12 @@ class _YourRequestCompleteWaitingViewState
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ChatItem("thanks".tr(), radius: radiusFirst),
+                          ChatItem("calculate_amount".tr(),
+                              radius: radiusFirst),
                           SizedBox(height: 4.h),
                           Column(
                             children: [
-                              ChatItem(
-                                  "we_are_processing_your_application".tr(),
+                              ChatItem(tr('insurance_premium_card'),
                                   height: 72,
                                   radius: isFinalTextVisible
                                       ? radiusLast

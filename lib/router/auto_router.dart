@@ -20,6 +20,7 @@ import 'package:solfy_flutter/views/onboarding/pin_code_login_view.dart';
 import 'package:solfy_flutter/views/onboarding/pin_code_stack_wrapper.dart';
 import 'package:solfy_flutter/views/onboarding/pin_code_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/address_form_view.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_card_waiting_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/choosing_filial_form_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/choosing_filial_stack_wrapper.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/job_info_form_view.dart';
@@ -113,6 +114,7 @@ import 'package:solfy_flutter/views/wallet/wallet_view.dart';
         children: [
           AutoRoute(page: ShortFormView, initial: true),
           AutoRoute(page: YourRequestWaitingChatView),
+          AutoRoute(page: YourRequestCardWaitingView),
           AutoRoute(page: YourRequestView),
           AutoRoute(page: PersonalInformationFormView),
           AutoRoute(page: AddressFormView),

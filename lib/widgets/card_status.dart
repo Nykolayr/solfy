@@ -24,7 +24,9 @@ class CardStatus extends StatelessWidget {
     AppTheme theme = context.read<AppTheme>();
 
     Widget buildContent(int currentStage) {
-      switch (wallet.status) {
+      String st = "questionnaire_accepted";
+      switch (st) {
+        // switch (wallet.status) {
         case "questionnaire_not_sent":
           return Column(
             children: [
@@ -75,7 +77,7 @@ class CardStatus extends StatelessWidget {
               SizedBox(height: 25.h),
               LongButtonWithText(
                 text: currentStage > 1
-                    ? "Продолжить оформление"
+                    ? "continue_registration".tr()
                     : "order_card".tr(),
                 width: currentStage > 1 ? 201.w : 137.w,
                 height: 34.r,
@@ -110,10 +112,19 @@ class CardStatus extends StatelessWidget {
           return LineStatus(
             wallet.title,
             wallet.description,
-            time: "2–3 дня",
             lines: 1,
             checkmark: 1,
             marked: 2,
+            bottom:
+                'sfewfeewf effse fefewfw fewwfe  fwwfwfw  dsfwf wfeww weffw',
+            buttonGo: () {
+              // context.router.push(YourRequestCardWaitingView());
+              context.router.root.push(
+                QuestionnaireStackRoute(
+                  children: [YourRequestCardWaitingView()],
+                ),
+              );
+            },
           );
         case "questionnaire_card_ready":
           return LineStatus(
@@ -208,7 +219,7 @@ class CardStatus extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: buildContent(currentStage),
               ),
-              SizedBox(height: 29.h),
+              SizedBox(height: 24.h),
             ],
           ),
         );

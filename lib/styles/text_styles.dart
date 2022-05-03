@@ -216,6 +216,15 @@ class AppTextStyles {
       );
 
   /// Серый дополнительный стиль
+  TextStyle get lightCaptionText10 => this._textStyle.copyWith(
+        color: _colors.virtualKeyboardNumbers,
+        fontSize: 10.sp,
+        fontFamily: 'Roboto',
+        fontWeight: FontWeight.w400,
+        letterSpacing: Platform.isAndroid ? 0.2.w : null,
+      );
+
+  /// Серый дополнительный стиль
   TextStyle get mediumMainText1 => this._textStyle.copyWith(
         color: _colors.virtualKeyboardNumbers,
         fontSize: 14.sp,

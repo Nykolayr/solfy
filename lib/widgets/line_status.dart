@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/card_circle_container.dart';
+import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 class LineStatus extends StatelessWidget {
@@ -13,6 +15,8 @@ class LineStatus extends StatelessWidget {
     this.lines = 0,
     this.checkmark,
     this.time,
+    this.bottom = '',
+    this.buttonGo,
   });
 
   final int marked;
@@ -21,6 +25,8 @@ class LineStatus extends StatelessWidget {
   final String? time;
   final String title;
   final String caption;
+  final String bottom;
+  final Function? buttonGo;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +117,26 @@ class LineStatus extends StatelessWidget {
           style: theme.textStyles.mediumMainText1,
           textAlign: TextAlign.center,
         ),
+        (buttonGo != null)
+            ? Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  LongButtonWithText(
+                    text: tr('continue_label'),
+                    onTap: buttonGo!,
+                    width: 111,
+                    fontSize: 14,
+                    height: 34,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    bottom,
+                    style: theme.textStyles.lightCaptionText10,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }

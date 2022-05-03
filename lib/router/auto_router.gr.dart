@@ -11,11 +11,9 @@
 // ignore_for_file: type=lint
 
 import 'dart:async' as _i62;
-
 import 'package:auto_route/auto_route.dart' as _i59;
 import 'package:flutter/material.dart' as _i60;
 import 'package:google_maps_flutter/google_maps_flutter.dart' as _i66;
-
 import '../bloc/biometric_set_bloc/biometric_set_bloc.dart' as _i61;
 import '../bloc/faq_bloc/faq_bloc.dart' as _i69;
 import '../bloc/store_bloc/store_bloc.dart' as _i63;
@@ -88,6 +86,8 @@ import '../views/stores/store_view.dart' as _i47;
 import '../views/stores/stores_view.dart' as _i49;
 import '../views/wallet/wallet_payment_details_view.dart' as _i51;
 import '../views/wallet/wallet_view.dart' as _i50;
+import '../views/onboarding/questionnaire/card/your_request_card_waiting_view.dart'
+    as _i70;
 
 class AppRouter extends _i59.RootStackRouter {
   AppRouter([_i60.GlobalKey<_i60.NavigatorState>? navigatorKey])
@@ -236,6 +236,10 @@ class AppRouter extends _i59.RootStackRouter {
       return _i59.MaterialPageX<dynamic>(
           routeData: routeData,
           child: const _i32.YourRequestCompleteWaitingView());
+    },
+    YourRequestCardWaitingView.name: (routeData) {
+      return _i59.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i70.YourRequestCardWaitingView());
     },
     ChoosingFilialFormView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
@@ -431,40 +435,45 @@ class AppRouter extends _i59.RootStackRouter {
             ]),
         _i59.RouteConfig(WelcomeView.name, path: '/welcome-view'),
         _i59.RouteConfig(ForgotPinCodeView.name, path: '/forgot-pin-code-view'),
-        _i59.RouteConfig(QuestionnaireStackRoute.name,
-            path: '/questionnaire-stack-wrapper',
-            children: [
-              _i59.RouteConfig(ShortFormView.name,
-                  path: '', parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(YourRequestWaitingChatView.name,
-                  path: 'your-request-waiting-chat-view',
-                  parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(YourRequestView.name,
-                  path: 'your-request-view',
-                  parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(PersonalInformationFormView.name,
-                  path: 'personal-information-form-view',
-                  parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(AddressFormView.name,
-                  path: 'address-form-view',
-                  parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(JobInfoFormView.name,
-                  path: 'job-info-form-view',
-                  parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(PropertyFormView.name,
-                  path: 'property-form-view',
-                  parent: QuestionnaireStackRoute.name),
-              _i59.RouteConfig(ChoosingFilialRoute.name,
-                  path: 'choosing-filial-stack-wrapper',
-                  parent: QuestionnaireStackRoute.name,
-                  children: [
-                    _i59.RouteConfig(ChoosingFilialFormView.name,
-                        path: '', parent: ChoosingFilialRoute.name)
-                  ]),
-              _i59.RouteConfig(YourRequestCompleteWaitingView.name,
-                  path: 'your-request-complete-waiting-view',
-                  parent: QuestionnaireStackRoute.name)
-            ]),
+        _i59.RouteConfig(
+          QuestionnaireStackRoute.name,
+          path: '/questionnaire-stack-wrapper',
+          children: [
+            _i59.RouteConfig(ShortFormView.name,
+                path: '', parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(YourRequestWaitingChatView.name,
+                path: 'your-request-waiting-chat-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(YourRequestView.name,
+                path: 'your-request-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(PersonalInformationFormView.name,
+                path: 'personal-information-form-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(AddressFormView.name,
+                path: 'address-form-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(JobInfoFormView.name,
+                path: 'job-info-form-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(PropertyFormView.name,
+                path: 'property-form-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(ChoosingFilialRoute.name,
+                path: 'choosing-filial-stack-wrapper',
+                parent: QuestionnaireStackRoute.name,
+                children: [
+                  _i59.RouteConfig(ChoosingFilialFormView.name,
+                      path: '', parent: ChoosingFilialRoute.name)
+                ]),
+            _i59.RouteConfig(YourRequestCompleteWaitingView.name,
+                path: 'your-request-complete-waiting-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(YourRequestCardWaitingView.name,
+                path: 'Your_Request_Card_Waiting_View',
+                parent: QuestionnaireStackRoute.name),
+          ],
+        ),
         _i59.RouteConfig(PersonalInformationRoute.name,
             path: '/personal-information-stack-wrapper',
             children: [
@@ -962,10 +971,18 @@ class ChoosingFilialRoute extends _i59.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i32.YourRequestCompleteWaitingView]
+/// [_i70.YourRequestCompleteWaitingView]
 class YourRequestCompleteWaitingView extends _i59.PageRouteInfo<void> {
   const YourRequestCompleteWaitingView()
       : super(YourRequestCompleteWaitingView.name,
+            path: 'Your_Request_Card_Waiting_View');
+
+  static const String name = 'YourRequestCardWaitingView';
+}
+
+class YourRequestCardWaitingView extends _i59.PageRouteInfo<void> {
+  const YourRequestCardWaitingView()
+      : super(YourRequestCardWaitingView.name,
             path: 'your-request-complete-waiting-view');
 
   static const String name = 'YourRequestCompleteWaitingView';
