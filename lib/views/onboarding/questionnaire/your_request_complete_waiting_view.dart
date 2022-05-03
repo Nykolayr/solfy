@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
@@ -20,10 +21,12 @@ class YourRequestCompleteWaitingView extends StatefulWidget {
   const YourRequestCompleteWaitingView({Key? key}) : super(key: key);
 
   @override
-  _YourRequestCompleteWaitingViewState createState() => _YourRequestCompleteWaitingViewState();
+  _YourRequestCompleteWaitingViewState createState() =>
+      _YourRequestCompleteWaitingViewState();
 }
 
-class _YourRequestCompleteWaitingViewState extends State<YourRequestCompleteWaitingView> {
+class _YourRequestCompleteWaitingViewState
+    extends State<YourRequestCompleteWaitingView> {
   final radiusFirst = BorderRadius.only(
     bottomLeft: (Radius.circular(8)),
     bottomRight: (Radius.circular(8)),
@@ -44,16 +47,13 @@ class _YourRequestCompleteWaitingViewState extends State<YourRequestCompleteWait
   );
   bool isFinalTextVisible = false;
   bool isError = false;
+  String errorMessage = '';
+  String errorCode = '';
 
   @override
   void initState() {
     Timer(Duration(seconds: 5), () {
       setState(() {
-        final state = context.read<QuestionnaireBloc>().state;
-        if (state is QuestionnaireSentError) {
-          isError = true;
-          ModalHelpers.showError(context, state.errors);
-        }
         isFinalTextVisible = true;
       });
     });
@@ -78,84 +78,103 @@ class _YourRequestCompleteWaitingViewState extends State<YourRequestCompleteWait
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                SizedBox(height: 16.h),
-                Container(
-                  width: double.infinity,
-                  child: Text(
-                    "your_application".tr(),
-                    style: theme.textStyles.mainBigText,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    theme.icons.logoSmallChat,
-                    SizedBox(width: 8.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ChatItem("thanks".tr(), radius: radiusFirst),
-                        SizedBox(height: 4.h),
-                        Column(
-                          children: [
-                            ChatItem("we_are_processing_your_application".tr(),
-                                height: 72, radius: isFinalTextVisible ? radiusLast : radiusMiddle),
-                            SizedBox(height: 4.h),
-                          ],
-                        ),
-                      ],
+      body: BlocConsumer<QuestionnaireBloc, QuestionnaireState>(
+          listener: (context, state) async {
+        if (state is QuestionnaireSentError) {
+          setState(() {
+            isError = true;
+            errorMessage = state.errors.errors![0].message!;
+            errorCode = state.errors.errors![0].code!;
+          });
+          ModalHelpers.showError(context, state.errors);
+        }
+      }, builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  Container(
+                    width: double.infinity,
+                    child: Text(
+                      "your_application".tr(),
+                      style: theme.textStyles.mainBigText,
+                      textAlign: TextAlign.left,
                     ),
-                  ],
-                ),
-                SizedBox(height: 24.h),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    theme.icons.logoSmallChat,
-                    SizedBox(width: 8.w),
-                    isFinalTextVisible
-                        ? ChatItem(
-                            isError
-                                ? "Произошла ошибка, попробуйте позже!"
-                                : "we_ll_give_you_the_approved_limit_soon".tr(),
-                            radius: radiusMiddle,
-                            height: 200,
-                          )
-                        : ChatLoadingItem(radius: radiusMiddle),
-                  ],
-                ),
-                SizedBox(height: 44.h),
-                isFinalTextVisible
-                    ? Column(
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      theme.icons.logoSmallChat,
+                      SizedBox(width: 8.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          LongButtonWithText(
-                            text: "perfect_thanks".tr(),
-                            onTap: () async {
-                              context.router.replaceAll([BaseTabRoute()]);
-                            },
+                          ChatItem("thanks".tr(), radius: radiusFirst),
+                          SizedBox(height: 4.h),
+                          Column(
+                            children: [
+                              ChatItem(
+                                  "we_are_processing_your_application".tr(),
+                                  height: 72,
+                                  radius: isFinalTextVisible
+                                      ? radiusLast
+                                      : radiusMiddle),
+                              SizedBox(height: 4.h),
+                            ],
                           ),
-                          SizedBox(height: 20.h),
                         ],
-                      )
-                    : SizedBox(),
-              ],
-            ),
-          ],
-        ),
-      ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 24.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      theme.icons.logoSmallChat,
+                      SizedBox(width: 8.w),
+                      isFinalTextVisible
+                          ? ChatItem(
+                              isError
+                                  ? errorMessage
+                                  : "we_ll_give_you_the_approved_limit_soon"
+                                      .tr(),
+                              radius: radiusMiddle,
+                              height: 200,
+                            )
+                          : ChatLoadingItem(radius: radiusMiddle),
+                    ],
+                  ),
+                  SizedBox(height: 44.h),
+                  isFinalTextVisible
+                      ? Column(
+                          children: [
+                            LongButtonWithText(
+                              text: isError
+                                  ? tr('understand')
+                                  : "perfect_thanks".tr(),
+                              onTap: () async {
+                                context.router.replaceAll([BaseTabRoute()]);
+                              },
+                            ),
+                            SizedBox(height: 20.h),
+                          ],
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

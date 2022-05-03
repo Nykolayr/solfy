@@ -22,8 +22,8 @@ class BankRepository implements IBankRepository {
       ClientSearchRequest request) async {
     try {
       print('console clientSearch1111 ');
-      final response = await _apiClient.clientSearch(request);
-      print('console clientSearch3333 === ${response} ');
+      ClientSearchResp? response = await _apiClient.clientSearch(request);
+      print('clientSearch3333 === ${response} ');
       return Right(response);
     } on DioError catch (error) {
       print(

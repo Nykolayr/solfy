@@ -22,7 +22,7 @@ class _BankApiClient implements BankApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    print('console clientSearch222222 $baseUrl == ${_dio.options.baseUrl}');
+    print('clientSearch222222 $baseUrl == ${_dio.options.baseUrl}');
     var _result;
     try {
       _result = await _dio.fetch<Map<String, dynamic>>(
@@ -32,10 +32,9 @@ class _BankApiClient implements BankApiClient {
                       queryParameters: queryParameters, data: _data)
                   .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     } catch (e) {
-      print('errorr clientSearch3333 $e');
+      print('errorr /client_search $e');
     }
-    final value = ClientSearchResp.fromJson(_result.data!);
-    return value;
+    return ClientSearchResp.fromJson(_result.data!);
   }
 
   @override
