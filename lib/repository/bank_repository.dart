@@ -21,7 +21,9 @@ class BankRepository implements IBankRepository {
   Future<Either<ErrorsResponse, ClientSearchResp>> clientSearch(
       ClientSearchRequest request) async {
     try {
+      print('console clientSearch1111 ');
       final response = await _apiClient.clientSearch(request);
+      print('console clientSearch3333 === ${response} ');
       return Right(response);
     } on DioError catch (error) {
       print(

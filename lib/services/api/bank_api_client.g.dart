@@ -22,12 +22,18 @@ class _BankApiClient implements BankApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ClientSearchResp>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/client_search',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    print('console clientSearch222222 $baseUrl == ${_dio.options.baseUrl}');
+    var _result;
+    try {
+      _result = await _dio.fetch<Map<String, dynamic>>(
+          _setStreamType<ClientSearchResp>(
+              Options(method: 'POST', headers: _headers, extra: _extra)
+                  .compose(_dio.options, '/client_search',
+                      queryParameters: queryParameters, data: _data)
+                  .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    } catch (e) {
+      print('errorr clientSearch3333 $e');
+    }
     final value = ClientSearchResp.fromJson(_result.data!);
     return value;
   }

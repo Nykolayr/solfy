@@ -96,7 +96,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       var res = await _profileRepository.getProfile();
       print('phone111 == ${res.right.profile!.toJson()}');
       if (res.isRight) {
-        print('phone2222 ==  ${res.isRight} == ${res.right.profile!.phone}');
+        print(
+            'phone2222 ==${event.number != null} == ${res.isRight} == ${res.right.profile!.phone}');
       }
       if (event.number != null && res.isRight) {
         String? phone = res.right.profile!.phone!
@@ -111,6 +112,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           event.pinFl!,
           true,
         );
+        print('phone3333 == ${request.toJson()}');
         final response = await _bankRepository.clientSearch(request);
         printWrapped('responst ==== ${response.right.toJson()}');
         if (response.isRight) {
