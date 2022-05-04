@@ -32,7 +32,7 @@ import 'package:solfy_flutter/views/onboarding/pin_code_login_view.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
 
 // TODO: меняем при тестировании на true
-bool isTest = false;
+bool isTest = true;
 
 void main() async {
   // Инициализация контейнеров
