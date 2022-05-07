@@ -27,7 +27,8 @@ class _WalletApiClient implements WalletApiClient {
                 .compose(_dio.options, 'wallet/v1',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = WalletGetResp.fromJson(_result.data!);
+    WalletGetResp value = WalletGetResp.fromJson(_result.data!);
+    print('console wallet =>>>> ${value.toJson()}');
     return value;
   }
 

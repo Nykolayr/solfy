@@ -11,19 +11,22 @@ class WalletViewModel {
   /// Форматированный тип ближайшего платежа
   FormattedValue<int?> get nearestOmp => FormattedValue(
         value: _walletResponse.wallet?.nearestOmp,
-        formatter: (value) => value != null ? MoneyFormatter.format(value ~/ 100) : "",
+        formatter: (value) =>
+            value != null ? MoneyFormatter.format(value ~/ 100) : "",
       );
 
   /// Форматированный тип комфортного платежа
   FormattedValue<int?> get comfortablePayment => FormattedValue(
         value: _walletResponse.wallet?.comfortablePayment,
-        formatter: (value) => value != null ? (value ~/ 100000000).toStringAsFixed(0) : "0",
+        formatter: (value) =>
+            value != null ? (value ~/ 100000000).toStringAsFixed(0) : "0",
       );
 
   /// Форматированный тип доступного баланса
   FormattedValue<int?> get availableBalance => FormattedValue(
         value: _walletResponse.wallet?.availableBalance,
-        formatter: (value) => value != null ? MoneyFormatter.format(value ~/ 100) : "0",
+        formatter: (value) =>
+            value != null ? MoneyFormatter.format(value ~/ 100) : "0",
       );
 
   String get nearestOmpDate => _walletResponse.wallet?.nearestOmpDate ?? "";
@@ -34,5 +37,7 @@ class WalletViewModel {
         _walletResponse.wallet?.status ?? "",
         _walletResponse.wallet?.statusContents?.title ?? "",
         _walletResponse.wallet?.statusContents?.description ?? "",
+        _walletResponse.wallet?.statusContents?.addition ?? "",
+        _walletResponse.wallet?.statusContents?.insurance_premium ?? "",
       );
 }

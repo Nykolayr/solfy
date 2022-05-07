@@ -14,5 +14,7 @@ class WalletStatusViewModel with _$WalletStatusViewModel {
 
     /// Описание
     @JsonKey(name: "description") String description,
+    @JsonKey(name: "addition") String addition,
+    @JsonKey(name: "insurance_premium") String insurance_premium,
   ) = WalletStatus;
 }

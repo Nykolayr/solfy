@@ -129,11 +129,16 @@ class LineStatus extends StatelessWidget {
                     height: 34,
                   ),
                   SizedBox(height: 16.h),
-                  Text(
-                    bottom,
-                    style: theme.textStyles.lightCaptionText10,
-                    textAlign: TextAlign.center,
-                  ),
+                  bottom != ''
+                      ? SizedBox(height: 16.h)
+                      : const SizedBox.shrink(),
+                  bottom != ''
+                      ? Text(
+                          bottom,
+                          style: theme.textStyles.lightCaptionText10,
+                          textAlign: TextAlign.center,
+                        )
+                      : const SizedBox.shrink(),
                 ],
               )
             : const SizedBox.shrink(),

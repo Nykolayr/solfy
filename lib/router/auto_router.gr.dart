@@ -237,10 +237,6 @@ class AppRouter extends _i59.RootStackRouter {
           routeData: routeData,
           child: const _i32.YourRequestCompleteWaitingView());
     },
-    YourRequestCardWaitingView.name: (routeData) {
-      return _i59.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i70.YourRequestCardWaitingView());
-    },
     ChoosingFilialFormView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i33.ChoosingFilialFormView());
@@ -468,9 +464,6 @@ class AppRouter extends _i59.RootStackRouter {
                 ]),
             _i59.RouteConfig(YourRequestCompleteWaitingView.name,
                 path: 'your-request-complete-waiting-view',
-                parent: QuestionnaireStackRoute.name),
-            _i59.RouteConfig(YourRequestCardWaitingView.name,
-                path: 'Your_Request_Card_Waiting_View',
                 parent: QuestionnaireStackRoute.name),
           ],
         ),
@@ -976,14 +969,6 @@ class YourRequestCompleteWaitingView extends _i59.PageRouteInfo<void> {
   const YourRequestCompleteWaitingView()
       : super(YourRequestCompleteWaitingView.name,
             path: 'Your_Request_Card_Waiting_View');
-
-  static const String name = 'YourRequestCardWaitingView';
-}
-
-class YourRequestCardWaitingView extends _i59.PageRouteInfo<void> {
-  const YourRequestCardWaitingView()
-      : super(YourRequestCardWaitingView.name,
-            path: 'your-request-complete-waiting-view');
 
   static const String name = 'YourRequestCompleteWaitingView';
 }

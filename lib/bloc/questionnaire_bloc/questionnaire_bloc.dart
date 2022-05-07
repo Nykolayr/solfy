@@ -85,7 +85,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> clientSearch(
       Emitter<QuestionnaireState> emit, ClientSearch event) async {
     final dbResponse = await _dbService.getClientSearchResponse();
-    printWrapped('dbResponse == ${dbResponse}');
+    printWrapped('dbResponse == ${dbResponse != null}');
     if (dbResponse != null) {
       emit(QuestionnaireFoundSuccess(
         dbResponse.clientSearchResponse,
@@ -162,8 +162,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   Future<void> savePersonalData(
       Emitter<QuestionnaireState> emit, SavePersonalData event) async {
     printWrapped('console step1 === ${event.data}');
-    print(
-        'console ------------------------------------------------------------');
     ValueObject countryBirth = ValueObject(
       _staticRepository.geo.countryItems
           ?.firstWhere((element) =>
@@ -298,15 +296,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ),
       codeWord: event.data["code_word"],
     );
-    print(
-        'console ------------------------------------------------------------');
     printWrapped('clientData === ${newQuestionnaire.clientData!.toJson()}');
-    print(
-        'console ------------------------------------------------------------');
     printWrapped(
         'clientFamilyData === ${newQuestionnaire.clientFamilyData!.toJson()}');
-    print(
-        'console ------------------------------------------------------------');
+
     await Future.delayed(
       Duration(
         milliseconds: 200,

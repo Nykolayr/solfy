@@ -10,6 +10,8 @@ _$StatusContentsItem _$$StatusContentsItemFromJson(Map<String, dynamic> json) =>
     _$StatusContentsItem(
       json['title'] as String?,
       json['description'] as String?,
+      json['addition'] as String?,
+      json['insurance_premium'] as String?,
     );
 
 Map<String, dynamic> _$$StatusContentsItemToJson(
@@ -17,4 +19,6 @@ Map<String, dynamic> _$$StatusContentsItemToJson(
     <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
+      'addition': instance.addition,
+      'insurance_premium': instance.insurance_premium,
     };

@@ -8,6 +8,7 @@ import 'package:solfy_flutter/models/entities/wallet/wallet_status_view_model.da
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/services/database/client_search_db_service.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_card_waiting_view.dart';
 import 'package:solfy_flutter/widgets/line_status.dart';
 import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
@@ -115,13 +116,11 @@ class CardStatus extends StatelessWidget {
             lines: 1,
             checkmark: 1,
             marked: 2,
-            bottom:
-                'sfewfeewf effse fefewfw fewwfe  fwwfwfw  dsfwf wfeww weffw',
+            bottom: wallet.addition,
             buttonGo: () {
-              // context.router.push(YourRequestCardWaitingView());
               context.router.root.push(
-                QuestionnaireStackRoute(
-                  children: [YourRequestCardWaitingView()],
+                YourRequestCardWaitingView(
+                  insurance_premium: 'dfewfw',
                 ),
               );
             },

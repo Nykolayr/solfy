@@ -14,7 +14,8 @@ class GetProfileWalletItemResponse with _$GetProfileWalletItemResponse {
     @JsonKey(name: "status") String? status,
 
     /// Детали статуса
-    @JsonKey(name: "status_contents") GetProfileStatusContentsItemResponse? statusContents,
+    @JsonKey(name: "status_contents")
+        GetProfileStatusContentsItemResponse? statusContents,
 
     /// Привязанные карты
     @JsonKey(name: "cards") List<GetProfileCardItemResponse>? cards,
@@ -26,7 +27,12 @@ class GetProfileWalletItemResponse with _$GetProfileWalletItemResponse {
 
 extension WalletItemMapper on GetProfileWalletItemResponse {
   WalletStatusViewModel getModel() {
-    return WalletStatusViewModel(this.status ?? "", this.statusContents?.title ?? "",
-        this.statusContents?.description ?? "");
+    return WalletStatusViewModel(
+      this.status ?? "",
+      this.statusContents?.title ?? "",
+      this.statusContents?.description ?? "",
+      this.statusContents?.addition ?? "",
+      this.statusContents?.insurance_premium ?? "",
+    );
   }
 }

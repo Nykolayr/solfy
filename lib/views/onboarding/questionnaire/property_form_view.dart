@@ -12,12 +12,13 @@ import 'package:solfy_flutter/models/form_selector_item.dart';
 import 'package:solfy_flutter/models/form_vehicle_model.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
-import 'package:solfy_flutter/widgets/custom_divider.dart';
 import 'package:solfy_flutter/widgets/header_app_bar.dart';
 import 'package:solfy_flutter/widgets/long_button_with_text.dart';
-import 'package:solfy_flutter/widgets/propetry_form.dart';
-import 'package:solfy_flutter/widgets/selector_form.dart';
 import 'package:solfy_flutter/widgets/vehicle_form.dart';
+
+import '../../../widgets/custom_divider.dart';
+import '../../../widgets/propetry_form.dart';
+import '../../../widgets/selector_form.dart';
 
 /// Четвертый шаг анкеты
 class PropertyFormView extends StatefulWidget {

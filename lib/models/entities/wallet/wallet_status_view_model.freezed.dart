@@ -18,13 +18,18 @@ class _$WalletStatusViewModelTearOff {
   const _$WalletStatusViewModelTearOff();
 
   WalletStatus call(
-      @JsonKey(name: "status") String status,
-      @JsonKey(name: "title") String title,
-      @JsonKey(name: "description") String description) {
+    @JsonKey(name: "status") String status,
+    @JsonKey(name: "title") String title,
+    @JsonKey(name: "description") String description,
+    @JsonKey(name: "addition") String addition,
+    @JsonKey(name: "insurance_premium") String insurance_premium,
+  ) {
     return WalletStatus(
       status,
       title,
       description,
+      addition,
+      insurance_premium,
     );
   }
 }
@@ -45,6 +50,14 @@ mixin _$WalletStatusViewModel {
   /// Описание
   @JsonKey(name: "description")
   String get description => throw _privateConstructorUsedError;
+
+  /// Описание
+  @JsonKey(name: "addition")
+  String get addition => throw _privateConstructorUsedError;
+
+  /// Описание
+  @JsonKey(name: "insurance_premium")
+  String get insurance_premium => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WalletStatusViewModelCopyWith<WalletStatusViewModel> get copyWith =>
@@ -123,6 +136,8 @@ class _$WalletStatusCopyWithImpl<$Res>
     Object? status = freezed,
     Object? title = freezed,
     Object? description = freezed,
+    Object? addition = freezed,
+    Object? insurance_premium = freezed,
   }) {
     return _then(WalletStatus(
       status == freezed
@@ -137,6 +152,14 @@ class _$WalletStatusCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      addition == freezed
+          ? _value.addition
+          : addition // ignore: cast_nullable_to_non_nullable
+              as String,
+      insurance_premium == freezed
+          ? _value.insurance_premium
+          : insurance_premium // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -145,9 +168,12 @@ class _$WalletStatusCopyWithImpl<$Res>
 
 class _$WalletStatus implements WalletStatus {
   const _$WalletStatus(
-      @JsonKey(name: "status") this.status,
-      @JsonKey(name: "title") this.title,
-      @JsonKey(name: "description") this.description);
+    @JsonKey(name: "status") this.status,
+    @JsonKey(name: "title") this.title,
+    @JsonKey(name: "description") this.description,
+    @JsonKey(name: "addition") this.addition,
+    @JsonKey(name: "insurance_premium") this.insurance_premium,
+  );
 
   @override
 
@@ -164,6 +190,18 @@ class _$WalletStatus implements WalletStatus {
   /// Описание
   @JsonKey(name: "description")
   final String description;
+
+  @override
+
+  /// Описание
+  @JsonKey(name: "addition")
+  final String addition;
+
+  @override
+
+  /// Описание
+  @JsonKey(name: "insurance_premium")
+  final String insurance_premium;
 
   @override
   String toString() {
@@ -198,9 +236,12 @@ class _$WalletStatus implements WalletStatus {
 
 abstract class WalletStatus implements WalletStatusViewModel {
   const factory WalletStatus(
-      @JsonKey(name: "status") String status,
-      @JsonKey(name: "title") String title,
-      @JsonKey(name: "description") String description) = _$WalletStatus;
+    @JsonKey(name: "status") String status,
+    @JsonKey(name: "title") String title,
+    @JsonKey(name: "description") String description,
+    @JsonKey(name: "addition") String addition,
+    @JsonKey(name: "insurance_premium") String insurance_premium,
+  ) = _$WalletStatus;
 
   @override
 
@@ -217,6 +258,18 @@ abstract class WalletStatus implements WalletStatusViewModel {
   /// Описание
   @JsonKey(name: "description")
   String get description => throw _privateConstructorUsedError;
+  @override
+
+  /// Заголовок
+  @JsonKey(name: "addition")
+  String get addition => throw _privateConstructorUsedError;
+
+  @override
+
+  /// Заголовок
+  @JsonKey(name: "insurance_premium")
+  String get insurance_premium => throw _privateConstructorUsedError;
+
   @override
   @JsonKey(ignore: true)
   $WalletStatusCopyWith<WalletStatus> get copyWith =>

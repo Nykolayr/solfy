@@ -109,12 +109,14 @@ import 'package:solfy_flutter/views/wallet/wallet_view.dart';
     AutoRoute(page: WelcomeView),
     AutoRoute(page: ForgotPinCodeView),
     AutoRoute(
+      page: YourRequestCardWaitingView,
+    ),
+    AutoRoute(
         page: QuestionnaireStackWrapper,
         name: "QuestionnaireStackRoute",
         children: [
           AutoRoute(page: ShortFormView, initial: true),
           AutoRoute(page: YourRequestWaitingChatView),
-          AutoRoute(page: YourRequestCardWaitingView),
           AutoRoute(page: YourRequestView),
           AutoRoute(page: PersonalInformationFormView),
           AutoRoute(page: AddressFormView),

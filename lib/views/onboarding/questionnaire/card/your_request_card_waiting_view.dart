@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
-import 'package:solfy_flutter/helpers/modal_helpers.dart';
+
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
@@ -17,7 +16,11 @@ import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Экран с ожиданием отправки анкеты
 class YourRequestCardWaitingView extends StatefulWidget {
-  const YourRequestCardWaitingView({Key? key}) : super(key: key);
+  final String insurance_premium;
+  const YourRequestCardWaitingView({
+    Key? key,
+    required this.insurance_premium,
+  }) : super(key: key);
 
   @override
   _YourRequestCardWaitingViewState createState() =>
@@ -77,103 +80,93 @@ class _YourRequestCardWaitingViewState
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
       ),
-      body: BlocConsumer<QuestionnaireBloc, QuestionnaireState>(
-          listener: (context, state) async {
-        if (state is QuestionnaireSentError) {
-          setState(() {
-            isError = true;
-            errorMessage = state.errors.errors![0].message!;
-            errorCode = state.errors.errors![0].code!;
-          });
-          ModalHelpers.showError(context, state.errors);
-        }
-      }, builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  SizedBox(height: 16.h),
-                  Container(
-                    width: double.infinity,
-                    child: Text(
-                      "your_application".tr(),
-                      style: theme.textStyles.mainBigText,
-                      textAlign: TextAlign.left,
-                    ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 16.h),
+                Container(
+                  width: double.infinity,
+                  child: Text(
+                    "your_application".tr(),
+                    style: theme.textStyles.mainBigText,
+                    textAlign: TextAlign.left,
                   ),
-                ],
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      theme.icons.logoSmallChat,
-                      SizedBox(width: 8.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ChatItem("calculate_amount".tr(),
-                              radius: radiusFirst),
-                          SizedBox(height: 4.h),
-                          Column(
-                            children: [
-                              ChatItem(tr('insurance_premium_card'),
-                                  height: 72,
-                                  radius: isFinalTextVisible
-                                      ? radiusLast
-                                      : radiusMiddle),
-                              SizedBox(height: 4.h),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 24.h),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      theme.icons.logoSmallChat,
-                      SizedBox(width: 8.w),
-                      isFinalTextVisible
-                          ? ChatItem(
-                              isError
-                                  ? errorMessage
-                                  : "we_ll_give_you_the_approved_limit_soon"
-                                      .tr(),
-                              radius: radiusMiddle,
-                              height: 200,
-                            )
-                          : ChatLoadingItem(radius: radiusMiddle),
-                    ],
-                  ),
-                  SizedBox(height: 44.h),
-                  isFinalTextVisible
-                      ? Column(
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    theme.icons.logoSmallChat,
+                    SizedBox(width: 8.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ChatItem("calculate_amount".tr(), radius: radiusFirst),
+                        SizedBox(height: 4.h),
+                        Column(
                           children: [
-                            LongButtonWithText(
-                              text: isError
-                                  ? tr('understand')
-                                  : "perfect_thanks".tr(),
-                              onTap: () async {
-                                context.router.replaceAll([BaseTabRoute()]);
-                              },
-                            ),
-                            SizedBox(height: 20.h),
+                            ChatItem(
+                                tr(
+                                  'insurance_premium_card',
+                                  args: [
+                                    widget.insurance_premium,
+                                  ],
+                                ),
+                                height: 72,
+                                radius: isFinalTextVisible
+                                    ? radiusLast
+                                    : radiusMiddle),
+                            SizedBox(height: 4.h),
                           ],
-                        )
-                      : SizedBox(),
-                ],
-              ),
-            ],
-          ),
-        );
-      }),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 24.h),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    theme.icons.logoSmallChat,
+                    SizedBox(width: 8.w),
+                    isFinalTextVisible
+                        ? ChatItem(
+                            isError
+                                ? errorMessage
+                                : "specify_your_card_details".tr(),
+                            radius: radiusMiddle,
+                            height: 200,
+                          )
+                        : ChatLoadingItem(radius: radiusMiddle),
+                  ],
+                ),
+                SizedBox(height: 44.h),
+                isFinalTextVisible
+                    ? Column(
+                        children: [
+                          LongButtonWithText(
+                            text: isError ? tr('understand') : "add_card".tr(),
+                            onTap: () async {
+                              context.router.replaceAll([BaseTabRoute()]);
+                            },
+                          ),
+                          SizedBox(height: 20.h),
+                        ],
+                      )
+                    : SizedBox(),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

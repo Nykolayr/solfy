@@ -22,11 +22,17 @@ GetProfileStatusContentsItemResponse
 class _$GetProfileStatusContentsItemResponseTearOff {
   const _$GetProfileStatusContentsItemResponseTearOff();
 
-  StatusContentsItem call(@JsonKey(name: "title") String? title,
-      @JsonKey(name: "description") String? description) {
+  StatusContentsItem call(
+    @JsonKey(name: "title") String? title,
+    @JsonKey(name: "description") String? description,
+    @JsonKey(name: "addition") String? addition,
+    @JsonKey(name: "insurance_premium") String? insurance_premium,
+  ) {
     return StatusContentsItem(
       title,
       description,
+      addition,
+      insurance_premium,
     );
   }
 
@@ -49,6 +55,12 @@ mixin _$GetProfileStatusContentsItemResponse {
   @JsonKey(name: "description")
   String? get description => throw _privateConstructorUsedError;
 
+  @JsonKey(name: "addition")
+  String? get addition => throw _privateConstructorUsedError;
+
+  @JsonKey(name: "insurance_premium")
+  String? get insurance_premium => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $GetProfileStatusContentsItemResponseCopyWith<
@@ -62,9 +74,12 @@ abstract class $GetProfileStatusContentsItemResponseCopyWith<$Res> {
           GetProfileStatusContentsItemResponse value,
           $Res Function(GetProfileStatusContentsItemResponse) then) =
       _$GetProfileStatusContentsItemResponseCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "description") String? description});
+  $Res call({
+    @JsonKey(name: "title") String? title,
+    @JsonKey(name: "description") String? description,
+    @JsonKey(name: "addition") String? addition,
+    @JsonKey(name: "insurance_premium") String? insurance_premium,
+  });
 }
 
 /// @nodoc
@@ -80,6 +95,8 @@ class _$GetProfileStatusContentsItemResponseCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? description = freezed,
+    Object? addition = freezed,
+    Object? insurance_premium = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
@@ -89,6 +106,14 @@ class _$GetProfileStatusContentsItemResponseCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      addition: addition == freezed
+          ? _value.addition
+          : addition // ignore: cast_nullable_to_non_nullable
+              as String?,
+      insurance_premium: insurance_premium == freezed
+          ? _value.insurance_premium
+          : insurance_premium // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -101,9 +126,12 @@ abstract class $StatusContentsItemCopyWith<$Res>
           StatusContentsItem value, $Res Function(StatusContentsItem) then) =
       _$StatusContentsItemCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "description") String? description});
+  $Res call({
+    @JsonKey(name: "title") String? title,
+    @JsonKey(name: "description") String? description,
+    @JsonKey(name: "addition") String? addition,
+    @JsonKey(name: "insurance_premium") String? insurance_premium,
+  });
 }
 
 /// @nodoc
@@ -121,6 +149,8 @@ class _$StatusContentsItemCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? description = freezed,
+    Object? addition = freezed,
+    Object? insurance_premium = freezed,
   }) {
     return _then(StatusContentsItem(
       title == freezed
@@ -131,6 +161,14 @@ class _$StatusContentsItemCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      addition == freezed
+          ? _value.addition
+          : addition // ignore: cast_nullable_to_non_nullable
+              as String?,
+      insurance_premium == freezed
+          ? _value.insurance_premium
+          : insurance_premium // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -138,8 +176,12 @@ class _$StatusContentsItemCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StatusContentsItem implements StatusContentsItem {
-  const _$StatusContentsItem(@JsonKey(name: "title") this.title,
-      @JsonKey(name: "description") this.description);
+  const _$StatusContentsItem(
+    @JsonKey(name: "title") this.title,
+    @JsonKey(name: "description") this.description,
+    @JsonKey(name: "addition") this.addition,
+    @JsonKey(name: "insurance_premium") this.insurance_premium,
+  );
 
   factory _$StatusContentsItem.fromJson(Map<String, dynamic> json) =>
       _$$StatusContentsItemFromJson(json);
@@ -154,10 +196,14 @@ class _$StatusContentsItem implements StatusContentsItem {
   /// Описание
   @JsonKey(name: "description")
   final String? description;
+  @JsonKey(name: "addition")
+  final String? addition;
+  @JsonKey(name: "insurance_premium")
+  final String? insurance_premium;
 
   @override
   String toString() {
-    return 'GetProfileStatusContentsItemResponse(title: $title, description: $description)';
+    return 'GetProfileStatusContentsItemResponse(title: $title, description: $description, addition: $addition, insurance_premium: $insurance_premium,)';
   }
 
   @override
@@ -190,8 +236,12 @@ class _$StatusContentsItem implements StatusContentsItem {
 
 abstract class StatusContentsItem
     implements GetProfileStatusContentsItemResponse {
-  const factory StatusContentsItem(@JsonKey(name: "title") String? title,
-      @JsonKey(name: "description") String? description) = _$StatusContentsItem;
+  const factory StatusContentsItem(
+    @JsonKey(name: "title") String? title,
+    @JsonKey(name: "description") String? description,
+    @JsonKey(name: "addition") String? addition,
+    @JsonKey(name: "insurance_premium") String? insurance_premium,
+  ) = _$StatusContentsItem;
 
   factory StatusContentsItem.fromJson(Map<String, dynamic> json) =
       _$StatusContentsItem.fromJson;
@@ -206,6 +256,16 @@ abstract class StatusContentsItem
   /// Описание
   @JsonKey(name: "description")
   String? get description => throw _privateConstructorUsedError;
+  @override
+
+  /// Описание
+  @JsonKey(name: "addition")
+  String? get addition => throw _privateConstructorUsedError;
+  @override
+
+  /// Описание
+  @JsonKey(name: "insurance_premium")
+  String? get insurance_premium => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $StatusContentsItemCopyWith<StatusContentsItem> get copyWith =>
