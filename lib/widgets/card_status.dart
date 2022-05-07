@@ -8,7 +8,6 @@ import 'package:solfy_flutter/models/entities/wallet/wallet_status_view_model.da
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/services/database/client_search_db_service.dart';
 import 'package:solfy_flutter/styles/themes.dart';
-import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_card_waiting_view.dart';
 import 'package:solfy_flutter/widgets/line_status.dart';
 import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
@@ -120,7 +119,7 @@ class CardStatus extends StatelessWidget {
             buttonGo: () {
               context.router.root.push(
                 YourRequestCardWaitingView(
-                  insurance_premium: 'dfewfw',
+                  insurance_premium: wallet.insurance_premium,
                 ),
               );
             },

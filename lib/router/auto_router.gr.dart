@@ -86,7 +86,7 @@ import '../views/stores/store_view.dart' as _i47;
 import '../views/stores/stores_view.dart' as _i49;
 import '../views/wallet/wallet_payment_details_view.dart' as _i51;
 import '../views/wallet/wallet_view.dart' as _i50;
-import '../views/onboarding/questionnaire/card/your_request_card_waiting_view.dart'
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_card_waiting_view.dart'
     as _i70;
 
 class AppRouter extends _i59.RootStackRouter {
@@ -141,6 +141,14 @@ class AppRouter extends _i59.RootStackRouter {
     WelcomeView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i10.WelcomeView());
+    },
+    YourRequestCardWaitingView.name: (routeData) {
+      final args = routeData.argsAs<YourRequestCardWaitingViewArgs>();
+      return _i59.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i70.YourRequestCardWaitingView(
+            insurance_premium: args.insurance_premium,
+          ));
     },
     ForgotPinCodeView.name: (routeData) {
       final args = routeData.argsAs<ForgotPinCodeViewArgs>();
@@ -430,6 +438,8 @@ class AppRouter extends _i59.RootStackRouter {
                   path: '', parent: SearchRoute.name)
             ]),
         _i59.RouteConfig(WelcomeView.name, path: '/welcome-view'),
+        _i59.RouteConfig(YourRequestCardWaitingView.name,
+            path: '/YourRequestCardWaitingView'),
         _i59.RouteConfig(ForgotPinCodeView.name, path: '/forgot-pin-code-view'),
         _i59.RouteConfig(
           QuestionnaireStackRoute.name,
@@ -709,6 +719,17 @@ class BiometricSetRoute extends _i59.PageRouteInfo<BiometricSetRouteArgs> {
   static const String name = 'BiometricSetRoute';
 }
 
+class YourRequestCardWaitingViewArgs {
+  const YourRequestCardWaitingViewArgs({required this.insurance_premium});
+
+  final String insurance_premium;
+
+  @override
+  String toString() {
+    return 'YourRequestCardWaitingViewArgs{ key: $insurance_premium}';
+  }
+}
+
 class BiometricSetRouteArgs {
   const BiometricSetRouteArgs({required this.biometricBloc, this.key});
 
@@ -748,6 +769,21 @@ class WelcomeView extends _i59.PageRouteInfo<void> {
   const WelcomeView() : super(WelcomeView.name, path: '/welcome-view');
 
   static const String name = 'WelcomeView';
+}
+
+/// generated route for
+/// [_i70.YourRequestCardWaitingView]
+class YourRequestCardWaitingView
+    extends _i59.PageRouteInfo<YourRequestCardWaitingViewArgs> {
+  YourRequestCardWaitingView({required String insurance_premium})
+      : super(
+          YourRequestCardWaitingView.name,
+          path: '/YourRequestCardWaitingView',
+          args: YourRequestCardWaitingViewArgs(
+            insurance_premium: insurance_premium,
+          ),
+        );
+  static const String name = 'YourRequestCardWaitingView';
 }
 
 /// generated route for

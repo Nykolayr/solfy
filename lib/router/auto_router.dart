@@ -108,6 +108,7 @@ import 'package:solfy_flutter/views/wallet/wallet_view.dart';
     ]),
     AutoRoute(page: WelcomeView),
     AutoRoute(page: ForgotPinCodeView),
+    AutoRoute(page: YourRequestCardWaitingView),
     AutoRoute(
       page: YourRequestCardWaitingView,
     ),
