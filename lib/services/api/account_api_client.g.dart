@@ -8,7 +8,7 @@ part of 'account_api_client.dart';
 
 class _AccountApiClient implements AccountApiClient {
   _AccountApiClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://api-edge.docu.ru/account/v1/';
+    baseUrl ??= '$apiUrl/account/v1/';
   }
 
   final Dio _dio;

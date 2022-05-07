@@ -8,7 +8,7 @@ part of 'wallet_api_client.dart';
 
 class _WalletApiClient implements WalletApiClient {
   _WalletApiClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://api-edge.docu.ru/';
+    baseUrl ??= '$apiUrl/';
   }
 
   final Dio _dio;

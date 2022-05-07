@@ -8,7 +8,7 @@ part of 'profile_api_client.dart';
 
 class _ProfileApiClient implements ProfileApiClient {
   _ProfileApiClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://api-edge.docu.ru/profile/';
+    baseUrl ??= '$apiUrl/profile/';
   }
 
   final Dio _dio;

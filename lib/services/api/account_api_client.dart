@@ -12,9 +12,11 @@ import 'package:solfy_flutter/models/api/account/sms_confirm/sms_confirm_respons
 import 'package:solfy_flutter/models/api/account/sms_send/sms_send_request.dart';
 import 'package:solfy_flutter/models/api/account/sms_send/sms_send_response.dart';
 
+import '../../main.dart';
+
 part 'account_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/account/v1/")
+// @RestApi(baseUrl: "https://api-edge.docu.ru/account/v1/")
 abstract class AccountApiClient {
   factory AccountApiClient(Dio dio, {String baseUrl}) = _AccountApiClient;
 

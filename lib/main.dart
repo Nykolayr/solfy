@@ -31,10 +31,11 @@ import 'package:solfy_flutter/views/onboarding/phone_number_input_view.dart';
 import 'package:solfy_flutter/views/onboarding/pin_code_login_view.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
 
-// TODO через поиск и замену меняем и наоборот при смене isTest
-// https://api-edge.docu.ru на https://api.solfy.com
+// TODO apiUrl меняем при смене isTest
+// $https://api-edge.docu.ru на https://api.solfy.com
 bool isTest = true;
-
+final String apiUrl =
+    isTest ? 'https://api-edge.docu.ru' : 'https://api.solfy.com';
 void main() async {
   // Инициализация контейнеров
   InitialContainer().initialise(Injector("Initial"));

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:solfy_flutter/main.dart';
 import 'package:solfy_flutter/models/api/catalog/brand/brand_response.dart';
 import 'package:solfy_flutter/models/api/catalog/brands/brands_response.dart';
 import 'package:solfy_flutter/models/api/catalog/categories/categories_request.dart';
@@ -13,7 +14,7 @@ import 'package:solfy_flutter/models/api/catalog/shops/shops_response.dart';
 
 part 'catalog_api_client.g.dart';
 
-@RestApi(baseUrl: "https://api-edge.docu.ru/catalog/v1/")
+// @RestApi(baseUrl: "https://api-edge.docu.ru/catalog/v1/")
 abstract class CatalogApiClient {
   factory CatalogApiClient(Dio dio, {String baseUrl}) = _CatalogApiClient;
 

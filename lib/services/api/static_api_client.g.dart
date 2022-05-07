@@ -8,7 +8,7 @@ part of 'static_api_client.dart';
 
 class _StaticApiClient implements StaticApiClient {
   _StaticApiClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://api-edge.docu.ru/static/v1/';
+    baseUrl ??= '$apiUrl/static/v1/';
   }
 
   final Dio _dio;
