@@ -88,6 +88,8 @@ import '../views/wallet/wallet_payment_details_view.dart' as _i51;
 import '../views/wallet/wallet_view.dart' as _i50;
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_card_waiting_view.dart'
     as _i70;
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/add_card_view.dart'
+    as _i71;
 
 class AppRouter extends _i59.RootStackRouter {
   AppRouter([_i60.GlobalKey<_i60.NavigatorState>? navigatorKey])
@@ -147,6 +149,14 @@ class AppRouter extends _i59.RootStackRouter {
       return _i59.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i70.YourRequestCardWaitingView(
+            insurance_premium: args.insurance_premium,
+          ));
+    },
+    AddCardView.name: (routeData) {
+      final args = routeData.argsAs<AddCardViewArgs>();
+      return _i59.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: _i71.AddCardView(
             insurance_premium: args.insurance_premium,
           ));
     },
@@ -440,6 +450,7 @@ class AppRouter extends _i59.RootStackRouter {
         _i59.RouteConfig(WelcomeView.name, path: '/welcome-view'),
         _i59.RouteConfig(YourRequestCardWaitingView.name,
             path: '/YourRequestCardWaitingView'),
+        _i59.RouteConfig(AddCardView.name, path: '/AddCardView'),
         _i59.RouteConfig(ForgotPinCodeView.name, path: '/forgot-pin-code-view'),
         _i59.RouteConfig(
           QuestionnaireStackRoute.name,
@@ -730,6 +741,17 @@ class YourRequestCardWaitingViewArgs {
   }
 }
 
+class AddCardViewArgs {
+  const AddCardViewArgs({required this.insurance_premium});
+
+  final String insurance_premium;
+
+  @override
+  String toString() {
+    return 'AddCardViewArgs{ key: $insurance_premium}';
+  }
+}
+
 class BiometricSetRouteArgs {
   const BiometricSetRouteArgs({required this.biometricBloc, this.key});
 
@@ -784,6 +806,20 @@ class YourRequestCardWaitingView
           ),
         );
   static const String name = 'YourRequestCardWaitingView';
+}
+
+/// generated route for
+/// [_i71.AddCardView]
+class AddCardView extends _i59.PageRouteInfo<AddCardViewArgs> {
+  AddCardView({required String insurance_premium})
+      : super(
+          AddCardView.name,
+          path: '/AddCardView',
+          args: AddCardViewArgs(
+            insurance_premium: insurance_premium,
+          ),
+        );
+  static const String name = 'AddCardView';
 }
 
 /// generated route for

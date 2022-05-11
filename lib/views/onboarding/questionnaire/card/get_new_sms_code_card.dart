@@ -3,23 +3,24 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:solfy_flutter/bloc/sms_code_bloc/sms_code_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
+import 'package:solfy_flutter/models/api/errors/errors_response.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Кнопка с отправкой запроса на получение нового кода
-class GetNewSmsCode extends StatefulWidget {
-  GetNewSmsCode({Key? key}) : super(key: key);
+class GetNewSmsCodeCard extends StatefulWidget {
+  GetNewSmsCodeCard({Key? key}) : super(key: key);
 
   @override
-  _GetNewSmsCodeState createState() => _GetNewSmsCodeState();
+  _GetNewSmsCodeCardState createState() => _GetNewSmsCodeCardState();
 }
 
-class _GetNewSmsCodeState extends State<GetNewSmsCode> {
+class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
   bool isSending = false;
   bool isSent = false;
   bool isTimerEnded = false;
@@ -31,7 +32,6 @@ class _GetNewSmsCodeState extends State<GetNewSmsCode> {
       mode: StopWatchMode.countDown,
       onEnded: () => setState(() => isTimerEnded = true),
     );
-    // _stopWatchTimer.setPresetMinuteTime(2);
     _stopWatchTimer.setPresetSecondTime(10);
     _stopWatchTimer.onExecute.add(StopWatchExecute.start);
     _stopWatchTimer.secondTime.listen((value) => setState(() => null));
@@ -49,7 +49,7 @@ class _GetNewSmsCodeState extends State<GetNewSmsCode> {
     AppTheme theme = context.read<AppTheme>();
 
     void onTap() async {
-      context.read<SmsCodeBloc>().add(SendNewCode());
+      context.read<CardBloc>().add(SendResCode());
       setState(() {
         isSending = true;
       });
@@ -69,10 +69,10 @@ class _GetNewSmsCodeState extends State<GetNewSmsCode> {
       });
     }
 
-    return BlocListener<SmsCodeBloc, SmsCodeState>(
+    return BlocListener<CardBloc, CardState>(
       listener: (context, state) {
-        if (state is SendNewSmsError) {
-          ModalHelpers.showError(context, state.errors);
+        if (state is CardError) {
+          ModalHelpers.showError(context, state.error);
         }
       },
       child: Container(

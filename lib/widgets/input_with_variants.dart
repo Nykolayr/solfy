@@ -31,7 +31,8 @@ class InputWithVariants extends StatelessWidget {
         size: 10,
       ),
       validators: [
-        FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+        FormBuilderValidators.required(context,
+            errorText: "Пожалуйста, заполните поле"),
       ],
       headerText: title,
       readOnly: true,

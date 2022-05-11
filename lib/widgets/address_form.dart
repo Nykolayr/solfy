@@ -51,10 +51,13 @@ class _AddressFormState extends State<AddressForm> {
             title: "region_oblast".tr(),
             stringVariants: static.geo.regions?.map((e) => e.name).toList(),
             onVariantTap: (text) {
-              widget.globalKey.currentState?.fields[widget.regionItem.name]?.didChange(text);
-              widget.globalKey.currentState?.fields[widget.districtItem.name]?.didChange("");
+              widget.globalKey.currentState?.fields[widget.regionItem.name]
+                  ?.didChange(text);
+              widget.globalKey.currentState?.fields[widget.districtItem.name]
+                  ?.didChange("");
             },
-            selectedVariant: widget.globalKey.currentState?.fields[widget.regionItem.name]?.value,
+            selectedVariant: widget
+                .globalKey.currentState?.fields[widget.regionItem.name]?.value,
           ),
         ),
         SizedBox(height: 24.h),
@@ -66,20 +69,23 @@ class _AddressFormState extends State<AddressForm> {
             context,
             title: "region_oblast".tr(),
             stringVariants: static.geo
-                .findDistrictsByRegionName(
-                    widget.globalKey.currentState?.fields[widget.regionItem.name]?.value)
+                .findDistrictsByRegionName(widget.globalKey.currentState
+                    ?.fields[widget.regionItem.name]?.value)
                 .map((e) => e.name)
                 .toList(),
-            onVariantTap: (text) =>
-                widget.globalKey.currentState?.fields[widget.districtItem.name]?.didChange(text),
-            selectedVariant: widget.globalKey.currentState?.fields[widget.districtItem.name]?.value,
+            onVariantTap: (text) => widget
+                .globalKey.currentState?.fields[widget.districtItem.name]
+                ?.didChange(text),
+            selectedVariant: widget.globalKey.currentState
+                ?.fields[widget.districtItem.name]?.value,
           ),
         ),
         SizedBox(height: 24.h),
         FormInputWithText(
           widget.cityItem.name,
           validators: [
-            FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+            FormBuilderValidators.required(context,
+                errorText: "Пожалуйста, заполните поле"),
           ],
           headerText: "city".tr(),
           initialValue: widget.cityItem.initialValue,
@@ -88,7 +94,8 @@ class _AddressFormState extends State<AddressForm> {
         FormInputWithText(
           widget.streetItem.name,
           validators: [
-            FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+            FormBuilderValidators.required(context,
+                errorText: "Пожалуйста, заполните поле"),
           ],
           initialValue: widget.streetItem.initialValue,
           headerText: "street".tr(),
@@ -101,7 +108,8 @@ class _AddressFormState extends State<AddressForm> {
             FormInputWithText(
               widget.houseItem.name,
               validators: [
-                FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+                FormBuilderValidators.required(context,
+                    errorText: "Пожалуйста, заполните поле"),
               ],
               initialValue: widget.houseItem.initialValue,
               width: 158.w,
@@ -111,7 +119,8 @@ class _AddressFormState extends State<AddressForm> {
             FormInputWithText(
               widget.apartmentItem.name,
               validators: [
-                FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+                FormBuilderValidators.required(context,
+                    errorText: "Пожалуйста, заполните поле"),
               ],
               initialValue: widget.apartmentItem.initialValue,
               width: 158.w,
@@ -128,9 +137,11 @@ class _AddressFormState extends State<AddressForm> {
             context,
             title: "property_type".tr(),
             variants: static.dictionaries.typeOwnership,
-            onVariantTap: (text) =>
-                widget.globalKey.currentState?.fields[widget.typeItem.name]?.didChange(text),
-            selectedVariant: widget.globalKey.currentState?.fields[widget.typeItem.name]?.value,
+            onVariantTap: (text) => widget
+                .globalKey.currentState?.fields[widget.typeItem.name]
+                ?.didChange(text),
+            selectedVariant: widget
+                .globalKey.currentState?.fields[widget.typeItem.name]?.value,
           ),
         ),
       ],

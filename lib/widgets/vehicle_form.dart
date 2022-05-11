@@ -38,8 +38,9 @@ class VehicleForm extends StatelessWidget {
     StaticRepository static = context.read<StaticRepository>();
 
     void showNativeDatePicker(String name) async {
-      DateTime _selectedDate =
-          DateTime(int.tryParse(formKey.currentState?.fields[name]?.value ?? "") ?? 2018);
+      DateTime _selectedDate = DateTime(
+          int.tryParse(formKey.currentState?.fields[name]?.value ?? "") ??
+              2018);
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -55,7 +56,8 @@ class VehicleForm extends StatelessWidget {
                 initialDate: DateTime(2018),
                 selectedDate: _selectedDate,
                 onChanged: (DateTime dateTime) {
-                  formKey.currentState?.fields[name]?.didChange(dateTime.year.toString());
+                  formKey.currentState?.fields[name]
+                      ?.didChange(dateTime.year.toString());
                   Navigator.pop(context);
                 },
               ),
@@ -86,7 +88,8 @@ class VehicleForm extends StatelessWidget {
           modelName,
           controller: model,
           validators: [
-            FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+            FormBuilderValidators.required(context,
+                errorText: "Пожалуйста, заполните поле"),
           ],
           headerText: "brand".tr(),
         ),
@@ -102,7 +105,8 @@ class VehicleForm extends StatelessWidget {
           marketValueName,
           controller: marketValue,
           validators: [
-            FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+            FormBuilderValidators.required(context,
+                errorText: "Пожалуйста, заполните поле"),
           ],
           customFormatter: ThousandsSeparatorInputFormatter(),
           keyboardType: TextInputType.number,

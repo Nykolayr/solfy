@@ -15,7 +15,6 @@ class _WalletApiClient implements WalletApiClient {
 
   String? baseUrl;
 
-  @override
   Future<WalletGetResp> getWallet() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -29,6 +28,73 @@ class _WalletApiClient implements WalletApiClient {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     WalletGetResp value = WalletGetResp.fromJson(_result.data!);
     print('console wallet =>>>> ${value.toJson()}');
+    return value;
+  }
+
+  @override
+  Future<CardResponse> sendCardLocal(
+      String card_number, String expire_date) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      'card_number': card_number,
+      'expire_date': expire_date,
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<WalletGetResp>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'bank/v2/local_card_send',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    CardResponse value = CardResponse.fromJson(_result.data!);
+    print('console sendCardLocal =>>>> ${value.toJson()}');
+    return value;
+  }
+
+  @override
+  Future<CardConfirmResponse> sendCardLocalConfirm(
+    String card_uuid,
+    String code,
+    String local_card_phone_number,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      'card_uuid': card_uuid,
+      'code': code,
+      'local_card_phone_number': local_card_phone_number,
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<WalletGetResp>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'bank/v2/local_card_confirm',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    CardConfirmResponse value = CardConfirmResponse.fromJson(_result.data!);
+    print('console sendCardLocalConfirm =>>>> ${value.toJson()}');
+    return value;
+  }
+
+  @override
+  Future<CardResendResponse> sendCardLocalResend(
+    String card_uuid,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      'card_uuid': card_uuid,
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<WalletGetResp>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'bank/v2/local_card_confirm',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    CardResendResponse value = CardResendResponse.fromJson(_result.data!);
+    print('console sendCardLocalResend =>>>> ${value.toJson()}');
     return value;
   }
 

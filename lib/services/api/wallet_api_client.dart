@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:solfy_flutter/main.dart';
+import 'package:solfy_flutter/models/api/bank/card/catd_repositores.dart';
 import 'package:solfy_flutter/models/api/wallet/comfortable_payment_update/comfortable_payment_update_request.dart';
 import 'package:solfy_flutter/models/api/wallet/comfortable_payment_update/comfortable_payment_update_response.dart';
 import 'package:solfy_flutter/models/api/wallet/operation/operation_response.dart';
@@ -30,6 +31,22 @@ abstract class WalletApiClient {
 
   @GET("wallet/v1/operation/{id}")
   Future<OperationResp> getOperation(@Path() String id);
+
+  @GET("bank/v2/local_card_send")
+  Future<CardResponse> sendCardLocal(
+    String card_number,
+    String expire_date,
+  );
+  @GET("bank/v2/local_card_confirm")
+  Future<CardConfirmResponse> sendCardLocalConfirm(
+    String card_uuid,
+    String code,
+    String local_card_phone_number,
+  );
+  @GET("/bank/v2/local_card_resend")
+  Future<CardResendResponse> sendCardLocalResend(
+    String card_uuid,
+  );
 
   @POST("wallet/v1/comfortable_payment_update")
   Future<ComfortablePaymentUpdateResp> comfortablePaymentUpdate(

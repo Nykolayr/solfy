@@ -29,7 +29,10 @@ import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/views/onboarding/language_selector_view.dart';
 import 'package:solfy_flutter/views/onboarding/phone_number_input_view.dart';
 import 'package:solfy_flutter/views/onboarding/pin_code_login_view.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
+
+import 'models/api/bank/card/catd_repositores.dart';
 
 // TODO apiUrl меняем при смене isTest
 // $https://api-edge.docu.ru на https://api.solfy.com
@@ -93,6 +96,11 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => languageChangerBloc,
+          ),
+          BlocProvider(
+            create: (context) => CardBloc(
+              Injector().get<CardRepository>(),
+            ),
           ),
           BlocProvider(
             create: (context) => RegionSearchBloc(

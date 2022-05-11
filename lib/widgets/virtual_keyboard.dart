@@ -41,7 +41,9 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
       final text = widget.textController.text;
       final textSelection = widget.textController.selection;
       String newText = "";
-      if (text.isNotEmpty && textSelection.start == -1 && textSelection.end == -1) {
+      if (text.isNotEmpty &&
+          textSelection.start == -1 &&
+          textSelection.end == -1) {
         newText = text;
       } else {
         newText = text.replaceRange(
@@ -50,18 +52,20 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
           textProp,
         );
       }
-      final formattedText =
-          widget.maskFormatter != null ? widget.maskFormatter!.maskText(newText) : newText;
-      final myTextLength =
-          widget.maskFormatter != null ? formattedText.length - text.length : textProp.length;
+      final formattedText = widget.maskFormatter != null
+          ? widget.maskFormatter!.maskText(newText)
+          : newText;
+      final myTextLength = widget.maskFormatter != null
+          ? formattedText.length - text.length
+          : textProp.length;
       widget.textController.text = formattedText;
       widget.textController.selection = textSelection.copyWith(
         baseOffset: textSelection.start + myTextLength,
         extentOffset: textSelection.start + myTextLength,
       );
       if (widget.isCompletedListener != null && widget.maskFormatter != null) {
-        widget.isCompletedListener
-            ?.call(formattedText.length == widget.maskFormatter!.getMask()!.length);
+        widget.isCompletedListener?.call(
+            formattedText.length == widget.maskFormatter!.getMask()!.length);
       }
     }
   }
@@ -114,8 +118,8 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         extentOffset: newStart,
       );
       if (widget.isCompletedListener != null && widget.maskFormatter != null) {
-        widget.isCompletedListener
-            ?.call(widget.textController.text.length == widget.maskFormatter!.getMask()!.length);
+        widget.isCompletedListener?.call(widget.textController.text.length ==
+            widget.maskFormatter!.getMask()!.length);
       }
     }
   }
@@ -328,9 +332,10 @@ class BackspaceKey extends StatelessWidget {
             child: Container(
               width: 24.r,
               height: 24.r,
-              alignment: biometricType != null && textController.text.length == 0
-                  ? Alignment.center
-                  : Alignment.centerLeft,
+              alignment:
+                  biometricType != null && textController.text.length == 0
+                      ? Alignment.center
+                      : Alignment.centerLeft,
               child: Icon(
                 biometricType != null && textController.text.length == 0
                     ? biometricType == BiometricType.face

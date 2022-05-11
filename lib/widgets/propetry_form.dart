@@ -68,7 +68,8 @@ class PropertyForm extends StatelessWidget {
           marketValueName,
           controller: marketValue,
           validators: [
-            FormBuilderValidators.required(context, errorText: "Пожалуйста, заполните поле"),
+            FormBuilderValidators.required(context,
+                errorText: "Пожалуйста, заполните поле"),
           ],
           customFormatter: ThousandsSeparatorInputFormatter(),
           keyboardType: TextInputType.number,

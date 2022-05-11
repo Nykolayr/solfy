@@ -25,8 +25,8 @@ class CardStatus extends StatelessWidget {
 
     Widget buildContent(int currentStage) {
       String st = "questionnaire_accepted";
+      st = wallet.status;
       switch (st) {
-        // switch (wallet.status) {
         case "questionnaire_not_sent":
           return Column(
             children: [

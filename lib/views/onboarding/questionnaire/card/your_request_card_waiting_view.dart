@@ -80,91 +80,98 @@ class _YourRequestCardWaitingViewState
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                SizedBox(height: 16.h),
-                Container(
-                  width: double.infinity,
-                  child: Text(
-                    "your_application".tr(),
-                    style: theme.textStyles.mainBigText,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    theme.icons.logoSmallChat,
-                    SizedBox(width: 8.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ChatItem("calculate_amount".tr(), radius: radiusFirst),
-                        SizedBox(height: 4.h),
-                        Column(
-                          children: [
-                            ChatItem(
-                                tr(
-                                  'insurance_premium_card',
-                                  args: [
-                                    widget.insurance_premium,
-                                  ],
-                                ),
-                                height: 72,
-                                radius: isFinalTextVisible
-                                    ? radiusLast
-                                    : radiusMiddle),
-                            SizedBox(height: 4.h),
-                          ],
-                        ),
-                      ],
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  Container(
+                    width: double.infinity,
+                    child: Text(
+                      "your_application".tr(),
+                      style: theme.textStyles.mainBigText,
+                      textAlign: TextAlign.left,
                     ),
-                  ],
-                ),
-                SizedBox(height: 24.h),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    theme.icons.logoSmallChat,
-                    SizedBox(width: 8.w),
-                    isFinalTextVisible
-                        ? ChatItem(
-                            isError
-                                ? errorMessage
-                                : "specify_your_card_details".tr(),
-                            radius: radiusMiddle,
-                            height: 200,
-                          )
-                        : ChatLoadingItem(radius: radiusMiddle),
-                  ],
-                ),
-                SizedBox(height: 44.h),
-                isFinalTextVisible
-                    ? Column(
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      theme.icons.logoSmallChat,
+                      SizedBox(width: 8.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          LongButtonWithText(
-                            text: isError ? tr('understand') : "add_card".tr(),
-                            onTap: () async {
-                              context.router.replaceAll([BaseTabRoute()]);
-                            },
+                          ChatItem("calculate_amount".tr(),
+                              radius: radiusFirst),
+                          SizedBox(height: 4.h),
+                          Column(
+                            children: [
+                              ChatItem(
+                                  tr(
+                                    'insurance_premium_card',
+                                    args: [
+                                      widget.insurance_premium,
+                                    ],
+                                  ),
+                                  height: 72,
+                                  radius: isFinalTextVisible
+                                      ? radiusLast
+                                      : radiusMiddle),
+                              SizedBox(height: 4.h),
+                            ],
                           ),
-                          SizedBox(height: 20.h),
                         ],
-                      )
-                    : SizedBox(),
-              ],
-            ),
-          ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 24.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      theme.icons.logoSmallChat,
+                      SizedBox(width: 8.w),
+                      isFinalTextVisible
+                          ? ChatItem(
+                              isError
+                                  ? errorMessage
+                                  : "specify_your_card_details".tr(),
+                              radius: radiusMiddle,
+                              height: 200,
+                            )
+                          : ChatLoadingItem(radius: radiusMiddle),
+                    ],
+                  ),
+                  SizedBox(height: 44.h),
+                  isFinalTextVisible
+                      ? Column(
+                          children: [
+                            LongButtonWithText(
+                              text: isError ? tr('understand') : tr('add_card'),
+                              onTap: () async {
+                                context.router.push(
+                                  AddCardView(
+                                    insurance_premium: widget.insurance_premium,
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(height: 12.h),
+                          ],
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

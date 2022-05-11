@@ -4,8 +4,11 @@ part of 'sms_code_bloc.dart';
 @freezed
 class SmsCodeEvent with _$SmsCodeEvent {
   /// Проверить код на валидность
-  const factory SmsCodeEvent.validateCode(SmsConfirmRequest request) = ValidateCode;
+  const factory SmsCodeEvent.validateCode(SmsConfirmRequest request) =
+      ValidateCode;
 
   /// Отправить новый код
   const factory SmsCodeEvent.sendNewCode() = SendNewCode;
 }
+
+
