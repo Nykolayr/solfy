@@ -117,8 +117,10 @@ class LineStatus extends StatelessWidget {
           style: theme.textStyles.mediumMainText1,
           textAlign: TextAlign.center,
         ),
-        (buttonGo != null)
-            ? Column(
+        Column(
+          children: [
+            if (buttonGo != null)
+              Column(
                 children: [
                   SizedBox(height: 16.h),
                   LongButtonWithText(
@@ -128,20 +130,21 @@ class LineStatus extends StatelessWidget {
                     fontSize: 14,
                     height: 34,
                   ),
-                  SizedBox(height: 16.h),
-                  bottom != ''
-                      ? SizedBox(height: 16.h)
-                      : const SizedBox.shrink(),
-                  bottom != ''
-                      ? Text(
-                          bottom,
-                          style: theme.textStyles.lightCaptionText10,
-                          textAlign: TextAlign.center,
-                        )
-                      : const SizedBox.shrink(),
                 ],
-              )
-            : const SizedBox.shrink(),
+              ),
+            if (bottom != '')
+              Column(
+                children: [
+                  SizedBox(height: 16.h),
+                  Text(
+                    bottom,
+                    style: theme.textStyles.lightCaptionText10,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+          ],
+        )
       ],
     );
   }

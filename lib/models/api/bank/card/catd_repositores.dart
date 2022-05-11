@@ -12,6 +12,7 @@ class CardRepository {
   ) async {
     CardResponse result =
         await apiClient.sendCardLocal(card_number, expire_date);
+    print('console result  == ${result.toJson()}');
     return result;
   }
 

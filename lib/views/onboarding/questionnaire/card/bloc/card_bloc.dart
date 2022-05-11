@@ -25,32 +25,21 @@ class CardBloc extends Bloc<CardEvent, CardState> {
         card_number = event.numberCard;
         expire_date = event.dataCard;
         insurance_premium = event.insurance_premium;
-        //TODO убрать когда будет готово
-        insurance_premium = '25 000 сум';
-        if (insurance_premium.isNotEmpty)
-          try {
-            insurance_premiumInt = int.parse(
-              insurance_premium.replaceAll(' ', '').replaceAll('сум', ''),
-            );
-          } catch (e) {
-            print('console error insurance_premiumInt == $e');
-          }
-        print('console == insurance_premiumInt == $insurance_premiumInt');
+        insurance_premiumInt = int.parse(
+            insurance_premium.replaceAll(' ', '').replaceAll('сум', ''));
         emit(CardLoad());
-        await Future.delayed(
-          Duration(seconds: 5),
-        );
         CardResponse? response =
             await cardRepository.sendCardLocal(card_number, expire_date);
-        response = null;
+        print('console response.toJson()  == ${response.toJson()}');
         if (response != null) {
           card_uuid = response.card_uuid;
           local_card_phone_number = response.local_card_phone_number;
+          emit(CardSuccess());
         } else {
           ErrorItemResponse error =
               ErrorItemResponse('45', 'title', 'message', 'target', 1, 'type');
           ErrorsResponse errors = ErrorsResponse(errors: [error]);
-          print('object11111 === >>>>>>> ${errors.errors!.first.toJson()}');
+          print('console error === >>>>>>> ${errors.errors!.first.toJson()}');
           emit(CardError(error: errors));
         }
       }

@@ -27,6 +27,16 @@ class CardStatus extends StatelessWidget {
       String st = "questionnaire_accepted";
       st = wallet.status;
       switch (st) {
+        case "questionnaire_card_preparing":
+          return LineStatus(
+            wallet.title,
+            wallet.description,
+            lines: 2,
+            checkmark: 2,
+            marked: 3,
+            bottom: wallet.addition,
+            time: "2-3 дня",
+          );
         case "questionnaire_not_sent":
           return Column(
             children: [
@@ -129,8 +139,9 @@ class CardStatus extends StatelessWidget {
             wallet.title,
             wallet.description,
             lines: 2,
-            checkmark: 2,
+            checkmark: 3,
             marked: 3,
+            bottom: wallet.addition,
           );
         case "questionnaire_card_received":
           return LineStatus(

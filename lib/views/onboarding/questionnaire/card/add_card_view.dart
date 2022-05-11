@@ -4,7 +4,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
-import 'package:solfy_flutter/models/api/errors/errors_response.dart';
 import 'package:solfy_flutter/services/form_builder_validators.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,7 +69,12 @@ class _AddCardViewState extends State<AddCardView> {
                     'object === >>>>>>> ${state.error.errors!.first.toJson()}');
                 ModalHelpers.showError(context, state.error);
               }
-              if (state is CardSuccess) {}
+              if (state is CardSuccess) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SmsCodeCardView()),
+                );
+              }
             },
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -152,7 +156,7 @@ class _AddCardViewState extends State<AddCardView> {
                     text: isError
                         ? tr('understand')
                         : tr(
-                            'payment_insurance_premium_card',
+                            'pay_summa',
                             args: [widget.insurance_premium],
                           ),
                     onTap: () async {
@@ -178,13 +182,13 @@ class _AddCardViewState extends State<AddCardView> {
                                 insurance_premium: widget.insurance_premium,
                               ),
                             );
-                        if (!isError) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SmsCodeCardView()),
-                          );
-                        }
+                        // if (!isError) {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => SmsCodeCardView()),
+                        //   );
+                        // }
                       }
                     },
                   ),
