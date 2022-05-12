@@ -90,6 +90,8 @@ import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_c
     as _i70;
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/add_card_view.dart'
     as _i71;
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_success_card_waiting_view.dart'
+    as _i72;
 
 class AppRouter extends _i59.RootStackRouter {
   AppRouter([_i60.GlobalKey<_i60.NavigatorState>? navigatorKey])
@@ -221,6 +223,10 @@ class AppRouter extends _i59.RootStackRouter {
     YourRequestWaitingChatView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i25.YourRequestWaitingChatView());
+    },
+    YourSuccessCardWaitingView.name: (routeData) {
+      return _i59.MaterialPageX<dynamic>(
+          routeData: routeData, child: _i72.YourSuccessCardWaitingView());
     },
     YourRequestView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
@@ -456,6 +462,8 @@ class AppRouter extends _i59.RootStackRouter {
           QuestionnaireStackRoute.name,
           path: '/questionnaire-stack-wrapper',
           children: [
+            _i59.RouteConfig(YourSuccessCardWaitingView.name,
+                path: '/YourSuccessCardWaitingView'),
             _i59.RouteConfig(ShortFormView.name,
                 path: '', parent: QuestionnaireStackRoute.name),
             _i59.RouteConfig(YourRequestWaitingChatView.name,
@@ -956,11 +964,20 @@ class ShortFormView extends _i59.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i72.YourRequestWaitingChatView]
+class YourSuccessCardWaitingView extends _i59.PageRouteInfo<void> {
+  const YourSuccessCardWaitingView()
+      : super(YourSuccessCardWaitingView.name,
+            path: '/YourSuccessCardWaitingView');
+  static const String name = 'YourSuccessCardWaitingView';
+}
+
+/// generated route for
 /// [_i25.YourRequestWaitingChatView]
 class YourRequestWaitingChatView extends _i59.PageRouteInfo<void> {
   const YourRequestWaitingChatView()
       : super(YourRequestWaitingChatView.name,
-            path: 'your-request-waiting-chat-view');
+            path: 'YourSuccessCardWaitingView');
 
   static const String name = 'YourRequestWaitingChatView';
 }

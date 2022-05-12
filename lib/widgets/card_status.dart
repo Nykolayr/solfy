@@ -24,9 +24,42 @@ class CardStatus extends StatelessWidget {
     AppTheme theme = context.read<AppTheme>();
 
     Widget buildContent(int currentStage) {
-      String st = "questionnaire_accepted";
+      String st = "questionnaire_accepted_paid";
       st = wallet.status;
       switch (st) {
+        case "questionnaire_accepted":
+          return LineStatus(
+            wallet.title,
+            wallet.description,
+            lines: 1,
+            checkmark: 1,
+            marked: 2,
+            bottom: wallet.addition,
+            buttonGo: () {
+              context.router.root.push(
+                YourRequestCardWaitingView(
+                  insurance_premium: wallet.insurance_premium,
+                ),
+              );
+            },
+          );
+        case "questionnaire_accepted_paid":
+          return LineStatus(
+            wallet.title,
+            wallet.description,
+            lines: 1,
+            checkmark: 1,
+            marked: 2,
+            bottom: wallet.addition,
+            buttonGo: () {
+              // context.router.push(ChoosingFilialRoute());
+              context.router.root.push(
+                QuestionnaireStackRoute(
+                  children: [ChoosingFilialRoute()],
+                ),
+              );
+            },
+          );
         case "questionnaire_card_preparing":
           return LineStatus(
             wallet.title,
@@ -117,22 +150,6 @@ class CardStatus extends StatelessWidget {
             wallet.title,
             wallet.description,
             time: "1-2 часа",
-          );
-        case "questionnaire_accepted":
-          return LineStatus(
-            wallet.title,
-            wallet.description,
-            lines: 1,
-            checkmark: 1,
-            marked: 2,
-            bottom: wallet.addition,
-            buttonGo: () {
-              context.router.root.push(
-                YourRequestCardWaitingView(
-                  insurance_premium: wallet.insurance_premium,
-                ),
-              );
-            },
           );
         case "questionnaire_card_ready":
           return LineStatus(

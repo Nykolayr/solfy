@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/models/enums.dart';
+import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/get_new_sms_code_card.dart';
@@ -69,7 +70,10 @@ class _SmsCodeCardViewState extends State<SmsCodeCardView> {
         if (state is CardError) {
           ModalHelpers.showError(context, state.error);
         }
+
         if (state is CardSuccess) {
+          context.router.replaceAll([YourSuccessCardWaitingView()]);
+
           // if (state.response.target != null) {
           //   if (state.response.target == 'email_send') {
           //     context.router.pop();

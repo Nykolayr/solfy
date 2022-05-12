@@ -22,6 +22,7 @@ import 'package:solfy_flutter/views/onboarding/pin_code_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/address_form_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/add_card_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_request_card_waiting_view.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_success_card_waiting_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/choosing_filial_form_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/choosing_filial_stack_wrapper.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/job_info_form_view.dart';
@@ -109,7 +110,6 @@ import 'package:solfy_flutter/views/wallet/wallet_view.dart';
     ]),
     AutoRoute(page: WelcomeView),
     AutoRoute(page: ForgotPinCodeView),
-    AutoRoute(page: YourRequestCardWaitingView),
     AutoRoute(page: AddCardView),
     AutoRoute(
       page: YourRequestCardWaitingView,
@@ -118,6 +118,7 @@ import 'package:solfy_flutter/views/wallet/wallet_view.dart';
         page: QuestionnaireStackWrapper,
         name: "QuestionnaireStackRoute",
         children: [
+          AutoRoute(page: YourSuccessCardWaitingView),
           AutoRoute(page: ShortFormView, initial: true),
           AutoRoute(page: YourRequestWaitingChatView),
           AutoRoute(page: YourRequestView),

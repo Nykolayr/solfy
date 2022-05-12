@@ -30,8 +30,8 @@ class CardBloc extends Bloc<CardEvent, CardState> {
         emit(CardLoad());
         CardResponse? response =
             await cardRepository.sendCardLocal(card_number, expire_date);
-        print('console response.toJson()  == ${response.toJson()}');
         if (response != null) {
+          print('console response.toJson()  == ${response.toJson()}');
           card_uuid = response.card_uuid;
           local_card_phone_number = response.local_card_phone_number;
           emit(CardSuccess());
