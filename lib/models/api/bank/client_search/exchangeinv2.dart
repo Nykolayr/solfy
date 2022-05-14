@@ -117,7 +117,9 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "loan_expenses": income['loan_expenses'] == null
         ? null
         : int.parse(income['loan_expenses']),
-    "add_income_source": income['add_income_source'],
+    "add_income_source": income['add_income_source'] == null
+        ? null
+        : income['add_income_source'],
     "add_income": income['add_income'],
     "monthly_income": income['monthly_income'] == null
         ? null

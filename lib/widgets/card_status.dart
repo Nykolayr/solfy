@@ -17,15 +17,14 @@ import 'package:solfy_flutter/widgets/solfy_icons.dart';
 /// [wallet] - кошелек
 class CardStatus extends StatelessWidget {
   CardStatus(this.wallet);
-
   final WalletStatusViewModel wallet;
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
 
     Widget buildContent(int currentStage) {
-      String st = "questionnaire_accepted_paid";
-      st = wallet.status;
+      // String st = "questionnaire_accepted";
+      String st = wallet.status;
       switch (st) {
         case "questionnaire_accepted":
           return LineStatus(

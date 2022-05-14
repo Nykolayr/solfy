@@ -112,23 +112,24 @@ class _ChoosingFilialFormViewState extends State<ChoosingFilialFormView> {
               style: theme.textStyles.mainText,
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 2.h),
-            RichText(
-              textAlign: TextAlign.left,
-              text: TextSpan(
-                text: 'step_6'.tr(),
-                style: theme.textStyles.headerSubtitleText,
-                children: [
-                  TextSpan(text: ' '),
-                  TextSpan(
-                    text: 'from_6'.tr(),
-                    style: theme.textStyles.headerSubtitleText.copyWith(
-                      color: theme.colors.virtualKeyboardNumbers,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // TODO: Добавить как будет пятый шаг
+            // SizedBox(height: 2.h),
+            // RichText(
+            //   textAlign: TextAlign.left,
+            //   text: TextSpan(
+            //     text: 'step_6'.tr(),
+            //     style: theme.textStyles.headerSubtitleText,
+            //     children: [
+            //       TextSpan(text: ' '),
+            //       TextSpan(
+            //         text: 'from_6'.tr(),
+            //         style: theme.textStyles.headerSubtitleText.copyWith(
+            //           color: theme.colors.virtualKeyboardNumbers,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
         suffix: Row(

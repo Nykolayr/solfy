@@ -33,7 +33,8 @@ class ProfileRepository implements IProfileRepository {
   int? cityId;
 
   @override
-  Future<Either<ErrorsResponse, PinCheckResp>> pinCheck(PinCheckRequest request) async {
+  Future<Either<ErrorsResponse, PinCheckResp>> pinCheck(
+      PinCheckRequest request) async {
     try {
       final response = await _apiClient.pinCheck(request);
       return Right(response);
@@ -64,7 +65,8 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
-  Future<Either<ErrorsResponse, EmailUpdateResp>> updateEmail(EmailUpdateRequest request) async {
+  Future<Either<ErrorsResponse, EmailUpdateResp>> updateEmail(
+      EmailUpdateRequest request) async {
     try {
       final response = await _apiClient.updateEmail(request);
       return Right(response);
@@ -87,7 +89,8 @@ class ProfileRepository implements IProfileRepository {
   Future<Either<ErrorsResponse, ReportResp>> sendLetter(
       ReportRequest request, List<File> images) async {
     try {
-      final response = await _apiClient.sendLetter(request.email, request.message, "{}", images);
+      final response = await _apiClient.sendLetter(
+          request.email, request.message, "{}", images);
       return Right(response);
     } on DioError catch (error) {
       return Left(ErrorsResponse.fromJson(error.response!.data));
@@ -105,7 +108,8 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
-  Future<Either<ErrorsResponse, SetSettingsResp>> setSettings(SetSettingsRequest request) async {
+  Future<Either<ErrorsResponse, SetSettingsResp>> setSettings(
+      SetSettingsRequest request) async {
     try {
       final response = await _apiClient.setSettings(request);
       return Right(response);
@@ -115,7 +119,8 @@ class ProfileRepository implements IProfileRepository {
   }
 
   @override
-  Future<Either<ErrorsResponse, PinUpdateResp>> pinUpdate(PinUpdateRequest request) async {
+  Future<Either<ErrorsResponse, PinUpdateResp>> pinUpdate(
+      PinUpdateRequest request) async {
     try {
       final response = await _apiClient.pinUpdate(request);
       return Right(response);

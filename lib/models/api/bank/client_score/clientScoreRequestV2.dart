@@ -58,7 +58,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
   await Future.delayed(Duration(milliseconds: 500));
   print('clientScoreRequestV2 clientIncome =${data.clientIncome!.toJson()}');
   print(
-      'clientScoreRequestV2 clientIncome =${data.clientIncome!.addIncomeSource}');
+      'clientScoreRequestV2 addIncomeSource >>>>>>>>>> =${data.clientIncome!.addIncomeSource}');
   List<Map>? vehicles = [];
   if (data.clientVehicles != null) {
     data.clientVehicles!.forEach((element) {
@@ -204,10 +204,12 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "monthly_income": data.clientIncome!.monthlyIncome.toString(),
       "monthly_expenses": data.clientIncome!.monthlyExpenses.toString(),
       "loan_expenses": data.clientIncome!.loanExpenses.toString(),
-      "add_income": {
-        "id": data.clientIncome!.addIncome,
-        "code": "${data.clientIncome!.addIncome}"
-      },
+      "add_income": (data.clientIncome!.addIncome == null)
+          ? null
+          : {
+              "id": data.clientIncome!.addIncome,
+              "code": "${data.clientIncome!.addIncome}"
+            },
       "add_income_amount": (data.clientIncome!.addIncomeAmount == null)
           ? null
           : data.clientIncome!.addIncomeAmount.toString(),
@@ -223,6 +225,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     "secret_word": data.secretWord,
   };
   printWrapped('console map >>>>>>>> $map');
+  printWrapped('console addIncomeSource >>>>>>>> ${map['add_income_source']}');
   showMap = map;
   return map;
 }

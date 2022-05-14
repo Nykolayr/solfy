@@ -38,6 +38,8 @@ class _BankApiClient implements BankApiClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    
+    
     // TODO: тут подмена request для отправки V2
 
     _data.addAll(await clientScoreRequestV2(request));

@@ -99,6 +99,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         print(
             'phone2222 ==${event.number != null} == ${res.isRight} == ${res.right.profile!.phone}');
       }
+
+      print('wallet== ${res.right.profile!.wallet!.toJson()}');
       if (event.number != null && res.isRight) {
         String? phone = res.right.profile!.phone!
             .replaceAll(" ", "")
@@ -106,7 +108,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             .replaceAll("-", "");
         final request = ClientSearchRequest(
           phone,
-          {"id": 8, "code": "BIO"},
+          {"id": 6, "code": "BIO"},
           event.series!,
           event.number!,
           event.pinFl!,
@@ -624,6 +626,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       Emitter<QuestionnaireState> emit, SaveJobData event) async {
     printWrapped('SaveJobData >>>>>>>> == ${event.data}');
     print('------------------------------------------------------');
+    printWrapped(
+        'additional_type >>>>>>>> == ${event.data["additional_type"]}');
     final newQuestionnaire = event.questionnaire.copyWith(
         clientJobInfo: (event.questionnaire.clientJobInfo == null)
             ? ClientSearchClientJobInfoResponse(
@@ -961,6 +965,9 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     print('------------------------------------------------------');
     printWrapped(
         'clientIncome >>>>>>> == ${newQuestionnaire.clientIncome!.toJson()}');
+    print('------------------------------------------------------');
+    printWrapped(
+        'addIncomeSource >>>>>>> == ${newQuestionnaire.clientIncome!.addIncomeSource}');
     print('------------------------------------------------------');
     await Future.delayed(
       Duration(

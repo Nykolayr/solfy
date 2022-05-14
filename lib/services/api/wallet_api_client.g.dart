@@ -58,6 +58,7 @@ class _WalletApiClient implements WalletApiClient {
     String code,
     String local_card_phone_number,
   ) async {
+    print('console code =>>>> $code');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       'card_uuid': card_uuid,
@@ -72,8 +73,10 @@ class _WalletApiClient implements WalletApiClient {
                 .compose(_dio.options, 'bank/v2/local_card_confirm',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    print('console requery =>>>> ${_result.data}');
+    print('console sendCardLocalConfirm1111 =>>>> ${_result.data}');
     CardConfirmResponse value = CardConfirmResponse.fromJson(_result.data!);
-    print('console sendCardLocalConfirm =>>>> ${value.toJson()}');
+    print('console sendCardLocalConfirm22222 =>>>> ${value.toJson()}');
     return value;
   }
 
@@ -90,7 +93,7 @@ class _WalletApiClient implements WalletApiClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<WalletGetResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'bank/v2/local_card_confirm',
+                .compose(_dio.options, 'bank/v2/local_card_resend',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     CardResendResponse value = CardResendResponse.fromJson(_result.data!);

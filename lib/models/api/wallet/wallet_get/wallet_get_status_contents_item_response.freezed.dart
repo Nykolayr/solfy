@@ -76,9 +76,12 @@ abstract class $WalletGetStatusContentsItemResponseCopyWith<$Res> {
           WalletGetStatusContentsItemResponse value,
           $Res Function(WalletGetStatusContentsItemResponse) then) =
       _$WalletGetStatusContentsItemResponseCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(name: "title") String? title,
-      @JsonKey(name: "description") String? description});
+  $Res call({
+    @JsonKey(name: "title") String? title,
+    @JsonKey(name: "description") String? description,
+    @JsonKey(name: "addition") String? addition,
+    @JsonKey(name: "insurance_premium") String? insurance_premium,
+  });
 }
 
 /// @nodoc
@@ -94,6 +97,8 @@ class _$WalletGetStatusContentsItemResponseCopyWithImpl<$Res>
   $Res call({
     Object? title = freezed,
     Object? description = freezed,
+    Object? addition = freezed,
+    Object? insurance_premium = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
@@ -103,6 +108,14 @@ class _$WalletGetStatusContentsItemResponseCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      addition: addition == freezed
+          ? _value.addition
+          : addition // ignore: cast_nullable_to_non_nullable
+              as String?,
+      insurance_premium: insurance_premium == freezed
+          ? _value.insurance_premium
+          : insurance_premium // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
