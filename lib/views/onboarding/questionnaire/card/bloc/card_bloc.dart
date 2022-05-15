@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
-import 'package:solfy_flutter/models/api/bank/card/catd_repositores.dart';
-import 'package:solfy_flutter/models/api/errors/error_item_response.dart';
+import 'package:solfy_flutter/models/api/bank/card/card_repositores.dart';
 import 'package:solfy_flutter/models/api/errors/errors_response.dart';
 
 part 'card_event.dart';
@@ -19,6 +19,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
   String processing_external_id = '';
   String transaction_id = '';
   final CardRepository cardRepository;
+
   CardBloc(CardRepository this.cardRepository) : super(CardInitial()) {
     on<CardEvent>((event, emit) async {
       if (event is PressAddCard) {
@@ -28,38 +29,44 @@ class CardBloc extends Bloc<CardEvent, CardState> {
         insurance_premiumInt = int.parse(
             insurance_premium.replaceAll(' ', '').replaceAll('сум', ''));
         emit(CardLoad());
-        CardResponse? response =
+        var response =
             await cardRepository.sendCardLocal(card_number, expire_date);
-        if (response != null) {
-          print('console response.toJson()  == ${response.toJson()}');
+        if (response is Left) {
+          emit(CardError(errors: response.left));
+        }
+        if (response is CardResponse) {
           card_uuid = response.card_uuid;
           local_card_phone_number = response.local_card_phone_number;
           emit(CardSuccess());
-        } else {
-          ErrorItemResponse error =
-              ErrorItemResponse('45', 'title', 'message', 'target', 1, 'type');
-          ErrorsResponse errors = ErrorsResponse(errors: [error]);
-          print('console error === >>>>>>> ${errors.errors!.first.toJson()}');
-          emit(CardError(error: errors));
         }
       }
       if (event is SendNewCodeCard) {
         code = event.code;
         emit(CardLoad());
-        CardConfirmResponse response = await cardRepository
-            .sendCardLocalConfirm(card_uuid, code, local_card_phone_number);
-        if (response != null) {
+        var response = await cardRepository.sendCardLocalConfirm(
+            card_uuid, code, local_card_phone_number);
+        if (response is Left) {
+          emit(CardCodeError(errors: response.left));
+        }
+        if (response is CardConfirmResponse) {
           insurance_token = response.insurance_token;
           processing_external_id = response.processing_external_id;
           transaction_id = response.transaction_id;
+          emit(CardCodeSuccess());
         }
       }
       if (event is SendResCode) {
-        // code = event.code;
-        emit(CardLoad());
-        await cardRepository.sendCardLocalResend(card_uuid);
+        // emit(CardLoad());
+        var response = await cardRepository.sendCardLocalResend(card_uuid);
+        if (response is Left) {
+          emit(CardResError(errors: response.left));
+        }
+        if (response is CardResendResponse) {
+          card_uuid = response.card_uuid;
+          local_card_phone_number = response.local_card_phone_number;
+          emit(CardResendSuccess());
+        }
       }
-      // emit(CardInitial());
     });
   }
 

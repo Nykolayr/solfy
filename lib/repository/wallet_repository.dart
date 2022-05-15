@@ -9,7 +9,6 @@ import 'package:solfy_flutter/models/api/wallet/schedules/schedules_response.dar
 import 'package:solfy_flutter/models/api/wallet/operations/operations_response.dart';
 import 'package:solfy_flutter/models/api/wallet/comfortable_payment_update/comfortable_payment_update_response.dart';
 import 'package:solfy_flutter/models/api/wallet/comfortable_payment_update/comfortable_payment_update_request.dart';
-import 'package:solfy_flutter/models/api/wallet/wallet_get/wallet_get_status_contents_item_response.dart';
 import 'package:solfy_flutter/repository/iwallet_repository.dart';
 import 'package:solfy_flutter/services/api/wallet_api_client.dart';
 

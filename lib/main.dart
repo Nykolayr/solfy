@@ -32,7 +32,7 @@ import 'package:solfy_flutter/views/onboarding/pin_code_login_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
 
-import 'models/api/bank/card/catd_repositores.dart';
+import 'models/api/bank/card/card_repositores.dart';
 
 // TODO apiUrl меняем при смене isTest
 // $https://api-edge.docu.ru на https://api.solfy.com

@@ -55,8 +55,6 @@ class _AddCardViewState extends State<AddCardView> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: BlocListener<CardBloc, CardState>(
             listener: (context, state) {
-              print('AddCardView >>>>>>>>>>>>>> $state');
-
               if (state is CardLoad) {
                 isLoad = true;
                 ModalHelpers.showLoadingModal(context);
@@ -65,9 +63,7 @@ class _AddCardViewState extends State<AddCardView> {
                 isLoad = false;
               }
               if (state is CardError) {
-                print(
-                    'object === >>>>>>> ${state.error.errors!.first.toJson()}');
-                ModalHelpers.showError(context, state.error);
+                ModalHelpers.showError(context, state.errors);
               }
               if (state is CardSuccess) {
                 Navigator.push(
@@ -153,12 +149,10 @@ class _AddCardViewState extends State<AddCardView> {
                     ],
                   ),
                   LongButtonWithText(
-                    text: isError
-                        ? tr('understand')
-                        : tr(
-                            'pay_summa',
-                            args: [widget.insurance_premium],
-                          ),
+                    text: tr(
+                      'pay_summa',
+                      args: [widget.insurance_premium],
+                    ),
                     onTap: () async {
                       final isValid =
                           _formKey.currentState?.validate() ?? false;
@@ -182,13 +176,6 @@ class _AddCardViewState extends State<AddCardView> {
                                 insurance_premium: widget.insurance_premium,
                               ),
                             );
-                        // if (!isError) {
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => SmsCodeCardView()),
-                        //   );
-                        // }
                       }
                     },
                   ),

@@ -23,6 +23,8 @@ class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
   bool isSending = false;
   bool isSent = false;
   bool isTimerEnded = false;
+  int seconds = 5;
+  int time = 6;
   late StopWatchTimer _stopWatchTimer;
 
   @override
@@ -31,7 +33,7 @@ class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
       mode: StopWatchMode.countDown,
       onEnded: () => setState(() => isTimerEnded = true),
     );
-    _stopWatchTimer.setPresetSecondTime(10);
+    _stopWatchTimer.setPresetSecondTime(time);
     _stopWatchTimer.onExecute.add(StopWatchExecute.start);
     _stopWatchTimer.secondTime.listen((value) => setState(() => null));
     super.initState();
@@ -48,19 +50,21 @@ class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
     AppTheme theme = context.read<AppTheme>();
 
     void onTap() async {
-      context.read<CardBloc>().add(SendResCode());
       setState(() {
         isSending = true;
       });
-      Timer(Duration(seconds: 3), () {
+
+      Timer(Duration(seconds: seconds), () {
+        context.read<CardBloc>().add(SendResCode());
         setState(() {
           isSending = false;
           isSent = true;
-          Timer(Duration(seconds: 3), () {
+
+          Timer(Duration(seconds: seconds), () {
             setState(() {
               isSent = false;
               isTimerEnded = false;
-              _stopWatchTimer.setPresetSecondTime(5);
+              _stopWatchTimer.setPresetSecondTime(seconds);
               _stopWatchTimer.onExecute.add(StopWatchExecute.start);
             });
           });
@@ -69,11 +73,7 @@ class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
     }
 
     return BlocListener<CardBloc, CardState>(
-      listener: (context, state) {
-        if (state is CardError) {
-          ModalHelpers.showError(context, state.error);
-        }
-      },
+      listener: (context, state) {},
       child: Container(
         height: 35,
         child: Row(
@@ -110,12 +110,16 @@ class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
                       )
                 : !isTimerEnded
                     ? Text(
-                        "get_new_sms_code_seconds_left".tr() +
+                        tr(
+                          "get_new_sms_code_seconds_left",
+                          args: [
                             StopWatchTimer.getDisplayTime(
                               _stopWatchTimer.rawTime.value,
                               hours: false,
                               milliSecond: false,
                             ),
+                          ],
+                        ),
                         style: theme.textStyles.mediumMainText,
                       )
                     : GestureDetector(

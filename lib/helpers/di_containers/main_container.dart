@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:solfy_flutter/models/api/bank/card/catd_repositores.dart';
+import 'package:solfy_flutter/models/api/bank/card/card_repositores.dart';
 import 'package:solfy_flutter/repository/account_repository.dart';
 import 'package:solfy_flutter/repository/bank_repository.dart';
 import 'package:solfy_flutter/repository/catalog_repository.dart';

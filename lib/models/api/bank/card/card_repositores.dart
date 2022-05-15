@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
+import 'package:solfy_flutter/models/api/errors/errors_response.dart';
 import 'package:solfy_flutter/services/api/wallet_api_client.dart';
 
 class CardRepository {
@@ -6,34 +9,44 @@ class CardRepository {
     required this.apiClient,
   });
 
-  Future<CardResponse> sendCardLocal(
+  Future<Object> sendCardLocal(
     String card_number,
     String expire_date,
   ) async {
-    CardResponse result =
-        await apiClient.sendCardLocal(card_number, expire_date);
-    print('console result  == ${result.toJson()}');
-    return result;
+    try {
+      final response = await apiClient.sendCardLocal(card_number, expire_date);
+      return response;
+    } on DioError catch (error) {
+      return Left(ErrorsResponse.fromJson(error.response!.data));
+    }
   }
 
-  Future<CardConfirmResponse> sendCardLocalConfirm(
+  Future<Object> sendCardLocalConfirm(
     String card_uuid,
     String code,
     String local_card_phone_number,
   ) async {
-    CardConfirmResponse result = await apiClient.sendCardLocalConfirm(
-      card_uuid,
-      code,
-      local_card_phone_number,
-    );
-    return result;
+    try {
+      final response = await apiClient.sendCardLocalConfirm(
+        card_uuid,
+        code,
+        local_card_phone_number,
+      );
+      return await response;
+    } on DioError catch (error) {
+      return Left(ErrorsResponse.fromJson(error.response!.data));
+    }
   }
 
-  Future<CardResendResponse> sendCardLocalResend(
+  Future<Object> sendCardLocalResend(
     String card_uuid,
   ) async {
-    CardResendResponse result = await apiClient.sendCardLocalResend(card_uuid);
-    return result;
+    try {
+      final response = await apiClient.sendCardLocalResend(card_uuid);
+      return response;
+    } on DioError catch (error) {
+      return Left(ErrorsResponse.fromJson(error.response!.data));
+    }
   }
 }
 

@@ -14,11 +14,31 @@ class CardInitial extends CardState {}
 class CardLoad extends CardState {}
 
 class CardError extends CardState {
-  ErrorsResponse error;
+  ErrorsResponse errors;
 
   CardError({
-    required this.error,
+    required this.errors,
+  });
+}
+
+class CardResError extends CardState {
+  ErrorsResponse errors;
+
+  CardResError({
+    required this.errors,
+  });
+}
+
+class CardCodeError extends CardState {
+  ErrorsResponse errors;
+
+  CardCodeError({
+    required this.errors,
   });
 }
 
 class CardSuccess extends CardState {}
+
+class CardCodeSuccess extends CardState {}
+
+class CardResendSuccess extends CardState {}

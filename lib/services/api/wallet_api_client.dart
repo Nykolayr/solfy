@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:solfy_flutter/main.dart';
-import 'package:solfy_flutter/models/api/bank/card/catd_repositores.dart';
+import 'package:solfy_flutter/models/api/bank/card/card_repositores.dart';
 import 'package:solfy_flutter/models/api/wallet/comfortable_payment_update/comfortable_payment_update_request.dart';
 import 'package:solfy_flutter/models/api/wallet/comfortable_payment_update/comfortable_payment_update_response.dart';
 import 'package:solfy_flutter/models/api/wallet/operation/operation_response.dart';

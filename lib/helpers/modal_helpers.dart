@@ -129,7 +129,8 @@ class ModalHelpers {
   }
 
   /// Показать модалку с предложением включить биометрию
-  static Future<void> showBiometricModal(BuildContext context, BiometricType type) async {
+  static Future<void> showBiometricModal(
+      BuildContext context, BiometricType type) async {
     await showCustomModalBottomSheet(
       context: context,
       containerWidget: (_, animation, child) => FloatingModal(
@@ -140,7 +141,8 @@ class ModalHelpers {
   }
 
   /// Показать модалку с загрузкой
-  static void showLoadingModal(BuildContext context, {bool useRootNavigator = true}) {
+  static void showLoadingModal(BuildContext context,
+      {bool useRootNavigator = true}) {
     if (isAnyLoadingModal) {
       return;
     }
@@ -350,7 +352,8 @@ class ModalHelpers {
   }
 
   /// Модалка с обновлением суммы комфортного платежа
-  static void showComfortablePaymentUpdateModal(BuildContext context, int value) {
+  static void showComfortablePaymentUpdateModal(
+      BuildContext context, int value) {
     final bloc = context.read<WalletBloc>();
     showCupertinoModalBottomSheet(
       enableDrag: true,
@@ -458,7 +461,8 @@ class ModalHelpers {
   }
 
   /// Модалка с номерами телефонов на карточке магазина
-  static Future<void> showPhonesModal(BuildContext context, List<String>? phones) async {
+  static Future<void> showPhonesModal(
+      BuildContext context, List<String>? phones) async {
     await showCustomModalBottomSheet(
       context: context,
       useRootNavigator: true,

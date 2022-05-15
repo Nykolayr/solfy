@@ -47,7 +47,8 @@ class SmsCodeBloc extends Bloc<SmsCodeEvent, SmsCodeState> {
     if (response.isLeft) {
       emit(SendNewSmsError(response.left));
     } else {
-      Injector().get<Dio>().options.headers["session_token"] = response.right.sessionToken;
+      Injector().get<Dio>().options.headers["session_token"] =
+          response.right.sessionToken;
     }
   }
 }

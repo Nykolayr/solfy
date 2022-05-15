@@ -119,8 +119,10 @@ class FeedDetailView extends StatelessWidget {
                       feed.feed?.image != null && feed.feed?.image != ""
                           ? CachedNetworkImage(
                               imageUrl: feed.feed!.image!,
-                              placeholder: (context, url) => LoadingRingAnimation(),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
+                              placeholder: (context, url) =>
+                                  LoadingRingAnimation(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
                             )
                           : SizedBox(),
                       Padding(
@@ -150,7 +152,8 @@ class FeedDetailView extends StatelessWidget {
                       feed.promotions?.categories?.length != 0 ||
                               feed.promotions?.brands?.length != 0
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -167,28 +170,38 @@ class FeedDetailView extends StatelessWidget {
                                   ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: feed.promotions?.categories?.length ?? 0,
+                                    itemCount:
+                                        feed.promotions?.categories?.length ??
+                                            0,
                                     itemBuilder: (context, index) => Padding(
                                       padding: EdgeInsets.only(
-                                          bottom: index != (feed.promotions!.categories!.length - 1)
+                                          bottom: index !=
+                                                  (feed.promotions!.categories!
+                                                          .length -
+                                                      1)
                                               ? 24.h
                                               : 0),
                                       child: GestureDetector(
                                         onTap: () async {
-                                          context.read<CategoriesBloc>().add(SetCategoryId(
-                                              feed.promotions!.categories![index].id!));
-                                          context.read<BrandsBloc>().add(GetBrands());
+                                          context.read<CategoriesBloc>().add(
+                                              SetCategoryId(feed.promotions!
+                                                  .categories![index].id!));
+                                          context
+                                              .read<BrandsBloc>()
+                                              .add(GetBrands());
                                           context.router.push(
                                             BrandsRoute(children: [
                                               CategoryStoresView(
-                                                  categoryName:
-                                                      feed.promotions!.categories![index].name!)
+                                                  categoryName: feed.promotions!
+                                                      .categories![index].name!)
                                             ]),
                                           );
                                         },
                                         child: CategoryRowItem(
-                                          name: feed.promotions!.categories![index].name!,
-                                          logo: feed.promotions!.categories![index].icon!,
+                                          name: feed.promotions!
+                                              .categories![index].name!,
+                                          logo: feed.promotions!
+                                              .categories![index].icon!,
                                         ),
                                       ),
                                     ),
@@ -199,19 +212,23 @@ class FeedDetailView extends StatelessWidget {
                                   ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: feed.promotions?.brands?.length ?? 0,
+                                    itemCount:
+                                        feed.promotions?.brands?.length ?? 0,
                                     itemBuilder: (context, index) => Padding(
                                       padding: EdgeInsets.only(bottom: 24.h),
                                       child: StoreRowItem(
-                                        name: feed.promotions!.brands![index].name!,
-                                        description:
-                                            feed.promotions!.brands![index].shortDescription!,
-                                        logo: feed.promotions!.brands![index].logo!,
-                                        range: feed.promotions!.brands![index].ranges!,
+                                        name: feed
+                                            .promotions!.brands![index].name!,
+                                        description: feed.promotions!
+                                            .brands![index].shortDescription!,
+                                        logo: feed
+                                            .promotions!.brands![index].logo!,
+                                        range: feed
+                                            .promotions!.brands![index].ranges!,
                                         onTap: () async {
-                                          context
-                                              .read<StoreBloc>()
-                                              .add(GetBrand(feed.promotions!.brands![index].id!));
+                                          context.read<StoreBloc>().add(
+                                              GetBrand(feed.promotions!
+                                                  .brands![index].id!));
                                         },
                                       ),
                                     ),
@@ -240,11 +257,13 @@ class FeedDetailView extends StatelessWidget {
                                   ListView.builder(
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
-                                    itemCount: feed.additional?.feeds?.length ?? 0,
+                                    itemCount:
+                                        feed.additional?.feeds?.length ?? 0,
                                     itemBuilder: (context, index) => Padding(
                                       padding: EdgeInsets.only(bottom: 24.h),
-                                      child:
-                                          FeedShortItem(feed.additional!.feeds![index].getModel()),
+                                      child: FeedShortItem(feed
+                                          .additional!.feeds![index]
+                                          .getModel()),
                                     ),
                                   ),
                                 ],
