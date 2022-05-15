@@ -163,7 +163,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Персональные данные"
   Future<void> savePersonalData(
       Emitter<QuestionnaireState> emit, SavePersonalData event) async {
-    printWrapped('console step1 === ${event.data}');
     ValueObject countryBirth = ValueObject(
       _staticRepository.geo.countryItems
           ?.firstWhere((element) =>
@@ -1067,7 +1066,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     );
     final questionnaire =
         (await _dbService.getClientSearchResponse())?.questionnaire;
-    printWrapped("console  Отправка анкеты ${questionnaire?.toJson()}");
+
     final request = ClientScoreRequest(
       clientData: ClientScoreClientDataItemRequest(
         lastName: questionnaire?.clientData?.lastName,
@@ -1174,10 +1173,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       ),
       secretWord: questionnaire?.codeWord,
     );
-
     final response = await _bankRepository.clientScore(request);
     if (response.isRight) {
-      emit(const QuestionnaireSentSuccess());
+      print('QuestionnaireSentSuccess');
+      // emit(const QuestionnaireSentSuccess());
     } else {
       emit(QuestionnaireSentError(response.left));
     }

@@ -35,7 +35,6 @@ class BankRepository implements IBankRepository {
   @override
   Future<Either<ErrorsResponse, ClientScoreResp>> clientScore(
       ClientScoreRequest request) async {
-    print('console clientScore ');
     try {
       final response = await _apiClient.clientScore(request);
       print('console clientScore =  ${response.valid}');
@@ -45,9 +44,7 @@ class BankRepository implements IBankRepository {
         'status': error.response!.statusMessage,
         'message': error.response!.data
       };
-      print('console ошибка ${error.response} ');
-      print(
-          'console ошибка clientScore == ${ErrorsResponse.fromJson(error.response!.data).errors}');
+      print('QuestionnaireSentError = $showApi');
       return Left(ErrorsResponse.fromJson(error.response!.data));
     }
   }

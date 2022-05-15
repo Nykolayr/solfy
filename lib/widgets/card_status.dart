@@ -23,7 +23,7 @@ class CardStatus extends StatelessWidget {
     AppTheme theme = context.read<AppTheme>();
 
     Widget buildContent(int currentStage) {
-      // String st = "questionnaire_accepted";
+      // String st = "questionnaire_accepted_paid";
       String st = wallet.status;
       switch (st) {
         case "questionnaire_accepted":
