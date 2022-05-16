@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/your_anketa_complete_waiting_view.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/your_request_complete_waiting_view.dart';
 import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 
 class FloatModalChoosingFilial extends StatelessWidget {
@@ -41,6 +44,13 @@ class FloatModalChoosingFilial extends StatelessWidget {
             text: "get_card_in_this_filial".tr(),
             onTap: () async {
               context.read<QuestionnaireBloc>().add(ClientScore(filialId));
+              await Future.delayed(Duration(
+                milliseconds: 200,
+              ));
+              Navigator.pop(context);
+              // Navigator.push(context, YourAncetaCompleteWaitingView());
+              // context.router.push(YourAncetaCompleteWaitingView());
+              // context.router.push(YourRequestCompleteWaitingView());
             },
           ),
           SizedBox(height: 16),

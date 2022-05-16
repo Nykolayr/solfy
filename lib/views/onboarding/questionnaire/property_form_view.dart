@@ -402,9 +402,9 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                   milliseconds: 200,
                                 ),
                               );
-                              context
-                                  .read<QuestionnaireBloc>()
-                                  .add(await ClientScore('1'));
+                              // context
+                              //     .read<QuestionnaireBloc>()
+                              //     .add(await ClientScore('1'));
                               await Future.delayed(
                                 Duration(
                                   milliseconds: 200,

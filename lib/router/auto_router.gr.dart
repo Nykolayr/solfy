@@ -92,6 +92,8 @@ import 'package:solfy_flutter/views/onboarding/questionnaire/card/add_card_view.
     as _i71;
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/your_success_card_waiting_view.dart'
     as _i72;
+import '../views/onboarding/questionnaire/your_anketa_complete_waiting_view.dart'
+    as _i73;
 
 class AppRouter extends _i59.RootStackRouter {
   AppRouter([_i60.GlobalKey<_i60.NavigatorState>? navigatorKey])
@@ -264,6 +266,11 @@ class AppRouter extends _i59.RootStackRouter {
     ChoosingFilialFormView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i33.ChoosingFilialFormView());
+    },
+    YourAncetaCompleteWaitingView.name: (routeData) {
+      return _i59.MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: const _i73.YourAncetaCompleteWaitingView());
     },
     PersonalInformationView.name: (routeData) {
       return _i59.MaterialPageX<dynamic>(
@@ -480,6 +487,9 @@ class AppRouter extends _i59.RootStackRouter {
                 parent: QuestionnaireStackRoute.name),
             _i59.RouteConfig(JobInfoFormView.name,
                 path: 'job-info-form-view',
+                parent: QuestionnaireStackRoute.name),
+            _i59.RouteConfig(YourAncetaCompleteWaitingView.name,
+                path: 'YourAncetaCompleteWaitingView',
                 parent: QuestionnaireStackRoute.name),
             _i59.RouteConfig(PropertyFormView.name,
                 path: 'property-form-view',
@@ -1068,6 +1078,15 @@ class ChoosingFilialFormView extends _i59.PageRouteInfo<void> {
   const ChoosingFilialFormView() : super(ChoosingFilialFormView.name, path: '');
 
   static const String name = 'ChoosingFilialFormView';
+}
+
+/// generated route for
+/// [_i33.YourAncetaCompleteWaitingView]
+class YourAncetaCompleteWaitingView extends _i59.PageRouteInfo<void> {
+  const YourAncetaCompleteWaitingView()
+      : super(YourAncetaCompleteWaitingView.name, path: '');
+
+  static const String name = 'YourAncetaCompleteWaitingView';
 }
 
 /// generated route for

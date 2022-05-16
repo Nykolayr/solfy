@@ -2,10 +2,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 
 Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
-  print('------------------------------------------------------');
-  printWrapped('console clientSearch =  $json');
-  print('------------------------------------------------------');
-  print('data == ${json['pinfl']} == ${json['verified_phone_number']}');
+  // print('------------------------------------------------------');
+  // printWrapped('console clientSearch =  $json');
+  // print('------------------------------------------------------');
+  // print('data == ${json['pinfl']} == ${json['verified_phone_number']}');
 
   String pinfl =
       (json['pinfl'] != null) ? json['pinfl'] : LocalData().loadJson("pin_fl");
@@ -51,26 +51,23 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
             : json['residency']['id'],
     'client_uid': json['client_uid'],
   };
-  print('data222 == ${clientData['pnfl']} == ${clientData['mobile_phone1']}');
   Map<String, dynamic>? clientLivingAddress;
   Map<String, dynamic>? clientRegistrationAddress;
   Map<String, dynamic>? clientTemporaryAddress;
-
+  print('data000 == ${clientData['pnfl']} == ${clientData['mobile_phone1']}');
   List address = json['addresses'] ?? [];
   for (int k = 0; k < address.length; k++) {
     int id = (address[k]['type']['id'] is String)
         ? int.parse(address[k]['type']['id'])
         : address[k]['type']['id'];
-    Map? district = address[k]['district'] ?? null;
-    String apartment_number = address[k]['house_number'];
-    String houseNumber = address[k]['apartment_number'];
-    String locality = address[k]['location'];
+    Map? district = address[k]['district'];
+    String? apartment_number = address[k]['house_number'];
+    String? houseNumber = address[k]['apartment_number'];
+    String? locality = address[k]['location'];
     Map? admin_area = address[k]['region'] ?? null;
-
-    String street = address[k]['street'];
+    String? street = address[k]['street'];
     Map? type_ownership = address[k]['realty_type'] ?? null;
-    // ignore: unused_local_variable
-    String address_string = address[k]['address_string'];
+    // String address_string = address[k]['address_string'];
     switch (id) {
       case 1:
         clientRegistrationAddress = {
@@ -108,7 +105,6 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
       default:
     }
   }
-
   Map<String, dynamic> income = json['income'];
   Map<String, dynamic> clientIncome = {
     "add_income_amount": income['add_income_amount'] == null
@@ -139,7 +135,6 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "children_number": countChildren,
   };
   Map<String, dynamic> job = json['job'];
-
   Map<String, dynamic> clientJobInfo = {
     "employer_name": job['employer_name'],
     "employment_position_category": job['employment_position_category'],
@@ -152,7 +147,6 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
     "type_business": job['organization_type'],
     "type_farm": job['organization_type'],
   };
-
   List? realties = json['realties'];
   List? vehicles = json['vehicles'];
   List? insurances = json['insurances'];

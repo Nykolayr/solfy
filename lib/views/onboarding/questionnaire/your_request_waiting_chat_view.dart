@@ -124,9 +124,9 @@ class _YourRequestWaitingChatViewState
             errorCode = state.errors.errors![0].code!;
           });
           ModalHelpers.showError(context, state.errors).then((value) {
-            Timer(Duration(seconds: 6), () {
-              //context.router.pop();
-            });
+            // Timer(Duration(seconds: 6), () {
+            //   //context.router.pop();
+            // });
           });
         }
       }, builder: (context, state) {

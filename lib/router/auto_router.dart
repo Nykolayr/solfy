@@ -29,6 +29,7 @@ import 'package:solfy_flutter/views/onboarding/questionnaire/job_info_form_view.
 import 'package:solfy_flutter/views/onboarding/questionnaire/personal_information_form_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/property_form_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/questionnaire_stack_wrapper.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/your_anketa_complete_waiting_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/your_request_complete_waiting_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/your_request_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/your_request_waiting_chat_view.dart';
@@ -126,6 +127,7 @@ import 'package:solfy_flutter/views/wallet/wallet_view.dart';
           AutoRoute(page: AddressFormView),
           AutoRoute(page: JobInfoFormView),
           AutoRoute(page: PropertyFormView),
+          AutoRoute(page: YourAncetaCompleteWaitingView, initial: true),
           AutoRoute(
               page: ChoosingFilialStackWrapper,
               name: "ChoosingFilialRoute",

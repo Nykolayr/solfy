@@ -36,7 +36,7 @@ import 'models/api/bank/card/card_repositores.dart';
 
 // TODO apiUrl меняем при смене isTest
 // $https://api-edge.docu.ru на https://api.solfy.com
-bool isTest = true;
+bool isTest = false;
 final String apiUrl =
     isTest ? 'https://api-edge.docu.ru' : 'https://api.solfy.com';
 void main() async {

@@ -94,7 +94,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       ));
     } else {
       var res = await _profileRepository.getProfile();
-      print('phone111 == ${res.right.profile!.toJson()}');
+
       if (res.isRight) {
         print(
             'phone2222 ==${event.number != null} == ${res.isRight} == ${res.right.profile!.phone}');
@@ -114,21 +114,13 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
           event.pinFl!,
           true,
         );
-        print('phone3333 == ${request.toJson()}');
         final response = await _bankRepository.clientSearch(request);
-        printWrapped('responst ==== ${response.right.toJson()}');
         if (response.isRight) {
           final clientData = response.right.clientData?.copyWith(
             docIssueDate:
                 formatFormDate(response.right.clientData?.docIssueDate),
             docEndDate: formatFormDate(response.right.clientData?.docEndDate),
           );
-          print('-------------------------------------');
-          printWrapped('clientData >>>>>>>==== ${clientData}');
-          print('-------------------------------------');
-          printWrapped(
-              'clientFamilyData >>>>>>>==== ${response.right.clientFamilyData}');
-          print('-------------------------------------');
           await _dbService.saveClientSearchResponse(response.right.copyWith(
             clientData: clientData,
           ));
@@ -143,7 +135,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
               milliseconds: 100,
             ),
           );
-          printWrapped('clientData dbResponse2222 >>>>>>>==== ${dbResponse}');
           if (dbResponse != null) {
             printWrapped('clientData success');
             emit(QuestionnaireFoundSuccess(
@@ -153,7 +144,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ));
           }
         } else {
-          print("errors ==${response.left.errors}");
+          print("dbResponse errorr  ==${response.left.errors}");
           emit(QuestionnaireFoundError(response.left));
         }
       }
@@ -1064,6 +1055,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         milliseconds: 200,
       ),
     );
+    print('codeFilial == ${event.id}');
     final questionnaire =
         (await _dbService.getClientSearchResponse())?.questionnaire;
 
@@ -1176,7 +1168,7 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     final response = await _bankRepository.clientScore(request);
     if (response.isRight) {
       print('QuestionnaireSentSuccess');
-      // emit(const QuestionnaireSentSuccess());
+      emit(QuestionnaireSentSuccess());
     } else {
       emit(QuestionnaireSentError(response.left));
     }
