@@ -178,8 +178,7 @@ class _ChoosingFilialFormViewState extends State<ChoosingFilialFormView> {
                                 builder: (context) => FloatModalChoosingFilial(
                                   filialName: e.value,
                                   filialAddress: e.hint,
-                                  // TODO: убрать когда сделают без 00
-                                  filialId: '00' + e.id.toString(),
+                                  filialId: e.id.toString(),
                                 ),
                               ),
                               icon: e.icon,
@@ -273,8 +272,7 @@ class _ChoosingFilialFormViewState extends State<ChoosingFilialFormView> {
                                         filialName: state.markers[index].value,
                                         filialAddress:
                                             state.markers[index].hint,
-                                        // TODO: убрать когда сделают без 00
-                                        filialId: '00' +
+                                        filialId:
                                             state.markers[index].id.toString(),
                                       ),
                                     );
