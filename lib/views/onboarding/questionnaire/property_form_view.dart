@@ -373,16 +373,29 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                             if (isValid &&
                                 !isVehiclesErrorVisible &&
                                 !isPropertiesErrorVisible) {
+                              // context.router.push(ChoosingFilialRoute());
                               _formGlobalKey.currentState?.save();
+                              final questionnaire = (context
+                                      .read<QuestionnaireBloc>()
+                                      .state as QuestionnaireFoundSuccess)
+                                  .questionnaire;
+
                               await Future.delayed(
                                 Duration(
                                   milliseconds: 200,
                                 ),
                               );
-                              final questionnaire = await (context
-                                      .read<QuestionnaireBloc>()
-                                      .state as QuestionnaireFoundSuccess)
-                                  .questionnaire;
+
+                              context.read<QuestionnaireBloc>().add(
+                                  SavePropertiesData(
+                                      properties.first.marketValue.text != ""
+                                          ? properties
+                                          : [],
+                                      vehicles.first.marketValue.text != ""
+                                          ? vehicles
+                                          : [],
+                                      questionnaire));
+
                               await Future.delayed(
                                 Duration(
                                   milliseconds: 200,
@@ -402,9 +415,9 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                   milliseconds: 200,
                                 ),
                               );
-                              // context
-                              //     .read<QuestionnaireBloc>()
-                              //     .add(await ClientScore('1'));
+                              context
+                                  .read<QuestionnaireBloc>()
+                                  .add(await ClientScore('null'));
                               await Future.delayed(
                                 Duration(
                                   milliseconds: 200,

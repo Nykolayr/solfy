@@ -113,25 +113,25 @@ class _YourRequestViewState extends State<YourRequestView> {
                       isArrowAtEnd: currentStage > 3,
                       defaultIconSize: 20.h,
                     ),
-                    RequestListItem(
-                      text: "Карта для автопогашения",
-                      isCompleted: currentStage > 5,
-                      isArrowAtEnd: currentStage > 4,
-                      defaultIconSize: 20.h,
-                    ),
-                    RequestListItem(
-                      text: "Отделение для получения карты",
-                      onTap: () => currentStage > 5
-                          ? context.router.root.push(
-                              QuestionnaireStackRoute(
-                                children: [ChoosingFilialRoute()],
-                              ),
-                            )
-                          : null,
-                      isCompleted: currentStage > 6,
-                      isArrowAtEnd: currentStage > 5,
-                      defaultIconSize: 20.h,
-                    ),
+                    // RequestListItem(
+                    //   text: "Карта для автопогашения",
+                    //   isCompleted: currentStage > 5,
+                    //   isArrowAtEnd: currentStage > 4,
+                    //   defaultIconSize: 20.h,
+                    // ),
+                    // RequestListItem(
+                    //   text: "Отделение для получения карты",
+                    //   onTap: () => currentStage > 5
+                    //       ? context.router.root.push(
+                    //           QuestionnaireStackRoute(
+                    //             children: [ChoosingFilialRoute()],
+                    //           ),
+                    //         )
+                    //       : null,
+                    //   isCompleted: currentStage > 6,
+                    //   isArrowAtEnd: currentStage > 5,
+                    //   defaultIconSize: 20.h,
+                    // ),
                   ],
                 ),
                 Column(

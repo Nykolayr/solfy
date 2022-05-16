@@ -111,12 +111,13 @@ class _GetNewSmsCodeState extends State<GetNewSmsCode> {
                       )
                 : !isTimerEnded
                     ? Text(
-                        "get_new_sms_code_seconds_left".tr() +
-                            StopWatchTimer.getDisplayTime(
-                              _stopWatchTimer.rawTime.value,
-                              hours: false,
-                              milliSecond: false,
-                            ),
+                        tr("get_new_sms_code_seconds_left", args: [
+                          StopWatchTimer.getDisplayTime(
+                            _stopWatchTimer.rawTime.value,
+                            hours: false,
+                            milliSecond: false,
+                          ),
+                        ]),
                         style: theme.textStyles.mediumMainText,
                       )
                     : GestureDetector(

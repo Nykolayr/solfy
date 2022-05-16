@@ -614,10 +614,10 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Работа и доходы"
   Future<void> saveJobData(
       Emitter<QuestionnaireState> emit, SaveJobData event) async {
-    printWrapped('SaveJobData >>>>>>>> == ${event.data}');
+    printWrapped('console SaveJobData >>>>>>>> == ${event.data}');
     print('------------------------------------------------------');
     printWrapped(
-        'additional_type >>>>>>>> == ${event.data["additional_type"]}');
+        'console additional_type >>>>>>>> == ${event.data["additional_type"]}');
     final newQuestionnaire = event.questionnaire.copyWith(
         clientJobInfo: (event.questionnaire.clientJobInfo == null)
             ? ClientSearchClientJobInfoResponse(
@@ -948,17 +948,17 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     event.questionnaire.clientJobInfo!.copyWith(
       typeOrganization: ValueObject(2, 'lkkd'),
     );
-    print('------------------------------------------------------');
+    print('console ------------------------------------------------------');
     print(
-        'employmentPositionCategory >>> ${event.questionnaire.clientJobInfo!.toJson()}');
+        'console employmentPositionCategory >>> ${event.questionnaire.clientJobInfo!.toJson()}');
 
-    print('------------------------------------------------------');
+    print('console ------------------------------------------------------');
     printWrapped(
-        'clientIncome >>>>>>> == ${newQuestionnaire.clientIncome!.toJson()}');
-    print('------------------------------------------------------');
+        'console clientIncome >>>>>>> == ${newQuestionnaire.clientIncome!.toJson()}');
+    print('console ------------------------------------------------------');
     printWrapped(
-        'addIncomeSource >>>>>>> == ${newQuestionnaire.clientIncome!.addIncomeSource}');
-    print('------------------------------------------------------');
+        'console addIncomeSource >>>>>>> == ${newQuestionnaire.clientIncome!.addIncomeSource}');
+    print('console ------------------------------------------------------');
     await Future.delayed(
       Duration(
         milliseconds: 200,

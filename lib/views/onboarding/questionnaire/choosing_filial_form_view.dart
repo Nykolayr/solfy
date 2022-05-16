@@ -15,12 +15,8 @@ import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'dart:ui' as direction;
 
 import 'package:solfy_flutter/repository/static_repository.dart';
-import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/services/database/global_settings_db_service.dart';
 import 'package:solfy_flutter/styles/themes.dart';
-import 'package:solfy_flutter/views/base_tab_feed_view.dart';
-import 'package:solfy_flutter/views/base_tab_stack_wrapper.dart';
-import 'package:solfy_flutter/views/base_tab_view.dart';
 import 'package:solfy_flutter/widgets/custom_divider.dart';
 import 'package:solfy_flutter/widgets/custom_google_map.dart';
 import 'package:solfy_flutter/widgets/header_app_bar.dart';

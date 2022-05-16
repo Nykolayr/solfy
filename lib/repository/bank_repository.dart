@@ -9,6 +9,11 @@ import 'package:dio/dio.dart';
 import 'package:solfy_flutter/repository/ibank_repository.dart';
 import 'package:solfy_flutter/services/api/bank_api_client.dart';
 
+String? codeFilial;
+String? client_id;
+String? client_code;
+String? client_uid;
+
 /// Реализация репозитория, работающего с bank-разделом API
 class BankRepository implements IBankRepository {
   final BankApiClient _apiClient;
@@ -21,9 +26,15 @@ class BankRepository implements IBankRepository {
   Future<Either<ErrorsResponse, ClientSearchResp>> clientSearch(
       ClientSearchRequest request) async {
     try {
-      print('console clientSearch1111 ');
+      print('console clientSearch1111 ==  ');
       ClientSearchResp? response = await _apiClient.clientSearch(request);
+
       print('clientSearch3333 === ${response} ');
+      codeFilial = response.clientData!.codeFilial;
+      client_id = response.clientData!.clientId;
+      client_code = response.clientData!.clientCode;
+      client_uid = response.clientData!.adminAreaDocument;
+
       return Right(response);
     } on DioError catch (error) {
       print(
