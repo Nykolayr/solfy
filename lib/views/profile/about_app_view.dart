@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
+import 'package:solfy_flutter/models/api/bank/client_score/clientScoreRequestV2.dart';
 import 'package:solfy_flutter/models/enums.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/custom_divider.dart';
@@ -108,32 +109,32 @@ class AboutAppView extends StatelessWidget {
                     ),
                   ),
                   // TODO  ответ сервера и выходные данные
-                  // SizedBox(height: 16.h),
-                  // Text('Ответ сервера:'),
-                  // SizedBox(height: 16.h),
-                  // Column(
-                  //   children: showApi.entries
-                  //       .map(
-                  //         (e) => paer(
-                  //           e.key,
-                  //           e.value,
-                  //         ),
-                  //       )
-                  //       .toList(),
-                  // ),
-                  // SizedBox(height: 16.h),
-                  // Text('Отправляемые данные'),
-                  // SizedBox(height: 16.h),
-                  // Column(
-                  //   children: showMap.entries
-                  //       .map(
-                  //         (e) => paer(
-                  //           e.key,
-                  //           e.value,
-                  //         ),
-                  //       )
-                  //       .toList(),
-                  // ),
+                  SizedBox(height: 16.h),
+                  Text('Ответ сервера:'),
+                  SizedBox(height: 16.h),
+                  Column(
+                    children: showApi.entries
+                        .map(
+                          (e) => paer(
+                            e.key,
+                            e.value,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text('Отправляемые данные'),
+                  SizedBox(height: 16.h),
+                  Column(
+                    children: showMap.entries
+                        .map(
+                          (e) => paer(
+                            e.key,
+                            e.value,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ],
               ),
             ),

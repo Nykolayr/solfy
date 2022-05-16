@@ -154,6 +154,8 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
   /// Сохранение в локальную бд данных из страницы "Персональные данные"
   Future<void> savePersonalData(
       Emitter<QuestionnaireState> emit, SavePersonalData event) async {
+    print('SavePersonalData== ${event.data}');
+    print('event.data["children_number"]== ${event.data["children_number"]}');
     ValueObject countryBirth = ValueObject(
       _staticRepository.geo.countryItems
           ?.firstWhere((element) =>
@@ -246,21 +248,22 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                               element.value == event.data["marital_status"])
                           .id,
                       event.data["marital_status"],
-                    ),
-              (event.data["marital_status"] == null)
+                    ), //maritalStatu
+              (event.data["children_number"] == null)
                   ? null
                   : ValueObject(
-                      (event.data["children_number"] == null &&
+                      (event.data["children_number"] == null ||
                               int.tryParse(event.data["children_number"]) == 0)
                           ? 0
                           : 1,
-                      (event.data["children_number"] == null &&
+                      (event.data["children_number"] == null ||
                               int.tryParse(event.data["children_number"]) == 0)
                           ? 'Нет'
-                          : 'Есть'),
-              event.data["children_number"] != null
-                  ? int.tryParse(event.data["children_number"])
-                  : 0,
+                          : 'Есть'), // children
+              (event.data["children_number"] == null)
+                  ? null
+                  : int.tryParse(
+                      event.data["children_number"]), // childrenNumber
             )
           : event.questionnaire.clientFamilyData!.copyWith(
               maritalStatus: (event.data["marital_status"] == null)
@@ -274,16 +277,16 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
                       event.data["marital_status"],
                     ),
               children: ValueObject(
-                  (event.data["children_number"] != null &&
-                          int.tryParse(event.data["children_number"]) != 0)
-                      ? 1
-                      : 0,
-                  (event.data["children_number"] != null &&
-                          int.tryParse(event.data["children_number"]) != 0)
-                      ? 'Есть'
-                      : 'Нет'),
+                  (event.data["children_number"] == null ||
+                          int.tryParse(event.data["children_number"]) == 0)
+                      ? 0
+                      : 1,
+                  (event.data["children_number"] == null ||
+                          int.tryParse(event.data["children_number"]) == 0)
+                      ? 'Нет'
+                      : 'Есть'),
               childrenNumber: event.data["children_number"] == null
-                  ? 0
+                  ? null
                   : int.tryParse(event.data["children_number"]),
             ),
       codeWord: event.data["code_word"],

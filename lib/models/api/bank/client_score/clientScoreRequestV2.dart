@@ -309,6 +309,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
   }
   printWrapped('console map >>>>>>>> $map');
   print('console add_income_source >>>>>>>> ${map['add_income_source']}');
+  print('console has_children >>>>>>>> ${map['has_children']}');
   showMap = map;
   return map;
 }
