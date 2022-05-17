@@ -28,3 +28,4 @@ class SendNewCodeCard extends CardEvent {
 }
 
 class SendResCode extends CardEvent {}
+class WalletCardUpdate extends CardEvent {}

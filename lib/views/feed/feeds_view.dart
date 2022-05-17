@@ -15,6 +15,7 @@ import 'package:solfy_flutter/router/auto_router.gr.dart' as auto;
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/services/database/global_settings_db_service.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/card_status.dart';
 import 'package:solfy_flutter/widgets/feed_item.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
@@ -51,115 +52,126 @@ class _FeedsViewState extends State<FeedsView> {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
-    return BlocListener<FeedBloc, FeedState>(
+    return BlocListener<CardBloc, CardState>(
       listener: (context, state) async {
-        if (state is FeedLoading) {
-          ModalHelpers.showLoadingModal(context);
-        }
-        if (state is FeedEndLoading) {
-          await context.router.root.pop();
-        }
-        if (state is GetFeedSuccess) {
-          context.router.push(
-            auto.FeedDetailRoute(
-              children: [FeedDetailView(feed: state.response)],
-            ),
-          );
-        }
-        if (state is GetFeedError) {
+        if (state is WalletCardUpdateError) {
+          print(
+              'WalletCardUpdateError == ${state.errors.errors!.first.toJson()}');
           ModalHelpers.showError(context, state.errors);
         }
       },
-      child: BlocConsumer<FeedsBloc, FeedsState>(
-        listener: (context, state) {
-          if (state is GetFeedsError) {
+      child: BlocListener<FeedBloc, FeedState>(
+        listener: (context, state) async {
+          if (state is FeedLoading) {
+            ModalHelpers.showLoadingModal(context);
+          }
+          if (state is FeedEndLoading) {
+            await context.router.root.pop();
+          }
+          if (state is GetFeedSuccess) {
+            context.router.push(
+              auto.FeedDetailRoute(
+                children: [FeedDetailView(feed: state.response)],
+              ),
+            );
+          }
+          if (state is GetFeedError) {
             ModalHelpers.showError(context, state.errors);
           }
         },
-        builder: (context, state) {
-          if (state is Loading) {
-            return SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LoadingRingAnimation(),
-                ],
-              ),
-            );
-          }
-          if (state is GetFeedsSuccess) {
-            return Scaffold(
-              backgroundColor: theme.colors.white1,
-              body: ColorfulSafeArea(
-                color: state.wallet.walletStatus.status != "active"
-                    ? Colors.white
-                    : theme.colors.white1,
-                child: CustomScrollView(
-                  // physics: ClampingScrollPhysics(),
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Container(
-                        color: theme.colors.white1,
-                        child: Column(
-                          children: [
-                            state.wallet.walletStatus.status != "active"
-                                ? Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.06),
-                                          spreadRadius: 0,
-                                          blurRadius: 2,
-                                          offset: Offset(0, 2),
-                                        ),
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.03),
-                                          spreadRadius: 0,
-                                          blurRadius: 1,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child:
-                                        CardStatus(state.wallet.walletStatus),
-                                  )
-                                : SizedBox(),
-                            state.wallet.walletStatus.status == "active"
-                                ? WalletStatus(state.wallet)
-                                : SizedBox(),
-                            SizedBox(height: 20.h),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              child: SearchInput(
-                                hintText: "store_or_category".tr(),
-                                onTap: () => context.router
-                                    .push(auto.SearchStoresRoute()),
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: state.feeds.length,
-                              itemBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.only(bottom: 12.h),
-                                child: FeedShortItem(
-                                    state.feeds[index].getModel()),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+        child: BlocConsumer<FeedsBloc, FeedsState>(
+          listener: (context, state) {
+            if (state is GetFeedsError) {
+              ModalHelpers.showError(context, state.errors);
+            }
+          },
+          builder: (context, state) {
+            if (state is Loading) {
+              return SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    LoadingRingAnimation(),
                   ],
                 ),
-              ),
-            );
-          }
-          return SizedBox();
-        },
+              );
+            }
+            if (state is GetFeedsSuccess) {
+              return Scaffold(
+                backgroundColor: theme.colors.white1,
+                body: ColorfulSafeArea(
+                  color: state.wallet.walletStatus.status != "active"
+                      ? Colors.white
+                      : theme.colors.white1,
+                  child: CustomScrollView(
+                    // physics: ClampingScrollPhysics(),
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Container(
+                          color: theme.colors.white1,
+                          child: Column(
+                            children: [
+                              state.wallet.walletStatus.status != "active"
+                                  ? Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.06),
+                                            spreadRadius: 0,
+                                            blurRadius: 2,
+                                            offset: Offset(0, 2),
+                                          ),
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.03),
+                                            spreadRadius: 0,
+                                            blurRadius: 1,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child:
+                                          CardStatus(state.wallet.walletStatus),
+                                    )
+                                  : SizedBox(),
+                              state.wallet.walletStatus.status == "active"
+                                  ? WalletStatus(state.wallet)
+                                  : SizedBox(),
+                              SizedBox(height: 20.h),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                child: SearchInput(
+                                  hintText: "store_or_category".tr(),
+                                  onTap: () => context.router
+                                      .push(auto.SearchStoresRoute()),
+                                ),
+                              ),
+                              SizedBox(height: 20.h),
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: state.feeds.length,
+                                itemBuilder: (context, index) => Padding(
+                                  padding: EdgeInsets.only(bottom: 12.h),
+                                  child: FeedShortItem(
+                                      state.feeds[index].getModel()),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            return SizedBox();
+          },
+        ),
       ),
     );
   }

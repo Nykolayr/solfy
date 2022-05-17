@@ -48,6 +48,9 @@ abstract class WalletApiClient {
     String card_uuid,
   );
 
+  @GET("bank/v2/wallet_card_update")
+  Future<CardUpdateResponse> walletCardUpdate();
+
   @POST("wallet/v1/comfortable_payment_update")
   Future<ComfortablePaymentUpdateResp> comfortablePaymentUpdate(
       @Body() ComfortablePaymentUpdateRequest request);

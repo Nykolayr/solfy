@@ -48,6 +48,32 @@ class CardRepository {
       return Left(ErrorsResponse.fromJson(error.response!.data));
     }
   }
+
+  Future<Object> walletCardUpdate() async {
+    try {
+      final response = await apiClient.walletCardUpdate();
+      return response;
+    } on DioError catch (error) {
+      return Left(ErrorsResponse.fromJson(error.response!.data));
+    }
+  }
+}
+
+class CardUpdateResponse {
+  String limit = '';
+  String available_balance = '';
+  CardUpdateResponse({required this.limit, required this.available_balance});
+  factory CardUpdateResponse.fromJson(Map<String, dynamic> json) {
+    return CardUpdateResponse(
+      limit: json['wallet']['limit'] ?? '',
+      available_balance: json['wallet']['available_balance'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'limit': limit,
+        'available_balance': available_balance,
+      };
 }
 
 class CardResponse {

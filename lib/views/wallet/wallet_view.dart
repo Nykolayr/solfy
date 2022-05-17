@@ -8,6 +8,7 @@ import 'package:solfy_flutter/bloc/wallet_bloc/wallet_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/card_status.dart';
 import 'package:solfy_flutter/widgets/header_wallet.dart';
 import 'package:solfy_flutter/widgets/history_list.dart';
@@ -46,7 +47,8 @@ class _WalletViewState extends State<WalletView> {
           ModalHelpers.showError(context, state.errors);
         }
         if (state is GetOperationSuccess) {
-          context.router.push(WalletPaymentDetailsView(operation: state.operation.operation!));
+          context.router.push(
+              WalletPaymentDetailsView(operation: state.operation.operation!));
         }
       },
       child: BlocConsumer<WalletBloc, WalletState>(
@@ -57,64 +59,75 @@ class _WalletViewState extends State<WalletView> {
         },
         builder: (context, state) {
           if (state is GetWalletSuccess) {
-            return Scaffold(
-              backgroundColor:
-                  state.wallet.walletStatus.status != "active" ? Colors.white : theme.colors.gray2,
-              body: state.wallet.walletStatus.status != "active"
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CardStatus(state.wallet.walletStatus),
-                      ],
-                    )
-                  : DefaultTabController(
-                      length: 2,
-                      child: NestedScrollView(
-                        physics: NeverScrollableScrollPhysics(),
-                        headerSliverBuilder: (context, _) {
-                          return [
-                            SliverToBoxAdapter(
-                              child: const HeaderWallet(),
-                            )
-                          ];
-                        },
-                        body: Column(
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(height: 25.h),
-                                TabBar(
-                                  labelColor: theme.colors.smsCodeColor,
-                                  labelStyle: theme.textStyles.blackRoboto1,
-                                  indicatorColor: theme.colors.secondaryItemsColor,
-                                  tabs: [
-                                    Tab(text: "schedule".tr()),
-                                    Tab(text: "history".tr()),
-                                  ],
-                                  unselectedLabelColor: Colors.grey,
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                              child: MediaQuery.removePadding(
-                                context: context,
-                                removeTop: true,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 0),
-                                  child: TabBarView(
-                                    children: [
-                                      ScheduleWalletList(),
-                                      ScheduleHistoryList(),
+            return BlocListener<CardBloc, CardState>(
+              listener: (context, state) async {
+                if (state is WalletCardUpdateError) {
+                  print(
+                      'WalletCardUpdateError == ${state.errors.errors!.first.toJson()}');
+                  ModalHelpers.showError(context, state.errors);
+                }
+              },
+              child: Scaffold(
+                backgroundColor: state.wallet.walletStatus.status != "active"
+                    ? Colors.white
+                    : theme.colors.gray2,
+                body: state.wallet.walletStatus.status != "active"
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CardStatus(state.wallet.walletStatus),
+                        ],
+                      )
+                    : DefaultTabController(
+                        length: 2,
+                        child: NestedScrollView(
+                          physics: NeverScrollableScrollPhysics(),
+                          headerSliverBuilder: (context, _) {
+                            return [
+                              SliverToBoxAdapter(
+                                child: const HeaderWallet(),
+                              )
+                            ];
+                          },
+                          body: Column(
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(height: 25.h),
+                                  TabBar(
+                                    labelColor: theme.colors.smsCodeColor,
+                                    labelStyle: theme.textStyles.blackRoboto1,
+                                    indicatorColor:
+                                        theme.colors.secondaryItemsColor,
+                                    tabs: [
+                                      Tab(text: "schedule".tr()),
+                                      Tab(text: "history".tr()),
                                     ],
+                                    unselectedLabelColor: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                              Expanded(
+                                child: MediaQuery.removePadding(
+                                  context: context,
+                                  removeTop: true,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 0),
+                                    child: TabBarView(
+                                      children: [
+                                        ScheduleWalletList(),
+                                        ScheduleHistoryList(),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+              ),
             );
           }
           return LoadingRingAnimation();

@@ -245,7 +245,7 @@ class _SmsCodeCardViewState extends State<SmsCodeCardView> {
                       ),
                       Column(
                         children: [
-                          // GetNewSmsCodeCard(),
+                          GetNewSmsCodeCard(),
                           VirtualKeyboard(
                             textController: _textController,
                             maxLength: 4,

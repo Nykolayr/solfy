@@ -11,6 +11,7 @@ import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/bloc/settings_bloc/settings_bloc.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart' as auto;
 import 'package:solfy_flutter/styles/themes.dart';
+import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Боттом табы приложения
@@ -65,6 +66,8 @@ class _BaseTabViewState extends State<BaseTabView> {
                 switch (index) {
                   case 0:
                     if (tabsRouter.activeIndex != index) {
+                      print('console === FeedsView begin');
+                      context.read<CardBloc>().add(WalletCardUpdate());
                       context
                           .read<BaseTabUpdaterBloc>()
                           .add(const UpdateFeed());
@@ -79,6 +82,8 @@ class _BaseTabViewState extends State<BaseTabView> {
                     break;
                   case 2:
                     if (tabsRouter.activeIndex != index) {
+                      print('console === FeedsView begin');
+                      context.read<CardBloc>().add(WalletCardUpdate());
                       context
                           .read<BaseTabUpdaterBloc>()
                           .add(const UpdateWallet());

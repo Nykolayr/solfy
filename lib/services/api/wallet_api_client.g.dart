@@ -15,6 +15,22 @@ class _WalletApiClient implements WalletApiClient {
 
   String? baseUrl;
 
+  Future<CardUpdateResponse> walletCardUpdate() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CardUpdateResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'bank/v2/wallet_card_update',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    CardUpdateResponse value = CardUpdateResponse.fromJson(_result.data!);
+    print('console CardUpdateResponse =>>>> ${value.toJson()}');
+    return value;
+  }
+
   Future<WalletGetResp> getWallet() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -35,12 +51,12 @@ class _WalletApiClient implements WalletApiClient {
   Future<CardResponse> sendCardLocal(
       String card_number, String expire_date) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{
       'card_number': card_number,
       'expire_date': expire_date,
     };
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<WalletGetResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
@@ -83,11 +99,11 @@ class _WalletApiClient implements WalletApiClient {
     String card_uuid,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{
       'card_uuid': card_uuid,
     };
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<WalletGetResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)

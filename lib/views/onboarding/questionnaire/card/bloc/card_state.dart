@@ -37,8 +37,18 @@ class CardCodeError extends CardState {
   });
 }
 
+class WalletCardUpdateError extends CardState {
+  ErrorsResponse errors;
+
+  WalletCardUpdateError({
+    required this.errors,
+  });
+}
+
 class CardSuccess extends CardState {}
 
 class CardCodeSuccess extends CardState {}
 
 class CardResendSuccess extends CardState {}
+
+class WalletCardUpdateSuccess extends CardState {}

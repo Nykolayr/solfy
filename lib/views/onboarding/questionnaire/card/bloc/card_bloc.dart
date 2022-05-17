@@ -67,6 +67,16 @@ class CardBloc extends Bloc<CardEvent, CardState> {
           emit(CardResendSuccess());
         }
       }
+      if (event is WalletCardUpdate) {
+        // emit(CardLoad());
+        var response = await cardRepository.walletCardUpdate();
+        if (response is Left) {
+          emit(WalletCardUpdateError(errors: response.left));
+        }
+        if (response is CardUpdateResponse) {
+          emit(WalletCardUpdateSuccess());
+        }
+      }
     });
   }
 

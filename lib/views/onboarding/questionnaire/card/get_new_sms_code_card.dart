@@ -23,7 +23,7 @@ class _GetNewSmsCodeCardState extends State<GetNewSmsCodeCard> {
   bool isSent = false;
   bool isTimerEnded = false;
   int seconds = 5;
-  int time = 6;
+  int time = 60;
   late StopWatchTimer _stopWatchTimer;
 
   @override
