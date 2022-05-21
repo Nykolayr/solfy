@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
+import 'package:solfy_flutter/models/pasport.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
@@ -20,10 +21,6 @@ import 'package:solfy_flutter/widgets/passport_form_fields.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Экран с краткой анкетой пользователя для получения полной с сервера
-String? seriaStored = "";
-String? numberStored = "";
-String? pinflStored = "";
-bool errorChat = false;
 
 class ShortFormView extends StatefulWidget {
   const ShortFormView({
@@ -39,9 +36,9 @@ class _ShortFormViewState extends State<ShortFormView> {
     var store = LocalStorage("auth");
     if (store.getItem("error") != '') {
       setState(() {
-        _seriaStored = seriaStored;
-        _numberStored = numberStored;
-        _pinflStored = pinflStored;
+        _seriaStored = Passport.seriaStored;
+        _numberStored = Passport.numberStored;
+        _pinflStored = Passport.pinflStored;
         _formKey.currentState?.activate();
       });
     }
@@ -71,9 +68,7 @@ class _ShortFormViewState extends State<ShortFormView> {
               _seriaStored = "";
               _numberStored = "";
               _pinflStored = "";
-              seriaStored = _seriaStored;
-              numberStored = _numberStored;
-              pinflStored = _pinflStored;
+              Passport.clearPassport();
               LocalData().saveJson("passportSeries", '');
               LocalData().saveJson("passportName", '');
               LocalData().saveJson("pin_fl", '');
@@ -115,11 +110,12 @@ class _ShortFormViewState extends State<ShortFormView> {
                       });
                       if (isValid) {
                         _formKey.currentState?.save();
-                        seriaStored =
+                        Passport.seriaStored =
                             _formKey.currentState?.value["passportSeries"];
-                        numberStored =
+                        Passport.numberStored =
                             _formKey.currentState?.value["passportName"];
-                        pinflStored = _formKey.currentState?.value["pin_fl"];
+                        Passport.pinflStored =
+                            _formKey.currentState?.value["pin_fl"];
                         LocalData().saveJson("passportSeries",
                             _formKey.currentState?.value["passportSeries"]);
                         LocalData().saveJson("passportName",

@@ -23,13 +23,19 @@ class _BankApiClient implements BankApiClient {
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     var _result;
+    // try {
     _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ClientSearchResp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/client_search',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    print('object >>>>>>>>>>> ${_result.data!}');
     return ClientSearchResp.fromJson(_result.data!);
+    // } on DioError catch (error) {
+    //   print('errror >>>>>>>>>>> ${error.response!.data}');
+    //   return ClientSearchResp.fromJson(error.response!.data);
+    // }
   }
 
   @override
@@ -38,8 +44,7 @@ class _BankApiClient implements BankApiClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    
-    
+
     // TODO: тут подмена request для отправки V2
 
     _data.addAll(await clientScoreRequestV2(request));

@@ -49,6 +49,7 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
   bool isSelectorErrorVisible = false;
   bool isSelectorUneditable = false;
   bool isOwnership = false;
+  bool isDoubleButton = false;
 
   @override
   void initState() {
@@ -615,8 +616,15 @@ class _JobInfoFormViewState extends State<JobInfoFormView> {
                                   : SizedBox(),
                               SizedBox(height: 24.h),
                               LongButtonWithText(
-                                text: "Продолжить",
+                                text: tr("continue_label"),
                                 onTap: () async {
+                                  if (isDoubleButton) {
+                                    return;
+                                  }
+                                  isDoubleButton = true;
+                                  Future.delayed(Duration(seconds: 3), () {
+                                    isDoubleButton = false;
+                                  });
                                   final isValid =
                                       _formGlobalKey.currentState?.validate() ??
                                           false;

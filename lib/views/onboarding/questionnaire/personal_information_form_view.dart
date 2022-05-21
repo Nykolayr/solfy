@@ -38,6 +38,7 @@ class _PersonalInformationFormViewState
   bool _validatingMode = false;
   bool isChildrenVisible = false;
   bool isSelectorErrorVisible = false;
+  bool isDoubleButton = false;
   final _phoneMaskFormatter = MaskTextInputFormatter(
     mask: "+998 ## ###-##-##",
     filter: {"#": RegExp(r'[0-9]')},
@@ -627,8 +628,15 @@ class _PersonalInformationFormViewState
                               ),
                               SizedBox(height: 20),
                               LongButtonWithText(
-                                text: "Продолжить",
+                                text: tr("continue_label"),
                                 onTap: () async {
+                                  if (isDoubleButton) {
+                                    return;
+                                  }
+                                  isDoubleButton = true;
+                                  Future.delayed(Duration(seconds: 3), () {
+                                    isDoubleButton = false;
+                                  });
                                   final isValid = (_formGlobalKey.currentState
                                               ?.validate() ??
                                           false) &&

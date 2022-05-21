@@ -66,7 +66,7 @@ class _BiometricSetViewState extends State<BiometricSetView> {
                   additionalButton: GestureDetector(
                     onTap: () => ModalHelpers.showLogoutModal(context),
                     child: Text(
-                      "Выйти",
+                      tr('log_out'),
                       style: theme.textStyles.virtualKeyboardText
                           .copyWith(fontSize: 14.sp),
                     ),

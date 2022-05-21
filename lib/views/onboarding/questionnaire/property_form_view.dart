@@ -65,6 +65,7 @@ class _PropertyFormViewState extends State<PropertyFormView> {
   bool isVehicleSelectorUneditable = false;
   bool isPropertiesErrorVisible = false;
   bool isVehiclesErrorVisible = false;
+  bool isDoubleButton = false;
   final List<FormPropertyModel> properties = [
     FormPropertyModel(UniqueKey().toString())
   ];
@@ -344,12 +345,19 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                         CustomDivider(12),
                         SizedBox(height: 24.h),
                         LongButtonWithText(
-                          text: "Продолжить",
+                          text: tr("continue_label"),
                           isEnabled: (_firstItemProperty.isEnabled ||
                                   _secondItemProperty.isEnabled) &&
                               (_firstItemVehicle.isEnabled ||
                                   _secondItemVehicle.isEnabled),
                           onTap: () async {
+                            if (isDoubleButton) {
+                              return;
+                            }
+                            isDoubleButton = true;
+                            Future.delayed(Duration(seconds: 3), () {
+                              isDoubleButton = false;
+                            });
                             final isValid =
                                 _formGlobalKey.currentState?.validate() ??
                                     false;

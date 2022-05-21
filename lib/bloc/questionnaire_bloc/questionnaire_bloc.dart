@@ -94,13 +94,11 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
       ));
     } else {
       var res = await _profileRepository.getProfile();
-
       if (res.isRight) {
         print(
             'phone2222 ==${event.number != null} == ${res.isRight} == ${res.right.profile!.phone}');
+        print('wallet== ${res.right.profile!.wallet!.toJson()}');
       }
-
-      print('wallet== ${res.right.profile!.wallet!.toJson()}');
       if (event.number != null && res.isRight) {
         String? phone = res.right.profile!.phone!
             .replaceAll(" ", "")
@@ -144,9 +142,12 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
             ));
           }
         } else {
-          print("dbResponse errorr  ==${response.left.errors}");
+          print(
+              "_bankRepository.clientSearch errorr  ==${response.left.errors}");
           emit(QuestionnaireFoundError(response.left));
         }
+      } else {
+        emit(QuestionnaireFoundError(res.left));
       }
     }
   }

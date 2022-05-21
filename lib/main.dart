@@ -31,12 +31,11 @@ import 'package:solfy_flutter/views/onboarding/phone_number_input_view.dart';
 import 'package:solfy_flutter/views/onboarding/pin_code_login_view.dart';
 import 'package:solfy_flutter/views/onboarding/questionnaire/card/bloc/card_bloc.dart';
 import 'package:solfy_flutter/widgets/loading_ring_animation.dart';
-
 import 'models/api/bank/card/card_repositores.dart';
 
 // TODO apiUrl меняем при смене isTest
 // $https://api-edge.docu.ru на https://api.solfy.com
-bool isTest = true;
+bool isTest = false;
 final String apiUrl =
     isTest ? 'https://api-edge.docu.ru' : 'https://api.solfy.com';
 void main() async {

@@ -138,7 +138,7 @@ class _YourRequestViewState extends State<YourRequestView> {
                   children: [
                     LongButtonWithText(
                       text: currentStage > 1
-                          ? "Продолжить заполнение"
+                          ? tr("continue_editing")
                           : "fill_the_form".tr(),
                       onTap: () async {
                         switch (currentStage) {

@@ -26,17 +26,16 @@ class BankRepository implements IBankRepository {
   Future<Either<ErrorsResponse, ClientSearchResp>> clientSearch(
       ClientSearchRequest request) async {
     try {
-      print('console clientSearch1111 ==  ');
+      print('console begin clientSearch ==  ');
       ClientSearchResp? response = await _apiClient.clientSearch(request);
-
       print('clientSearch3333 === ${response} ');
       codeFilial = response.clientData!.codeFilial;
       client_id = response.clientData!.clientId;
       client_code = response.clientData!.clientCode;
       client_uid = response.clientData!.adminAreaDocument;
-
       return Right(response);
     } on DioError catch (error) {
+      print('ошибка clientSearch errrorr == ${error.response!.data}');
       print(
           'ошибка clientSearch == ${ErrorsResponse.fromJson(error.response!.data).errors}');
       return Left(ErrorsResponse.fromJson(error.response!.data));

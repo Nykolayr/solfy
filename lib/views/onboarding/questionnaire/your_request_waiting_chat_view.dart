@@ -7,8 +7,8 @@ import 'package:localstorage/localstorage.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
-import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'package:solfy_flutter/models/api/bank/client_search/exchangeinv2.dart';
+import 'package:solfy_flutter/models/pasport.dart';
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
@@ -74,6 +74,7 @@ class _YourRequestWaitingChatViewState
       appBar: AppBar(
         leading: BaseIconGesturesWrapper(
           onTap: () async {
+            Passport.clearPassport();
             LocalData().saveJson("passportSeries", '');
             LocalData().saveJson("passportName", '');
             LocalData().saveJson("pin_fl", '');
@@ -103,6 +104,7 @@ class _YourRequestWaitingChatViewState
         });
         await Future.delayed(Duration(seconds: 2));
         if (state is QuestionnaireFoundSuccess) {
+          Passport.clearPassport();
           setState(() {
             store.setItem("error", '');
             isFinalTextVisible = true;
@@ -120,13 +122,20 @@ class _YourRequestWaitingChatViewState
           setState(() {
             isFinalTextVisible = true;
             isAnyError = true;
-            errorMessage = state.errors.errors![0].message!;
-            errorCode = state.errors.errors![0].code!;
-          });
-          ModalHelpers.showError(context, state.errors).then((value) {
-            // Timer(Duration(seconds: 6), () {
-            //   //context.router.pop();
-            // });
+            try {
+              errorMessage = state.errors.errors![0].message!;
+              errorCode = state.errors.errors![0].code!;
+            } catch (e) {
+              errorCode = '906';
+              errorMessage =
+                  'Ошибка не известна, попробуйте снова через некоторое время';
+            }
+            //     ModalHelpers.showError(context, state.errors).then((value) {
+            //       Timer(Duration(seconds: 6), () {
+            //         context.router.pop();
+            //                     });
+            //     });
+            //   }
           });
         }
       }, builder: (context, state) {

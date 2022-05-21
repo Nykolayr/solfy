@@ -31,6 +31,7 @@ class _AddressFormViewState extends State<AddressFormView> {
   bool validationEnabled = false;
   bool isSelectorsUneditable = false;
   bool isSelectorErrorVisible = false;
+  bool isDoubleButton = false;
   late FormSelectorItem _firstItem = FormSelectorItem(
     text: "equals_to_the_permanent_registration_address".tr(),
     onTap: () => setState(() {
@@ -473,8 +474,15 @@ class _AddressFormViewState extends State<AddressFormView> {
                                   : SizedBox(),
                               SizedBox(height: 24.h),
                               LongButtonWithText(
-                                text: "Продолжить",
+                                text: tr('continue_label'),
                                 onTap: () async {
+                                  if (isDoubleButton) {
+                                    return;
+                                  }
+                                  isDoubleButton = true;
+                                  Future.delayed(Duration(seconds: 3), () {
+                                    isDoubleButton = false;
+                                  });
                                   final isValid =
                                       _formGlobalKey.currentState?.validate() ??
                                           false;

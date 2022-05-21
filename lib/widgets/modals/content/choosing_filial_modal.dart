@@ -20,6 +20,7 @@ class FloatModalChoosingFilial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
+    bool isDoubleButton = false;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -42,6 +43,13 @@ class FloatModalChoosingFilial extends StatelessWidget {
           LongButtonWithText(
             text: "get_card_in_this_filial".tr(),
             onTap: () async {
+              if (isDoubleButton) {
+                return;
+              }
+              isDoubleButton = true;
+              Future.delayed(Duration(seconds: 3), () {
+                isDoubleButton = false;
+              });
               context.read<QuestionnaireBloc>().add(ClientScore(filialId));
               context.router.push(YourRequestCompleteWaitingView());
 
