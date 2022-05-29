@@ -381,19 +381,12 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                             if (isValid &&
                                 !isVehiclesErrorVisible &&
                                 !isPropertiesErrorVisible) {
-                              // context.router.push(ChoosingFilialRoute());
+                              context.router.push(ChoosingFilialRoute());
                               _formGlobalKey.currentState?.save();
                               final questionnaire = (context
                                       .read<QuestionnaireBloc>()
                                       .state as QuestionnaireFoundSuccess)
                                   .questionnaire;
-
-                              await Future.delayed(
-                                Duration(
-                                  milliseconds: 200,
-                                ),
-                              );
-
                               context.read<QuestionnaireBloc>().add(
                                   SavePropertiesData(
                                       properties.first.marketValue.text != ""
@@ -403,37 +396,64 @@ class _PropertyFormViewState extends State<PropertyFormView> {
                                           ? vehicles
                                           : [],
                                       questionnaire));
-
-                              await Future.delayed(
-                                Duration(
-                                  milliseconds: 200,
-                                ),
-                              );
-                              context.read<QuestionnaireBloc>().add(
-                                  await SavePropertiesData(
-                                      properties.first.marketValue.text != ""
-                                          ? properties
-                                          : [],
-                                      vehicles.first.marketValue.text != ""
-                                          ? vehicles
-                                          : [],
-                                      questionnaire));
-                              await Future.delayed(
-                                Duration(
-                                  milliseconds: 200,
-                                ),
-                              );
-                              context
-                                  .read<QuestionnaireBloc>()
-                                  .add(await ClientScore('null'));
-                              await Future.delayed(
-                                Duration(
-                                  milliseconds: 200,
-                                ),
-                              );
-                              context.router
-                                  .push(YourRequestCompleteWaitingView());
                             }
+
+                            // if (isValid &&
+                            //     !isVehiclesErrorVisible &&
+                            //     !isPropertiesErrorVisible) {
+                            //   // context.router.push(ChoosingFilialRoute());
+                            //   _formGlobalKey.currentState?.save();
+                            //   final questionnaire = (context
+                            //           .read<QuestionnaireBloc>()
+                            //           .state as QuestionnaireFoundSuccess)
+                            //       .questionnaire;
+
+                            //   await Future.delayed(
+                            //     Duration(
+                            //       milliseconds: 200,
+                            //     ),
+                            //   );
+
+                            //   context.read<QuestionnaireBloc>().add(
+                            //       SavePropertiesData(
+                            //           properties.first.marketValue.text != ""
+                            //               ? properties
+                            //               : [],
+                            //           vehicles.first.marketValue.text != ""
+                            //               ? vehicles
+                            //               : [],
+                            //           questionnaire));
+
+                            //   await Future.delayed(
+                            //     Duration(
+                            //       milliseconds: 200,
+                            //     ),
+                            //   );
+                            //   context.read<QuestionnaireBloc>().add(
+                            //       await SavePropertiesData(
+                            //           properties.first.marketValue.text != ""
+                            //               ? properties
+                            //               : [],
+                            //           vehicles.first.marketValue.text != ""
+                            //               ? vehicles
+                            //               : [],
+                            //           questionnaire));
+                            //   await Future.delayed(
+                            //     Duration(
+                            //       milliseconds: 200,
+                            //     ),
+                            //   );
+                            //   context
+                            //       .read<QuestionnaireBloc>()
+                            //       .add(await ClientScore('null'));
+                            //   await Future.delayed(
+                            //     Duration(
+                            //       milliseconds: 200,
+                            //     ),
+                            //   );
+                            //   context.router
+                            //       .push(YourRequestCompleteWaitingView());
+                            // }
                           },
                         ),
                         SizedBox(height: 20.h),

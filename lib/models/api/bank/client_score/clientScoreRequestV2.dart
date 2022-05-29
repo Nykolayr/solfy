@@ -228,85 +228,85 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     "vehicles": (vehicles == null || vehicles.isEmpty) ? null : vehicles,
     "secret_word": data.secretWord,
   };
-  if (data.clientData!.codeFilial != null &&
-      data.clientData!.codeFilial != 'null') {
-    map = {
-      "stage": "UPDATE",
-      "order_source": "SOLFY",
-      "questionnaire_id": null,
-      "bpm_process_id": null,
-      "pinfl": null,
-      "client_id": (client_id == null) ? null : client_id,
-      "client_code": (client_code == null) ? null : client_code,
-      "client_uid": (client_uid == null) ? null : client_uid,
-      "last_name": null,
-      "first_name": null,
-      "middle_name": null,
-      "gender": null,
-      "date_of_birth": null,
-      "tin": null,
-      "marital_status": null,
-      "has_children": null,
-      "children_count": null,
-      "document": {
-        "type": null,
-        "series": null,
-        "number": null,
-        "issue_date": null,
-        "end_date": null,
-        "given_place": null
-      },
-      "residency": null,
-      "residence_country": null,
-      "filial": (codeFilial == null)
-          ? null
-          : (data.clientData!.codeFilial == 'null')
-              ? {
-                  "id": codeFilial,
-                  "code": codeFilial,
-                }
-              : {
-                  "id": data.clientData!.codeFilial.toString(),
-                  "code": data.clientData!.codeFilial.toString()
-                },
-      "birth_place": null,
-      "verified_phone_number": null,
-      "email": null,
-      "education": null,
-      "addresses": null,
-      "job": {
-        "activity_type": null,
-        "employer_name": null,
-        "employer_tin": null,
-        "organization_type": null,
-        "employment_position_category": null,
-        "last_work_experience": null,
-        "work_experience": null
-      },
-      "income": {
-        "loan_expenses": null,
-        "add_income": null,
-        "add_income_source": null
-      },
-      "realties": null,
-      "vehicles": null,
-      "secret_word": null,
-      "chosen_insurance_company_uuid": null,
-      "chosen_insurance_company_tin": null,
-      "local_card_uuid": null,
-      "use_solfy_card_to_pay_premium": true,
-      "card_filial": (data.clientData!.codeFilial == null)
-          ? null
-          : {
-              "id": data.clientData!.codeFilial.toString(),
-              "code": data.clientData!.codeFilial.toString()
-            },
-      "client_acceptance": true,
-      "local_card_transaction_id": null,
-      "insurance_token": null,
-      "processing_external_id": null
-    };
-  }
+  // if (data.clientData!.codeFilial != null &&
+  //     data.clientData!.codeFilial != 'null') {
+  //   map = {
+  //     "stage": "UPDATE",
+  //     "order_source": "SOLFY",
+  //     "questionnaire_id": null,
+  //     "bpm_process_id": null,
+  //     "pinfl": null,
+  //     "client_id": (client_id == null) ? null : client_id,
+  //     "client_code": (client_code == null) ? null : client_code,
+  //     "client_uid": (client_uid == null) ? null : client_uid,
+  //     "last_name": null,
+  //     "first_name": null,
+  //     "middle_name": null,
+  //     "gender": null,
+  //     "date_of_birth": null,
+  //     "tin": null,
+  //     "marital_status": null,
+  //     "has_children": null,
+  //     "children_count": null,
+  //     "document": {
+  //       "type": null,
+  //       "series": null,
+  //       "number": null,
+  //       "issue_date": null,
+  //       "end_date": null,
+  //       "given_place": null
+  //     },
+  //     "residency": null,
+  //     "residence_country": null,
+  //     "filial": (codeFilial == null)
+  //         ? null
+  //         : (data.clientData!.codeFilial == 'null')
+  //             ? {
+  //                 "id": codeFilial,
+  //                 "code": codeFilial,
+  //               }
+  //             : {
+  //                 "id": data.clientData!.codeFilial.toString(),
+  //                 "code": data.clientData!.codeFilial.toString()
+  //               },
+  //     "birth_place": null,
+  //     "verified_phone_number": null,
+  //     "email": null,
+  //     "education": null,
+  //     "addresses": null,
+  //     "job": {
+  //       "activity_type": null,
+  //       "employer_name": null,
+  //       "employer_tin": null,
+  //       "organization_type": null,
+  //       "employment_position_category": null,
+  //       "last_work_experience": null,
+  //       "work_experience": null
+  //     },
+  //     "income": {
+  //       "loan_expenses": null,
+  //       "add_income": null,
+  //       "add_income_source": null
+  //     },
+  //     "realties": null,
+  //     "vehicles": null,
+  //     "secret_word": null,
+  //     "chosen_insurance_company_uuid": null,
+  //     "chosen_insurance_company_tin": null,
+  //     "local_card_uuid": null,
+  //     "use_solfy_card_to_pay_premium": true,
+  //     "card_filial": (data.clientData!.codeFilial == null)
+  //         ? null
+  //         : {
+  //             "id": data.clientData!.codeFilial.toString(),
+  //             "code": data.clientData!.codeFilial.toString()
+  //           },
+  //     "client_acceptance": true,
+  //     "local_card_transaction_id": null,
+  //     "insurance_token": null,
+  //     "processing_external_id": null
+  //   };
+  // }
   printWrapped('console map >>>>>>>> $map');
   print('console add_income_source >>>>>>>> ${map['add_income_source']}');
   print('console has_children >>>>>>>> ${map['has_children']}');

@@ -1059,7 +1059,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
         milliseconds: 200,
       ),
     );
-    print('codeFilial == ${event.id}');
     final questionnaire =
         (await _dbService.getClientSearchResponse())?.questionnaire;
 
@@ -1171,7 +1170,6 @@ class QuestionnaireBloc extends Bloc<QuestionnaireEvent, QuestionnaireState> {
     );
     final response = await _bankRepository.clientScore(request);
     if (response.isRight) {
-      print('QuestionnaireSentSuccess');
       emit(QuestionnaireSentSuccess());
     } else {
       emit(QuestionnaireSentError(response.left));

@@ -52,11 +52,6 @@ class FloatModalChoosingFilial extends StatelessWidget {
               });
               context.read<QuestionnaireBloc>().add(ClientScore(filialId));
               context.router.push(YourRequestCompleteWaitingView());
-
-              await Future.delayed(Duration(
-                milliseconds: 200,
-              ));
-              context.read<QuestionnaireBloc>().add(ClientScore(filialId));
             },
           ),
           SizedBox(height: 16),

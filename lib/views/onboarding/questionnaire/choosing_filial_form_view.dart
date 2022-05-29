@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:solfy_flutter/bloc/choosing_filial_bloc/choosing_filial_bloc.dart';
-import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
 import 'dart:ui' as direction;
 
@@ -55,7 +54,6 @@ class _ChoosingFilialFormViewState extends State<ChoosingFilialFormView> {
         }
       },
     );
-
     super.initState();
   }
 
@@ -115,24 +113,23 @@ class _ChoosingFilialFormViewState extends State<ChoosingFilialFormView> {
               style: theme.textStyles.mainText,
               textAlign: TextAlign.left,
             ),
-            // TODO: Добавить как будет пятый шаг
-            // SizedBox(height: 2.h),
-            // RichText(
-            //   textAlign: TextAlign.left,
-            //   text: TextSpan(
-            //     text: 'step_6'.tr(),
-            //     style: theme.textStyles.headerSubtitleText,
-            //     children: [
-            //       TextSpan(text: ' '),
-            //       TextSpan(
-            //         text: 'from_6'.tr(),
-            //         style: theme.textStyles.headerSubtitleText.copyWith(
-            //           color: theme.colors.virtualKeyboardNumbers,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            SizedBox(height: 2.h),
+            RichText(
+              textAlign: TextAlign.left,
+              text: TextSpan(
+                text: 'step_5'.tr(),
+                style: theme.textStyles.headerSubtitleText,
+                children: [
+                  TextSpan(text: ' '),
+                  TextSpan(
+                    text: 'from_6'.tr(),
+                    style: theme.textStyles.headerSubtitleText.copyWith(
+                      color: theme.colors.virtualKeyboardNumbers,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
         suffix: Row(
@@ -146,210 +143,195 @@ class _ChoosingFilialFormViewState extends State<ChoosingFilialFormView> {
           ],
         ),
       ),
-      body: BlocListener<QuestionnaireBloc, QuestionnaireState>(
-        listener: (context, state) {
-          if (state is QuestionnaireSentSuccess) {
-            print('QuestionnaireSentSuccess === ');
-            context.router.root.push(PageRouteInfo(
-              "BaseTabFeedView",
-              path: '',
-            ));
-            // Navigator.push(context, BaseTabStackWrapper());
-          }
-        },
-        child: BlocBuilder<ChoosingFilialBloc, ChoosingFilialState>(
-          builder: (context, state) {
-            if (state is Markers) {
-              return isMapView
-                  ? CustomGoogleMap(
-                      initialLatLng: static.citiesCoordinates[1],
-                      initialZoom: 10,
-                      markers: state.markers
-                          .map(
-                            (e) => Marker(
-                              onTap: () => showCustomModalBottomSheet(
-                                context: context,
-                                containerWidget: (_, animation, child) =>
-                                    FloatingModal(child: child),
-                                builder: (context) => FloatModalChoosingFilial(
-                                  filialName: e.value,
-                                  filialAddress: e.hint,
-                                  filialId: e.id.toString(),
-                                ),
+      body: BlocBuilder<ChoosingFilialBloc, ChoosingFilialState>(
+        builder: (context, state) {
+          if (state is Markers) {
+            return isMapView
+                ? CustomGoogleMap(
+                    initialLatLng: static.citiesCoordinates[1],
+                    initialZoom: 10,
+                    markers: state.markers
+                        .map(
+                          (e) => Marker(
+                            onTap: () => showCustomModalBottomSheet(
+                              context: context,
+                              containerWidget: (_, animation, child) =>
+                                  FloatingModal(child: child),
+                              builder: (context) => FloatModalChoosingFilial(
+                                filialName: e.value,
+                                filialAddress: e.hint,
+                                filialId: e.id.toString(),
                               ),
-                              icon: e.icon,
-                              markerId: MarkerId(e.id.toString()),
-                              position: LatLng(e.lat, e.lon),
                             ),
-                          )
-                          .toSet(),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 8.h),
-                          Container(
-                            width: double.infinity,
-                            child: Text(
-                              "choose_filial_to_get_solfy_card".tr(),
-                              style: theme.textStyles.formSubtitleText,
-                              textAlign: TextAlign.left,
-                            ),
+                            icon: e.icon,
+                            markerId: MarkerId(e.id.toString()),
+                            position: LatLng(e.lat, e.lon),
                           ),
-                          CustomDivider(12),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () => showModalWithVariants(
-                              "region_oblast".tr(),
-                              static.geo.regions
-                                      ?.map((element) => element.name)
-                                      .toList() ??
-                                  [],
-                              (text) {
-                                final id = static.geo.regions
-                                    ?.firstWhere(
-                                        (element) => element.name == text)
-                                    .id;
-                                regionId = id;
-                                setState(
-                                  () {
-                                    currentRegion = text;
-                                    context
-                                        .read<ChoosingFilialBloc>()
-                                        .add(GetMarkers(filterById: id));
-                                  },
-                                );
-                              },
-                              selectedVariant: currentRegion,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      currentRegion ?? "all_regions".tr(),
-                                      style: theme.textStyles.blackRoboto1,
-                                    ),
-                                    SizedBox(height: 4.h),
-                                    Text(
-                                      state.markers.length.toString() +
-                                          "branches_count".tr(),
-                                      style: theme.textStyles.inputHintText,
-                                    ),
-                                  ],
-                                ),
-                                Icon(
-                                  SolfyIcons.arrow,
-                                  color: theme.colors.gray1,
-                                  size: 15,
-                                )
-                              ],
-                            ),
+                        )
+                        .toSet(),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 8.h),
+                        Container(
+                          width: double.infinity,
+                          child: Text(
+                            "choose_filial_to_get_solfy_card".tr(),
+                            style: theme.textStyles.formSubtitleText,
+                            textAlign: TextAlign.left,
                           ),
-                          CustomDivider(12),
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: state.markers.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.only(bottom: 28.0),
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    showCustomModalBottomSheet(
-                                      context: context,
-                                      containerWidget: (_, animation, child) =>
-                                          FloatingModal(child: child),
-                                      builder: (context) =>
-                                          FloatModalChoosingFilial(
-                                        filialName: state.markers[index].value,
-                                        filialAddress:
-                                            state.markers[index].hint,
-                                        filialId:
-                                            state.markers[index].id.toString(),
-                                      ),
-                                    );
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: state.markers[index]
-                                                        .distance !=
-                                                    null
-                                                ? hasTextOverflow(
-                                                    state.markers[index].value,
-                                                    theme.textStyles
-                                                        .chooseFormText,
-                                                    maxLines: 1,
-                                                    maxWidth: 230.w,
-                                                  )
-                                                    ? 230.w
-                                                    : null
-                                                : null,
-                                            child: TextOneLine(
-                                              state.markers[index].value,
-                                              style: theme
-                                                  .textStyles.chooseFormText,
-                                            ),
-                                          ),
-                                          state.markers[index].distance != null
-                                              ? Row(
-                                                  children: [
-                                                    SizedBox(width: 9.w),
-                                                    Icon(
-                                                      SolfyIcons.geo,
-                                                      size: 12.r,
-                                                      color: theme.colors.gray1,
-                                                    ),
-                                                    SizedBox(width: 4.w),
-                                                    Text(
-                                                      state.markers[index]
-                                                                  .distance! <
-                                                              1000
-                                                          ? state.markers[index]
-                                                                  .distance!
-                                                                  .toStringAsFixed(
-                                                                      0) +
-                                                              " м"
-                                                          : (state.markers[index]
-                                                                          .distance! /
-                                                                      1000)
-                                                                  .toStringAsFixed(0) +
-                                                              ' км',
-                                                      style: theme.textStyles
-                                                          .inputHintText,
-                                                    ),
-                                                  ],
-                                                )
-                                              : SizedBox(),
-                                        ],
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      Text(
-                                        state.markers[index].hint,
-                                        style: theme.textStyles.inputHintText,
-                                      )
-                                    ],
+                        ),
+                        CustomDivider(12),
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => showModalWithVariants(
+                            "region_oblast".tr(),
+                            static.geo.regions
+                                    ?.map((element) => element.name)
+                                    .toList() ??
+                                [],
+                            (text) {
+                              final id = static.geo.regions
+                                  ?.firstWhere(
+                                      (element) => element.name == text)
+                                  .id;
+                              regionId = id;
+                              setState(
+                                () {
+                                  currentRegion = text;
+                                  context
+                                      .read<ChoosingFilialBloc>()
+                                      .add(GetMarkers(filterById: id));
+                                },
+                              );
+                            },
+                            selectedVariant: currentRegion,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    currentRegion ?? "all_regions".tr(),
+                                    style: theme.textStyles.blackRoboto1,
+                                  ),
+                                  SizedBox(height: 4.h),
+                                  Text(
+                                    state.markers.length.toString() +
+                                        "branches_count".tr(),
+                                    style: theme.textStyles.inputHintText,
+                                  ),
+                                ],
+                              ),
+                              Icon(
+                                SolfyIcons.arrow,
+                                color: theme.colors.gray1,
+                                size: 15,
+                              )
+                            ],
+                          ),
+                        ),
+                        CustomDivider(12),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: state.markers.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.only(bottom: 28.0),
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () => showCustomModalBottomSheet(
+                                  context: context,
+                                  containerWidget: (_, animation, child) =>
+                                      FloatingModal(child: child),
+                                  builder: (context) =>
+                                      FloatModalChoosingFilial(
+                                    filialName: state.markers[index].value,
+                                    filialAddress: state.markers[index].hint,
+                                    filialId:
+                                        state.markers[index].id.toString(),
                                   ),
                                 ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: state.markers[index]
+                                                      .distance !=
+                                                  null
+                                              ? hasTextOverflow(
+                                                  state.markers[index].value,
+                                                  theme.textStyles
+                                                      .chooseFormText,
+                                                  maxLines: 1,
+                                                  maxWidth: 230.w,
+                                                )
+                                                  ? 230.w
+                                                  : null
+                                              : null,
+                                          child: TextOneLine(
+                                            state.markers[index].value,
+                                            style:
+                                                theme.textStyles.chooseFormText,
+                                          ),
+                                        ),
+                                        state.markers[index].distance != null
+                                            ? Row(
+                                                children: [
+                                                  SizedBox(width: 9.w),
+                                                  Icon(
+                                                    SolfyIcons.geo,
+                                                    size: 12.r,
+                                                    color: theme.colors.gray1,
+                                                  ),
+                                                  SizedBox(width: 4.w),
+                                                  Text(
+                                                    state.markers[index]
+                                                                .distance! <
+                                                            1000
+                                                        ? state.markers[index]
+                                                                .distance!
+                                                                .toStringAsFixed(
+                                                                    0) +
+                                                            " м"
+                                                        : (state.markers[index]
+                                                                        .distance! /
+                                                                    1000)
+                                                                .toStringAsFixed(
+                                                                    0) +
+                                                            ' км',
+                                                    style: theme.textStyles
+                                                        .inputHintText,
+                                                  ),
+                                                ],
+                                              )
+                                            : SizedBox(),
+                                      ],
+                                    ),
+                                    SizedBox(height: 3.h),
+                                    Text(
+                                      state.markers[index].hint,
+                                      style: theme.textStyles.inputHintText,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    );
-            }
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+          }
 
-            return LoadingRingAnimation();
-          },
-        ),
+          return LoadingRingAnimation();
+        },
       ),
     );
   }
