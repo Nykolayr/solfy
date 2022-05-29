@@ -17,6 +17,8 @@ _$WalletItem _$$WalletItemFromJson(Map<String, dynamic> json) => _$WalletItem(
       json['comfortable_payment'] as int?,
       json['nearest_omp'] as int?,
       json['nearest_omp_date'] as String?,
+      json['nearest_omp_status'] as String?,
+      json['nearest_omp_description'] as String?,
       (json['accounts'] as List<dynamic>?)
           ?.map((e) =>
               WalletGetAccountItemResponse.fromJson(e as Map<String, dynamic>))
@@ -36,6 +38,8 @@ Map<String, dynamic> _$$WalletItemToJson(_$WalletItem instance) =>
       'comfortable_payment': instance.comfortablePayment,
       'nearest_omp': instance.nearestOmp,
       'nearest_omp_date': instance.nearestOmpDate,
+      'nearest_omp_status': instance.nearest_omp_status,
+      'nearest_omp_description': instance.nearest_omp_description,
       'accounts': instance.accounts,
       'cards': instance.cards,
     };

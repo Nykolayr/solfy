@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
+import 'package:solfy_flutter/models/enums.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,13 +23,40 @@ class WalletNearestContent extends StatelessWidget {
           BlocBuilder<WalletBloc, WalletState>(
             builder: (context, state) {
               if (state is GetWalletSuccess) {
-                if (state.wallet.nearestOmp.value != null && state.wallet.nearestOmp.value != 0) {
+                if (state.wallet.nearestOmp.value != null &&
+                    state.wallet.nearestOmp.value != 0) {
                   return Column(
                     children: [
                       SizedBox(height: 94.r),
-                      Text(
-                        state.wallet.nearestOmp.formattedValue,
-                        style: theme.textStyles.mainBigText,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.wallet.nearestOmp.formattedValue,
+                            style: theme.textStyles.mainBigText,
+                          ),
+                          (state.wallet.nearest_omp_status == 'advance')
+                              ? GestureDetector(
+                                  onTap: () {
+                                    ModalHelpers.showTExtSuccessModal(
+                                      context,
+                                      text:
+                                          state.wallet.nearest_omp_description,
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(2),
+                                    color: Colors.transparent,
+                                    child: Icon(
+                                      Icons.access_time,
+                                      color: theme.colors.buttonPrimary,
+                                      size: 22,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                        ],
                       ),
                       Text(
                         "value_name".tr(),
@@ -65,7 +93,9 @@ class WalletNearestContent extends StatelessWidget {
               return GestureDetector(
                 onTap: state is GetWalletSuccess
                     ? () => ModalHelpers.showComfortablePaymentUpdateModal(
-                        context, ((state.wallet.comfortablePayment.value ?? 0) ~/ 100000000))
+                        context,
+                        ((state.wallet.comfortablePayment.value ?? 0) ~/
+                            100000000))
                     : null,
                 child: Text(
                   state is GetWalletSuccess

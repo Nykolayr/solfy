@@ -50,14 +50,14 @@ class CardStatus extends StatelessWidget {
             checkmark: 1,
             marked: 2,
             bottom: wallet.addition,
-            buttonGo: () {
-              // context.router.push(ChoosingFilialRoute());
-              context.router.root.push(
-                QuestionnaireStackRoute(
-                  children: [ChoosingFilialRoute()],
-                ),
-              );
-            },
+            // TODO: убрать как поменяется статус
+            // buttonGo: () {
+            //   context.router.root.push(
+            //     QuestionnaireStackRoute(
+            //       children: [ChoosingFilialRoute()],
+            //     ),
+            //   );
+            // },
           );
         case "questionnaire_card_preparing":
           return LineStatus(

@@ -44,13 +44,15 @@ class HeaderWallet extends StatelessWidget {
             children: [
               BlocBuilder<WalletBloc, WalletState>(
                 builder: (context, state) {
-                  if (state is GetWalletSuccess && state.wallet.nearestOmp.value != 0) {
+                  if (state is GetWalletSuccess &&
+                      state.wallet.nearestOmp.value != 0) {
                     return Column(
                       children: [
                         SizedBox(height: 24.r),
                         state.wallet.nearestOmp != 0
                             ? Text(
-                                "nearest_date_payment".tr() + (state.wallet.nearestOmpDate),
+                                "nearest_date_payment".tr() +
+                                    (state.wallet.nearestOmpDate),
                                 style: theme.textStyles.inputHeaderText,
                                 textAlign: TextAlign.center,
                               )
@@ -74,7 +76,9 @@ class HeaderWallet extends StatelessWidget {
                             size: Size(240.r, 240.r),
                             painter: WalletChart(
                               state.wallet.nearestOmp.value?.toDouble() ?? 0,
-                              state.wallet.comfortablePayment.value?.toDouble() ?? 0,
+                              state.wallet.comfortablePayment.value
+                                      ?.toDouble() ??
+                                  0,
                             ),
                           );
                         return CustomPaint(
@@ -129,7 +133,8 @@ class HeaderWallet extends StatelessWidget {
                     builder: (context, state) {
                       return Container(
                         width: state is GetWalletSuccess
-                            ? (((state.wallet.availableBalance.value ?? 0) / (state.wallet.limit)) *
+                            ? (((state.wallet.availableBalance.value ?? 0) /
+                                        (state.wallet.limit)) *
                                     172)
                                 .w
                             : 0,

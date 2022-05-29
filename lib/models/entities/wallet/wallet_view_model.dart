@@ -31,6 +31,12 @@ class WalletViewModel {
 
   String get nearestOmpDate => _walletResponse.wallet?.nearestOmpDate ?? "";
 
+  String get nearest_omp_status =>
+      _walletResponse.wallet?.nearest_omp_status ?? "";
+
+  String get nearest_omp_description =>
+      _walletResponse.wallet?.nearest_omp_description ?? "";
+
   int get limit => _walletResponse.wallet?.limit ?? 1;
 
   WalletStatusViewModel get walletStatus => WalletStatusViewModel(

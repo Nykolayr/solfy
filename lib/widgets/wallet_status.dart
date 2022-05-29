@@ -74,7 +74,8 @@ class WalletStatus extends StatelessWidget {
                       ),
                       SizedBox(height: 4.r),
                       Text(
-                        MoneyFormatter.shortFormat((wallet.availableBalance.value ?? 0) ~/ 100),
+                        MoneyFormatter.shortFormat(
+                            (wallet.availableBalance.value ?? 0) ~/ 100),
                         style: theme.textStyles.formTitleText,
                       ),
                     ],

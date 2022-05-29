@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:solfy_flutter/bloc/questionnaire_bloc/questionnaire_bloc.dart';
+import 'package:solfy_flutter/helpers/modal_helpers.dart';
 
 import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
@@ -53,14 +55,13 @@ class _YourSuccessCardWaitingViewState
       });
     });
     Timer(Duration(seconds: 7), () {
-      context.router.root.push(
-        QuestionnaireStackRoute(
-          children: [ChoosingFilialRoute()],
-        ),
-      );
-      // context.router.root.push(QuestionnaireStackRoute(
-      //   children: [ChoosingFilialFormView()],
-      // ));
+      /// отсылаем для окончательного закрытия анкеты
+      context.read<QuestionnaireBloc>().add(ClientScore('update'));
+      // context.router.root.push(
+      //   QuestionnaireStackRoute(
+      //     children: [ChoosingFilialRoute()],
+      //   ),
+      // );
     });
     super.initState();
   }
@@ -83,91 +84,110 @@ class _YourSuccessCardWaitingViewState
         backgroundColor: Colors.white,
         shadowColor: Colors.transparent,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  SizedBox(height: 16.h),
-                  Container(
-                    width: double.infinity,
-                    child: Text(
-                      "your_application".tr(),
-                      style: theme.textStyles.mainBigText,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      theme.icons.logoSmallChat,
-                      SizedBox(width: 8.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ChatItem("thanks".tr(), radius: radiusFirst),
-                          SizedBox(height: 4.h),
-                          Column(
-                            children: [
-                              ChatItem(
-                                  tr(
-                                    'payment_insurance_premium',
-                                  ),
-                                  height: 72,
-                                  radius: isFinalTextVisible
-                                      ? radiusLast
-                                      : radiusMiddle),
-                              SizedBox(height: 4.h),
-                            ],
-                          ),
-                        ],
+      body: BlocListener<QuestionnaireBloc, QuestionnaireState>(
+        listener: (context, state) async {
+          print('state status === ${state.runtimeType}');
+          if (state is QuestionnaireSentSuccess) {
+            print('object222 === ${state.runtimeType}');
+            context.router.pop();
+            context.router.replaceAll([BaseTabRoute()]);
+          }
+          if (state is QuestionnaireSentError) {
+            print('object333 === ${state.runtimeType}');
+            ModalHelpers.showError(context, state.errors).then((value) {
+              Timer(Duration(seconds: 6), () {
+                context.router.pop();
+                context.router.pop();
+              });
+            });
+          }
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: 16.h),
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        "your_application".tr(),
+                        style: theme.textStyles.mainBigText,
+                        textAlign: TextAlign.left,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 24.h),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      theme.icons.logoSmallChat,
-                      SizedBox(width: 8.w),
-                      isFinalTextVisible
-                          ? ChatItem(
-                              isError ? errorMessage : "chase_filial".tr(),
-                              radius: radiusMiddle,
-                              height: 200,
-                            )
-                          : ChatLoadingItem(radius: radiusMiddle),
-                    ],
-                  ),
-                  // SizedBox(height: 44.h),
-                  // isFinalTextVisible
-                  //     ? Column(
-                  //         children: [
-                  //           LongButtonWithText(
-                  //             text: isError ? tr('understand') : tr('add_card'),
-                  //             onTap: () async {
-                  //               // context.router.push(
-                  //               //   AddCardView(
-                  //               //   ),
-                  //               // );
-                  //             },
-                  //           ),
-                  //           SizedBox(height: 12.h),
-                  //         ],
-                  //       )
-                  //     : SizedBox(),
-                  SizedBox(height: 12.h),
-                ],
-              ),
-            ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        theme.icons.logoSmallChat,
+                        SizedBox(width: 8.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ChatItem("thanks".tr(), radius: radiusFirst),
+                            SizedBox(height: 4.h),
+                            Column(
+                              children: [
+                                ChatItem(
+                                    tr(
+                                      'payment_insurance_premium',
+                                    ),
+                                    height: 72,
+                                    radius: isFinalTextVisible
+                                        ? radiusLast
+                                        : radiusMiddle),
+                                SizedBox(height: 4.h),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 24.h),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        theme.icons.logoSmallChat,
+                        SizedBox(width: 8.w),
+                        isFinalTextVisible
+                            ? ChatItem(
+                                isError ? errorMessage : "chase_filial".tr(),
+                                radius: radiusMiddle,
+                                height: 200,
+                              )
+                            : ChatLoadingItem(radius: radiusMiddle),
+                      ],
+                    ),
+                    // SizedBox(height: 44.h),
+                    // isFinalTextVisible
+                    //     ? Column(
+                    //         children: [
+                    //           LongButtonWithText(
+                    //             text: isError ? tr('understand') : tr('add_card'),
+                    //             onTap: () async {
+                    //               // context.router.push(
+                    //               //   AddCardView(
+                    //               //   ),
+                    //               // );
+                    //             },
+                    //           ),
+                    //           SizedBox(height: 12.h),
+                    //         ],
+                    //       )
+                    //     : SizedBox(),
+                    SizedBox(height: 12.h),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

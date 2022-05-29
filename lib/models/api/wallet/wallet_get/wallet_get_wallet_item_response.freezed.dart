@@ -37,6 +37,10 @@ class _$WalletGetWalletItemResponseTearOff {
           int? nearestOmp,
       @JsonKey(name: "nearest_omp_date")
           String? nearestOmpDate,
+      @JsonKey(name: "nearest_omp_status")
+          String? nearest_omp_status,
+      @JsonKey(name: "nearest_omp_description")
+          String? nearest_omp_description,
       @JsonKey(name: "accounts")
           List<WalletGetAccountItemResponse>? accounts,
       @JsonKey(name: "cards")
@@ -49,6 +53,8 @@ class _$WalletGetWalletItemResponseTearOff {
       comfortablePayment,
       nearestOmp,
       nearestOmpDate,
+      nearest_omp_status,
+      nearest_omp_description,
       accounts,
       cards,
     );
@@ -92,6 +98,14 @@ mixin _$WalletGetWalletItemResponse {
   /// Дата ближайшего платежа
   @JsonKey(name: "nearest_omp_date")
   String? get nearestOmpDate => throw _privateConstructorUsedError;
+
+  /// Дата ближайшего платежа
+  @JsonKey(name: "nearest_omp_status")
+  String? get nearest_omp_status => throw _privateConstructorUsedError;
+
+  /// Дата ближайшего платежа
+  @JsonKey(name: "nearest_omp_description")
+  String? get nearest_omp_description => throw _privateConstructorUsedError;
 
   /// Аккаунты
   @JsonKey(name: "accounts")
@@ -262,6 +276,8 @@ class _$WalletItemCopyWithImpl<$Res>
     Object? comfortablePayment = freezed,
     Object? nearestOmp = freezed,
     Object? nearestOmpDate = freezed,
+    Object? nearest_omp_status = freezed,
+    Object? nearest_omp_description = freezed,
     Object? accounts = freezed,
     Object? cards = freezed,
   }) {
@@ -294,6 +310,14 @@ class _$WalletItemCopyWithImpl<$Res>
           ? _value.nearestOmpDate
           : nearestOmpDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      nearest_omp_status == freezed
+          ? _value.nearest_omp_status
+          : nearest_omp_status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nearest_omp_description == freezed
+          ? _value.nearest_omp_description
+          : nearest_omp_description // ignore: cast_nullable_to_non_nullable
+              as String?,
       accounts == freezed
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
@@ -317,6 +341,8 @@ class _$WalletItem implements WalletItem {
       @JsonKey(name: "comfortable_payment") this.comfortablePayment,
       @JsonKey(name: "nearest_omp") this.nearestOmp,
       @JsonKey(name: "nearest_omp_date") this.nearestOmpDate,
+      @JsonKey(name: "nearest_omp_status") this.nearest_omp_status,
+      @JsonKey(name: "nearest_omp_description") this.nearest_omp_description,
       @JsonKey(name: "accounts") this.accounts,
       @JsonKey(name: "cards") this.cards);
 
@@ -358,6 +384,16 @@ class _$WalletItem implements WalletItem {
   /// Дата ближайшего платежа
   @JsonKey(name: "nearest_omp_date")
   final String? nearestOmpDate;
+  @override
+
+  /// Дата ближайшего платежа
+  @JsonKey(name: "nearest_omp_status")
+  final String? nearest_omp_status;
+  @override
+
+  /// Дата ближайшего платежа
+  @JsonKey(name: "nearest_omp_description")
+  final String? nearest_omp_description;
   @override
 
   /// Аккаунты
@@ -444,6 +480,10 @@ abstract class WalletItem implements WalletGetWalletItemResponse {
           int? nearestOmp,
       @JsonKey(name: "nearest_omp_date")
           String? nearestOmpDate,
+      @JsonKey(name: "nearest_omp_status")
+          String? nearest_omp_status,
+      @JsonKey(name: "nearest_omp_description")
+          String? nearest_omp_description,
       @JsonKey(name: "accounts")
           List<WalletGetAccountItemResponse>? accounts,
       @JsonKey(name: "cards")
@@ -488,6 +528,16 @@ abstract class WalletItem implements WalletGetWalletItemResponse {
   /// Дата ближайшего платежа
   @JsonKey(name: "nearest_omp_date")
   String? get nearestOmpDate => throw _privateConstructorUsedError;
+  @override
+
+  /// Дата ближайшего платежа
+  @JsonKey(name: "nearest_omp_status")
+  String? get nearest_omp_status => throw _privateConstructorUsedError;
+  @override
+
+  /// Дата ближайшего платежа
+  @JsonKey(name: "nearest_omp_description")
+  String? get nearest_omp_description => throw _privateConstructorUsedError;
   @override
 
   /// Аккаунты

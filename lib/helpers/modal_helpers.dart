@@ -43,6 +43,7 @@ import 'package:solfy_flutter/widgets/modals/content/location_request_modal.dart
 import 'package:solfy_flutter/widgets/modals/content/logout_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/phone_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/pin_fl_modal.dart';
+import 'package:solfy_flutter/widgets/modals/content/text_success_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/touch_id_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/uneditable_value_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/wallet_carousel_modal.dart';
@@ -125,6 +126,18 @@ class ModalHelpers {
         child: child,
       ),
       builder: (context) => FloatModalEmailSend(),
+    );
+  }
+
+  /// Показать модалку с текстом и кнопкой понятно
+  static Future<void> showTExtSuccessModal(BuildContext context,
+      {required String text}) async {
+    await showCustomModalBottomSheet(
+      context: context,
+      containerWidget: (_, animation, child) => FloatingModal(
+        child: child,
+      ),
+      builder: (context) => FloatModalText(text),
     );
   }
 

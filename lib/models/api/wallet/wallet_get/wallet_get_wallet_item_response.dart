@@ -33,6 +33,12 @@ class WalletGetWalletItemResponse with _$WalletGetWalletItemResponse {
     /// Дата ближайшего платежа
     @JsonKey(name: "nearest_omp_date") String? nearestOmpDate,
 
+    /// Дата ближайшего платежа
+    @JsonKey(name: "nearest_omp_status") String? nearest_omp_status,
+
+    /// Дата ближайшего платежа
+    @JsonKey(name: "nearest_omp_description") String? nearest_omp_description,
+
     /// Аккаунты
     @JsonKey(name: "accounts") List<WalletGetAccountItemResponse>? accounts,
 

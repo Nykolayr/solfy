@@ -53,19 +53,6 @@ class WalletRepository implements IWalletRepository {
   Future<Either<ErrorsResponse, WalletGetResp>> getWallet() async {
     try {
       WalletGetResp response = await _apiClient.getWallet();
-
-      // TODO закоментировать перед выгрузкой
-      // WalletGetStatusContentsItemResponse statusContents =
-      //     response.wallet!.statusContents!;
-      // response = response.copyWith(
-      //   wallet: response.wallet!.copyWith(
-      //     status: 'questionnaire_accepted',
-      //     statusContents: statusContents.copyWith(
-      //       addition: 'additional',
-      //       insurance_premium: '25 000 сум',
-      //     ),
-      //   ),
-      // );
       print('getWallet === ${response.wallet!.toJson()}');
       return Right(response);
     } on DioError catch (error) {
