@@ -34,6 +34,7 @@ class CardRepository {
       );
       return await response;
     } on DioError catch (error) {
+      print('DioError  == ${error.message}');
       return Left(ErrorsResponse.fromJson(error.response!.data));
     }
   }

@@ -88,6 +88,8 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       data.clientTemporaryAddress!.street != null) {
     address.add(getMapAdress(adress: data.clientTemporaryAddress, id: 3));
   }
+  String? bank_filial = await LocalData().loadJson('code_filial');
+  print('');
   Map<String, dynamic> map = {
     "bpm_process_id": null,
     "stage": "INITIAL",
@@ -137,7 +139,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "id": data.clientData!.residenceCountry,
       "code": "UZ"
     },
-    "filial": (data.clientData!.codeFilial == null)
+    "card_filial": (data.clientData!.codeFilial == null)
         ? null
         : (data.clientData!.codeFilial == 'null')
             ? {
@@ -148,6 +150,19 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
                 "id": data.clientData!.codeFilial.toString(),
                 "code": data.clientData!.codeFilial.toString()
               },
+    "filial": (bank_filial != null && bank_filial.isNotEmpty)
+        ? bank_filial
+        : (data.clientData!.codeFilial == null)
+            ? null
+            : (data.clientData!.codeFilial == 'null')
+                ? {
+                    "id": codeFilial,
+                    "code": codeFilial,
+                  }
+                : {
+                    "id": data.clientData!.codeFilial.toString(),
+                    "code": data.clientData!.codeFilial.toString()
+                  },
     "birth_place": {
       "country": {
         "id": data.clientData!.countryBirth,
@@ -230,7 +245,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
   };
   if (data.clientData!.codeFilial != null &&
       data.clientData!.codeFilial == 'update') {
-         print('update === ');
+    print('update === ');
     map = {
       "stage": "UPDATE",
       "order_source": "SOLFY",
@@ -262,18 +277,20 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       },
       "residency": null,
       "residence_country": null,
-      // "filial": (codeFilial == null)
-      //     ? null
-      //     : (data.clientData!.codeFilial == 'null')
-      //         ? {
-      //             "id": codeFilial,
-      //             "code": codeFilial,
-      //           }
-      //         : {
-      //             "id": data.clientData!.codeFilial.toString(),
-      //             "code": data.clientData!.codeFilial.toString()
-      //           },
-      "filial": null,
+
+      "filial": (bank_filial != null && bank_filial.isNotEmpty)
+          ? bank_filial
+          : (data.clientData!.codeFilial == null)
+              ? null
+              : (data.clientData!.codeFilial == 'null')
+                  ? {
+                      "id": codeFilial,
+                      "code": codeFilial,
+                    }
+                  : {
+                      "id": data.clientData!.codeFilial.toString(),
+                      "code": data.clientData!.codeFilial.toString()
+                    },
       "birth_place": null,
       "verified_phone_number": null,
       "email": null,
@@ -300,13 +317,12 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "chosen_insurance_company_tin": null,
       "local_card_uuid": null,
       "use_solfy_card_to_pay_premium": true,
-      // "card_filial": (data.clientData!.codeFilial == null)
-      //     ? null
-      //     : {
-      //         "id": data.clientData!.codeFilial.toString(),
-      //         "code": data.clientData!.codeFilial.toString()
-      //       },
-      "card_filial": null,
+      "card_filial": (data.clientData!.codeFilial == null)
+          ? null
+          : {
+              "id": data.clientData!.codeFilial.toString(),
+              "code": data.clientData!.codeFilial.toString()
+            },
       "client_acceptance": true,
       "local_card_transaction_id": null,
       "insurance_token": null,

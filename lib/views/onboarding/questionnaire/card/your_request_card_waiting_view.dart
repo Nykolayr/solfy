@@ -48,6 +48,7 @@ class _YourRequestCardWaitingViewState
     topRight: (Radius.circular(8)),
   );
   bool isFinalTextVisible = false;
+  bool isMeddleTextVisible = false;
   bool isError = false;
   String errorMessage = '';
   String errorCode = '';
@@ -55,6 +56,11 @@ class _YourRequestCardWaitingViewState
   @override
   void initState() {
     Timer(Duration(seconds: 5), () {
+      setState(() {
+        isMeddleTextVisible = true;
+      });
+    });
+    Timer(Duration(seconds: 9), () {
       setState(() {
         isFinalTextVisible = true;
       });
@@ -113,22 +119,24 @@ class _YourRequestCardWaitingViewState
                           ChatItem("calculate_amount".tr(),
                               radius: radiusFirst),
                           SizedBox(height: 4.h),
-                          Column(
-                            children: [
-                              ChatItem(
-                                  tr(
-                                    'insurance_premium_card',
-                                    args: [
-                                      widget.insurance_premium,
-                                    ],
-                                  ),
-                                  height: 72,
-                                  radius: isFinalTextVisible
-                                      ? radiusLast
-                                      : radiusMiddle),
-                              SizedBox(height: 4.h),
-                            ],
-                          ),
+                          isMeddleTextVisible
+                              ? Column(
+                                  children: [
+                                    ChatItem(
+                                        tr(
+                                          'insurance_premium_card',
+                                          args: [
+                                            widget.insurance_premium,
+                                          ],
+                                        ),
+                                        height: 72,
+                                        radius: isMeddleTextVisible
+                                            ? radiusLast
+                                            : radiusMiddle),
+                                    SizedBox(height: 4.h),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       ),
                     ],

@@ -98,7 +98,7 @@ class CardStatus extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              width: (172 / 4 * (currentStage - 1)).w,
+                              width: (172 / 5 * (currentStage - 1)).w,
                               height: 4,
                               decoration: BoxDecoration(
                                 color: theme.colors.secondaryItemsColor,
@@ -109,7 +109,7 @@ class CardStatus extends StatelessWidget {
                         ),
                         SizedBox(height: 16.h),
                         Text(
-                          "remaining_stages".plural(5 - currentStage),
+                          "remaining_stages".plural(6 - currentStage),
                           style: theme.textStyles.mediumMainText1,
                           textAlign: TextAlign.center,
                         ),

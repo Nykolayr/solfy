@@ -35,6 +35,7 @@ import 'package:solfy_flutter/widgets/modals/content/country_choosing_modal.dart
 import 'package:solfy_flutter/widgets/modals/content/email_change_confirm_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/email_change_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/email_send_success_modal.dart';
+import 'package:solfy_flutter/widgets/modals/content/error_23.dart';
 import 'package:solfy_flutter/widgets/modals/content/files_go_settings_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/filter_modal.dart';
 import 'package:solfy_flutter/widgets/modals/content/geolocation_request_modal.dart';
@@ -64,6 +65,25 @@ class ModalHelpers {
           children: [child],
         );
       },
+    );
+  }
+
+  /// Показать модалку с ошибкой 23
+  static void showError23(
+    BuildContext context,
+    ErrorsResponse errors, {
+    void Function()? onErrorSubmit,
+  }) {
+    showCustomModalBottomSheet(
+      context: context,
+      containerWidget: (_, animation, child) => FloatingModal(
+        child: child,
+      ),
+      builder: (context) => FloatModalError23(
+        message: errors.errors!.first.title,
+        subTitle: errors.errors!.first.message,
+        onErrorSubmit: onErrorSubmit,
+      ),
     );
   }
 

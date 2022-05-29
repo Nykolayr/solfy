@@ -139,6 +139,7 @@ class _AddCardViewState extends State<AddCardView> {
                                 mask: "##/##",
                                 filter: {"#": RegExp(r'[0-9]')},
                               ),
+                              width: 158,
                             ),
                           ],
                         ),

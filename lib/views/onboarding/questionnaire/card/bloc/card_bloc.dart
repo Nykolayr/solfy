@@ -41,10 +41,12 @@ class CardBloc extends Bloc<CardEvent, CardState> {
         }
       }
       if (event is SendNewCodeCard) {
+        print('SendNewCodeCard ==');
         code = event.code;
         emit(CardLoad());
         var response = await cardRepository.sendCardLocalConfirm(
             card_uuid, code, local_card_phone_number);
+        print('response == ${response.runtimeType}');
         if (response is Left) {
           emit(CardCodeError(errors: response.left));
         }
@@ -56,7 +58,6 @@ class CardBloc extends Bloc<CardEvent, CardState> {
         }
       }
       if (event is SendResCode) {
-        // emit(CardLoad());
         var response = await cardRepository.sendCardLocalResend(card_uuid);
         if (response is Left) {
           emit(CardResError(errors: response.left));

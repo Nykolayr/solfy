@@ -14,10 +14,11 @@ Map<String, dynamic> exchangev1inv2(Map<String, dynamic> json) {
   LocalData().saveJson('client_uid', json['client_uid'] ?? '');
   LocalData().saveJson('pinfl', pinfl);
   LocalData().saveJson('client_code', json['client_code'] ?? '');
+  LocalData().saveJson('code_filial', json['code_filial'] ?? '');
   Map<String, dynamic> clientData = {
     "last_name": json['last_name'],
     "country_birth": json['birth_place']['country'],
-    "code_filial": json['filial'] != null ? json['filial']['id'] ?? '1' : null,
+    "code_filial": json['filial'] != null ? json['filial']['id'] : null,
     "first_name": json['first_name'],
     "doc_type": json['document']['type'],
     "email": json['email'],

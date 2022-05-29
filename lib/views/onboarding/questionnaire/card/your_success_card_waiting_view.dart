@@ -13,6 +13,7 @@ import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
 import 'package:solfy_flutter/widgets/chat_item.dart';
 import 'package:solfy_flutter/widgets/chat_loading_item.dart';
+import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 
 /// Экран с ожиданием отправки анкеты
@@ -50,11 +51,11 @@ class _YourSuccessCardWaitingViewState
   @override
   void initState() {
     Timer(Duration(seconds: 5), () {
-      setState(() {
-        isFinalTextVisible = true;
-      });
+      // setState(() {
+      //   isFinalTextVisible = true;
+      // });
     });
-    Timer(Duration(seconds: 7), () {
+    Timer(Duration(seconds: 4), () {
       /// отсылаем для окончательного закрытия анкеты
       context.read<QuestionnaireBloc>().add(ClientScore('update'));
       // context.router.root.push(
@@ -86,18 +87,15 @@ class _YourSuccessCardWaitingViewState
       ),
       body: BlocListener<QuestionnaireBloc, QuestionnaireState>(
         listener: (context, state) async {
-          print('state status === ${state.runtimeType}');
           if (state is QuestionnaireSentSuccess) {
-            print('object222 === ${state.runtimeType}');
-            context.router.pop();
-            context.router.replaceAll([BaseTabRoute()]);
+            setState(() {
+              isFinalTextVisible = true;
+            });
           }
           if (state is QuestionnaireSentError) {
-            print('object333 === ${state.runtimeType}');
             ModalHelpers.showError(context, state.errors).then((value) {
-              Timer(Duration(seconds: 6), () {
-                context.router.pop();
-                context.router.pop();
+              setState(() {
+                isError = true;
               });
             });
           }
@@ -134,55 +132,46 @@ class _YourSuccessCardWaitingViewState
                           children: [
                             ChatItem("thanks".tr(), radius: radiusFirst),
                             SizedBox(height: 4.h),
-                            Column(
-                              children: [
-                                ChatItem(
-                                    tr(
-                                      'payment_insurance_premium',
-                                    ),
-                                    height: 72,
-                                    radius: isFinalTextVisible
-                                        ? radiusLast
-                                        : radiusMiddle),
-                                SizedBox(height: 4.h),
-                              ],
-                            ),
+                            isFinalTextVisible
+                                ? Column(
+                                    children: [
+                                      ChatItem(
+                                          tr(
+                                            'payment_insurance_premium',
+                                          ),
+                                          height: 72,
+                                          radius: isFinalTextVisible
+                                              ? radiusLast
+                                              : radiusMiddle),
+                                      SizedBox(height: 4.h),
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
                           ],
                         ),
                       ],
                     ),
-                    SizedBox(height: 24.h),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        theme.icons.logoSmallChat,
-                        SizedBox(width: 8.w),
-                        isFinalTextVisible
-                            ? ChatItem(
-                                isError ? errorMessage : "chase_filial".tr(),
-                                radius: radiusMiddle,
-                                height: 200,
-                              )
-                            : ChatLoadingItem(radius: radiusMiddle),
-                      ],
-                    ),
-                    // SizedBox(height: 44.h),
-                    // isFinalTextVisible
-                    //     ? Column(
-                    //         children: [
-                    //           LongButtonWithText(
-                    //             text: isError ? tr('understand') : tr('add_card'),
-                    //             onTap: () async {
-                    //               // context.router.push(
-                    //               //   AddCardView(
-                    //               //   ),
-                    //               // );
-                    //             },
-                    //           ),
-                    //           SizedBox(height: 12.h),
-                    //         ],
-                    //       )
-                    //     : SizedBox(),
+                    SizedBox(height: 44.h),
+                    isFinalTextVisible
+                        ? Column(
+                            children: [
+                              LongButtonWithText(
+                                text: isError
+                                    ? tr('understand')
+                                    : tr('perfect_thanks'),
+                                onTap: () async {
+                                  if (isError) {
+                                    context.router.pop();
+                                    context.router.pop();
+                                  } else {
+                                    context.router.replaceAll([BaseTabRoute()]);
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 12.h),
+                            ],
+                          )
+                        : SizedBox(),
                     SizedBox(height: 12.h),
                   ],
                 ),

@@ -61,6 +61,7 @@ class _SmsCodeCardViewState extends State<SmsCodeCardView> {
 
     return BlocListener<CardBloc, CardState>(
       listener: (context, state) async {
+        print('state ==== ${state.runtimeType}');
         if (state is CardLoad) {
           isLoad = true;
         } else {
@@ -68,13 +69,13 @@ class _SmsCodeCardViewState extends State<SmsCodeCardView> {
           isLoad = false;
         }
         if (state is CardCodeError) {
+          print('state error ${state.errors.errors}');
           switch (state.errors.errors!.first.code) {
             case '023':
               state.errors.errors!.first = state.errors.errors!.first.copyWith(
-                message: tr("error_23",
-                    args: [context.read<CardBloc>().insurance_premium]),
+                message: context.read<CardBloc>().insurance_premium,
               );
-              ModalHelpers.showError(
+              ModalHelpers.showError23(
                 context,
                 state.errors,
                 onErrorSubmit: () {
