@@ -141,7 +141,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     },
     "card_filial": (data.clientData!.codeFilial == null)
         ? null
-        : (data.clientData!.codeFilial == 'null')
+        : (data.clientData!.codeFilial == null)
             ? {
                 "id": codeFilial,
                 "code": codeFilial,
@@ -154,7 +154,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
         ? bank_filial
         : (data.clientData!.codeFilial == null)
             ? null
-            : (data.clientData!.codeFilial == 'null')
+            : (data.clientData!.codeFilial == null)
                 ? {
                     "id": codeFilial,
                     "code": codeFilial,
@@ -220,9 +220,15 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     },
 
     "income": {
-      "monthly_income": data.clientIncome!.monthlyIncome.toString(),
-      "monthly_expenses": data.clientIncome!.monthlyExpenses.toString(),
-      "loan_expenses": data.clientIncome!.loanExpenses.toString(),
+      "monthly_income": (data.clientIncome!.monthlyIncome == null)
+          ? null
+          : data.clientIncome!.monthlyIncome.toString(),
+      "monthly_expenses": (data.clientIncome!.monthlyExpenses == null)
+          ? null
+          : data.clientIncome!.monthlyExpenses.toString(),
+      "loan_expenses": (data.clientIncome!.loanExpenses == null)
+          ? null
+          : data.clientIncome!.loanExpenses.toString(),
       "add_income": (data.clientIncome!.addIncome == null)
           ? null
           : {
@@ -282,7 +288,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
           ? bank_filial
           : (data.clientData!.codeFilial == null)
               ? null
-              : (data.clientData!.codeFilial == 'null')
+              : (data.clientData!.codeFilial == null)
                   ? {
                       "id": codeFilial,
                       "code": codeFilial,
@@ -306,9 +312,12 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
         "work_experience": null
       },
       "income": {
+        "monthly_income": null,
+        "monthly_expenses": null,
         "loan_expenses": null,
         "add_income": null,
-        "add_income_source": null
+        "add_income_amount": null,
+        "add_income_source": null,
       },
       "realties": null,
       "vehicles": null,
