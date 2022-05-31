@@ -12,7 +12,6 @@ import 'package:solfy_flutter/router/auto_router.gr.dart';
 import 'package:solfy_flutter/styles/themes.dart';
 import 'package:solfy_flutter/widgets/base_icon_gestures_wrapper.dart';
 import 'package:solfy_flutter/widgets/chat_item.dart';
-import 'package:solfy_flutter/widgets/chat_loading_item.dart';
 import 'package:solfy_flutter/widgets/long_button_with_text.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 

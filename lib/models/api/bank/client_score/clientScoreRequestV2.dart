@@ -255,12 +255,11 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     map = {
       "stage": "UPDATE",
       "order_source": "SOLFY",
+      "use_solfy_card_to_pay_premium": true,
+      "client_acceptance": true,
       "questionnaire_id": null,
       "bpm_process_id": null,
       "pinfl": null,
-      // "client_id": (client_id == null) ? null : client_id,
-      // "client_code": (client_code == null) ? null : client_code,
-      // "client_uid": (client_uid == null) ? null : client_uid,
       "client_id": null,
       "client_code": null,
       "client_uid": null,
@@ -283,20 +282,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       },
       "residency": null,
       "residence_country": null,
-
-      "filial": (bank_filial != null && bank_filial.isNotEmpty)
-          ? bank_filial
-          : (data.clientData!.codeFilial == null)
-              ? null
-              : (data.clientData!.codeFilial == null)
-                  ? {
-                      "id": codeFilial,
-                      "code": codeFilial,
-                    }
-                  : {
-                      "id": data.clientData!.codeFilial.toString(),
-                      "code": data.clientData!.codeFilial.toString()
-                    },
+      "filial": null,
       "birth_place": null,
       "verified_phone_number": null,
       "email": null,
@@ -325,14 +311,7 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "chosen_insurance_company_uuid": null,
       "chosen_insurance_company_tin": null,
       "local_card_uuid": null,
-      "use_solfy_card_to_pay_premium": true,
-      "card_filial": (data.clientData!.codeFilial == null)
-          ? null
-          : {
-              "id": data.clientData!.codeFilial.toString(),
-              "code": data.clientData!.codeFilial.toString()
-            },
-      "client_acceptance": true,
+      "card_filial": null,
       "local_card_transaction_id": null,
       "insurance_token": null,
       "processing_external_id": null

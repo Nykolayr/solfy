@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:solfy_flutter/helpers/modal_helpers.dart';
-import 'package:solfy_flutter/models/enums.dart';
 import 'package:solfy_flutter/widgets/solfy_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
