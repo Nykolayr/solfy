@@ -255,14 +255,12 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
     map = {
       "stage": "UPDATE",
       "order_source": "SOLFY",
-      "use_solfy_card_to_pay_premium": true,
-      "client_acceptance": true,
       "questionnaire_id": null,
       "bpm_process_id": null,
       "pinfl": null,
       "client_id": null,
-      "client_code": null,
       "client_uid": null,
+      "client_code": null,
       "last_name": null,
       "first_name": null,
       "middle_name": null,
@@ -298,12 +296,9 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
         "work_experience": null
       },
       "income": {
-        "monthly_income": null,
-        "monthly_expenses": null,
         "loan_expenses": null,
         "add_income": null,
-        "add_income_amount": null,
-        "add_income_source": null,
+        "add_income_source": null
       },
       "realties": null,
       "vehicles": null,
@@ -311,7 +306,9 @@ Future<Map<String, dynamic>> clientScoreRequestV2(
       "chosen_insurance_company_uuid": null,
       "chosen_insurance_company_tin": null,
       "local_card_uuid": null,
+      "use_solfy_card_to_pay_premium": true,
       "card_filial": null,
+      "client_acceptance": true,
       "local_card_transaction_id": null,
       "insurance_token": null,
       "processing_external_id": null
