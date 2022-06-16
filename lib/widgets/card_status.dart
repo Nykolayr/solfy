@@ -18,14 +18,98 @@ import 'package:solfy_flutter/widgets/solfy_icons.dart';
 class CardStatus extends StatelessWidget {
   CardStatus(this.wallet);
   final WalletStatusViewModel wallet;
+
   @override
   Widget build(BuildContext context) {
     AppTheme theme = context.read<AppTheme>();
-
+    String status = '';
     Widget buildContent(int currentStage) {
-      // String st = "questionnaire_accepted_paid";
-      String st = wallet.status;
-      switch (st) {
+      status = wallet.status;
+      // TODO убрать после теста
+      status = "questionnaire_close";
+      switch (status) {
+        case "questionnaire_close":
+          return Column(
+            children: [
+              Text(
+                "your_close_card".tr(),
+                style: theme.textStyles.blackRoboto1,
+              ),
+              SizedBox(height: 25.h),
+              LongButtonWithText(
+                text: "new_card".tr(),
+                width: 184.w,
+                height: 34.r,
+                onTap: () async {
+                  final response =
+                      await ClientSearchDbService().getClientSearchResponse();
+                  if (response == null) {
+                    context.router.root.push(
+                      QuestionnaireStackRoute(
+                        children: [ShortFormView()],
+                      ),
+                    );
+                  } else {
+                    context.router.root.push(
+                      QuestionnaireStackRoute(
+                        children: [YourRequestView()],
+                      ),
+                    );
+                  }
+                },
+                fontSize: 14.sp,
+              ),
+            ],
+          );
+        case "questionnaire_block":
+          return Column(
+            children: [
+              Text(
+                "your_ublock_card".tr(),
+                style: theme.textStyles.blackRoboto1,
+              ),
+              SizedBox(height: 8.h),
+              Column(
+                children: [
+                  Text(
+                    tr('for_unblock1'),
+                    style: theme.textStyles.mediumMainText1,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        tr('for_unblock2'),
+                        style: theme.textStyles.mediumMainText1,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context.router.push(PersonalInformationRoute());
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 5,
+                          ),
+                          child: Text(
+                            tr('for_unblock3'),
+                            style: theme.textStyles.mediumMainText1.copyWith(
+                              color: theme.colors.buttonPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    tr('for_unblock4'),
+                    style: theme.textStyles.mediumMainText1,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ],
+          );
         case "questionnaire_accepted":
           return LineStatus(
             wallet.title,
@@ -206,6 +290,7 @@ class CardStatus extends StatelessWidget {
 
     return BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
       builder: (context, state) {
+        status = wallet.status;
         final currentStage =
             state is QuestionnaireFoundSuccess ? state.currentStage : 1;
         return Container(
@@ -214,10 +299,10 @@ class CardStatus extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 12.h),
-              wallet.status != "questionnaire_rejected"
+              status != "questionnaire_rejected"
                   ? Container(
-                      decoration: !(wallet.status == 'questionnaire_rejected' ||
-                              wallet.status == 'questionnaire_refused')
+                      decoration: !(status == 'questionnaire_rejected' ||
+                              status == 'questionnaire_refused')
                           ? BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -228,11 +313,14 @@ class CardStatus extends StatelessWidget {
                               ],
                             )
                           : null,
-                      child: wallet.status == 'questionnaire_rejected' ||
-                              wallet.status == 'questionnaire_refused'
+                      child: (status == 'questionnaire_rejected' ||
+                              status == 'questionnaire_refused')
                           ? Image.asset('assets/Error.png')
-                          : Image.asset("assets/Bitmap.png",
-                              width: 105.63.r, height: 65.05.r),
+                          : status == 'questionnaire_block'
+                              ? Image.asset("assets/SolfyCardBlock.png",
+                                  width: 105.63.r, height: 65.05.r)
+                              : Image.asset("assets/Bitmap.png",
+                                  width: 105.63.r, height: 65.05.r),
                     )
                   : Icon(
                       SolfyIcons.info,

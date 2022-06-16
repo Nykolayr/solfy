@@ -17,7 +17,8 @@ class PersonalInformationView extends StatefulWidget {
   const PersonalInformationView();
 
   @override
-  _PersonalInformationViewState createState() => _PersonalInformationViewState();
+  _PersonalInformationViewState createState() =>
+      _PersonalInformationViewState();
 }
 
 class _PersonalInformationViewState extends State<PersonalInformationView> {
@@ -39,10 +40,13 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       profileRepository.profile?.wallet?.status != "active"
-                          ? CardStatus(profileRepository.profile!.wallet!.getModel())
+                          ? CardStatus(
+                              profileRepository.profile!.wallet!.getModel())
                           : SizedBox(),
                       profileRepository.profile?.wallet?.cards != null &&
-                              profileRepository.profile?.wallet!.cards!.length != 0
+                              profileRepository
+                                      .profile?.wallet!.cards!.length !=
+                                  0
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -52,20 +56,40 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                                   style: theme.textStyles.profileTitleText,
                                 ),
                                 SizedBox(height: 4.h),
-                                for (var card in profileRepository.profile!.wallet!.cards!)
+                                for (var card in profileRepository
+                                    .profile!.wallet!.cards!)
                                   PersonalInformationItem(
                                     title: formatAsCardNumber(
                                       card.mask!,
                                       useSeparators: true,
                                     ),
                                     secondTitle: card.validity,
-                                    subTitleColor: theme.colors.secondaryItemsColor,
-                                    subTitle: "Карта активна",
+                                    subTitleColor:
+                                        theme.colors.secondaryItemsColor,
+                                    status: statusCard.active,
                                   ),
                                 Divider(height: 14.h),
                               ],
                             )
                           : SizedBox(),
+                      PersonalInformationItem(
+                        title: formatAsCardNumber(
+                          'title',
+                          useSeparators: true,
+                        ),
+                        secondTitle: 'secondTitle',
+                        subTitleColor: theme.colors.secondaryItemsColor,
+                        status: statusCard.block,
+                      ),
+                      PersonalInformationItem(
+                        title: formatAsCardNumber(
+                          'title2',
+                          useSeparators: true,
+                        ),
+                        secondTitle: 'secondTitle2',
+                        subTitleColor: theme.colors.secondaryItemsColor,
+                        status: statusCard.close,
+                      ),
                       Text(
                         "Мои данные",
                         style: theme.textStyles.profileTitleText,
@@ -77,13 +101,15 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       ),
                       PersonalInformationItem(
                         title: profileRepository.profile?.email,
-                        onEditIconTap: () => ModalHelpers.showEmailChangeModal(context),
+                        onEditIconTap: () =>
+                            ModalHelpers.showEmailChangeModal(context),
                         subTitle: "Email",
-                        subTitleCaption: profileRepository.profile?.emailIsConfirmed != null
-                            ? !profileRepository.profile!.emailIsConfirmed!
-                                ? "ожидает подтверждения"
-                                : null
-                            : null,
+                        subTitleCaption:
+                            profileRepository.profile?.emailIsConfirmed != null
+                                ? !profileRepository.profile!.emailIsConfirmed!
+                                    ? "ожидает подтверждения"
+                                    : null
+                                : null,
                         editIcon: true,
                       ),
                       PersonalInformationItem(
@@ -103,7 +129,8 @@ class _PersonalInformationViewState extends State<PersonalInformationView> {
                       ),
                       PersonalInformationItem(
                         title: profileRepository.profile?.dateOfBirth,
-                        isHidden: profileRepository.profile?.dateOfBirth == null,
+                        isHidden:
+                            profileRepository.profile?.dateOfBirth == null,
                         subTitle: "date_of_birth".tr(),
                       ),
                       SizedBox(height: 24.h),
