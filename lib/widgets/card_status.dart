@@ -26,7 +26,7 @@ class CardStatus extends StatelessWidget {
     Widget buildContent(int currentStage) {
       status = wallet.status;
       // TODO убрать после теста
-      status = "questionnaire_close";
+      // status = "questionnaire_close";
       switch (status) {
         case "questionnaire_close":
           return Column(
