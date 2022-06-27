@@ -37,7 +37,7 @@ import 'models/api/bank/card/card_repositores.dart';
 // $https://api-edge.docu.ru на https://api.solfy.com
 bool isTest = true;
 final String apiUrl =
-    isTest ? 'https://api-edge.docu.ru' : 'https://api.solfy.com';
+    isTest ? 'https://api.test.solfy.com' : 'https://api.solfy.com';
 void main() async {
   // Инициализация контейнеров
   InitialContainer().initialise(Injector("Initial"));
