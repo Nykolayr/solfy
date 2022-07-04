@@ -53,7 +53,7 @@ class StaticRepository implements IStaticRepository {
       final response = await _apiClient.getDictionaries();
       return Right(response);
     } on DioError catch (error) {
-      print('error getDictionaries == ${error.response}');
+      print('error getDictionaries == $error');
       return Left(ErrorsResponse.fromJson(error.response!.data));
     }
   }

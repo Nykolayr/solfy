@@ -75,12 +75,16 @@ class _SmsCodeViewState extends State<SmsCodeView> {
           ModalHelpers.showError(context, state.errors);
         }
         if (state is ValidationSuccess) {
+          print('console ValidationSuccess == ${state.response.target}');
           if (state.response.target != null) {
             if (state.response.target == 'email_send') {
               context.router.pop();
               context.router.root.push(EmailInputViewRoute());
             }
             if (state.response.target == 'pin_confirm') {
+              context.router.root.push(PinCodeLoginViewRoute());
+            }
+            if (state.response.target == 'pin_set') {
               context.router.root.push(PinCodeLoginViewRoute());
             }
           }
